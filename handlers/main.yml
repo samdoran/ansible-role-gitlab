@@ -1,0 +1,15 @@
+---
+- name: reconfigure gitlab
+  command: gitlab-ctl reconfigure
+
+- name: restart gitlab
+  command: gitlab-ctl restart
+
+- name: restart gitlab nginx
+  command: gitlab-ctl restart nginx
+
+- name: start gitlab
+  command: gitlab-ctl start
+
+- name: restart postfix
+  service: name=postfix state=restarted

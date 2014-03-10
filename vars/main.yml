@@ -1,0 +1,3 @@
+---
+gitlab_version: 6.6.4_omnibus-1
+ssl_cert_path: /etc/pki/tls/private

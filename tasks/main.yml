@@ -1,0 +1,98 @@
+---
+- name: Install GitLab deps
+  yum: name={{ item }} state=latest
+  with_items:
+    - postfix
+  tags: [ 'gitlab' , 'yum' ]
+
+- name: Enable services
+  service: name={{ item }} state=started
+  with_items:
+    - postfix
+  tags: gitlab
+
+- name: Configure mail relay
+  lineinfile: dest=/etc/postfix/main.cf
+              state=present
+              insertafter='#relayhost = '
+              line='relayhost = [68.142.178.30]'
+  notify: restart postfix
+  tags: gitlab
+
+- name: Check if GitLab is already installed
+  command: rpm -q gitlab
+  register: gitlab_status
+  ignore_errors: true
+  tags: gitlab
+
+- name: Get GitLab CE Omnibus rpm
+  get_url: url=https://downloads-packages.s3.amazonaws.com/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+           dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  when: gitlab_status.rc != 0
+  tags: gitlab
+
+- name: Install GitLab
+  command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  when: gitlab_status.rc != 0
+  tags: gitlab
+
+- name: Remove GitLab rpm
+  file: state=absent
+        path=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  when: gitlab_status.rc != 0
+  tags: gitlab
+
+- name: Reconfigure GitLab
+  command: gitlab-ctl reconfigure
+  when: gitlab_status.rc != 0
+  tags: gitlab
+
+- name: Create /etc/gitlab
+  file: state=directory
+        path=/etc/gitlab
+        owner=root
+        group=root
+        mode=0700
+  tags: gitlab
+
+- name: Copy gitlab.rb
+  template: src=gitlab.rb.j2
+            dest=/etc/gitlab/gitlab.rb
+            owner=root
+            group=root
+            mode=0600
+  # notify: reconfigure gitlab
+  tags: gitlab
+
+- name: Copy gitlab.crt
+  copy: src=gitlab.crt
+        dest=/etc/pki/tls/private/gitlab.crt
+        owner=root
+        group=root
+        mode=0644
+  tags: gitlab
+
+- name: Copy gitlab.key
+  copy: src=gitlab.key
+        dest=/etc/pki/tls/private/gitlab.key
+        owner=root
+        group=root
+        mode=0600
+  tags: gitlab
+
+- name: Copy nginx SSL config
+  template: src=gitlab-ssl.conf
+            dest=/var/opt/gitlab/nginx/etc/gitlab-ssl.conf
+            owner=root
+            group=root
+            mode=0644
+  notify: restart gitlab nginx
+  tags: gitlab
+
+- name: Point nginx.conf at gitlab-ssl.conf
+  lineinfile: dest=/var/opt/gitlab/nginx/etc/nginx.conf
+              state=present
+              regexp='include.*/gitlab-.*.conf'
+              line='  include /var/opt/gitlab/nginx/etc/gitlab-ssl.conf;'
+  notify: restart gitlab nginx
+  tags: gitlab

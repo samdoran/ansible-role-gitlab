@@ -74,13 +74,13 @@
   tags: gitlab
 
 - name: Copy gitlab.key
-  copy: src=gitlab.key
-        dest=/etc/pki/tls/private/gitlab.key
-        owner=root
-        group=root
-        mode=0600
+  template: src=gitlab.key.j2
+            dest=/etc/pki/tls/private/gitlab.key
+            owner=root
+            group=root
+            mode=0600
   when: update_ssl_cert
-  tags: gitlab
+  tags: test
 
 - name: Copy nginx SSL config
   template: src=gitlab-ssl.conf

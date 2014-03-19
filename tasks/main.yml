@@ -79,8 +79,7 @@
             owner=root
             group=root
             mode=0600
-  when: update_ssl_cert
-  tags: test
+  tags: gitlab
 
 - name: Copy nginx SSL config
   template: src=gitlab-ssl.conf

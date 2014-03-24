@@ -6,7 +6,7 @@
   tags: [ 'gitlab' , 'yum' ]
 
 - name: Enable services
-  service: name={{ item }} state=started
+  service: name={{ item }} state=started enabled=yes
   with_items:
     - postfix
   tags: gitlab
@@ -15,7 +15,7 @@
   lineinfile: dest=/etc/postfix/main.cf
               state=present
               insertafter='#relayhost = '
-              line='relayhost = [68.142.178.30]'
+              line='relayhost = [{{ mail_relay }}]'
   notify: restart postfix
   tags: gitlab
 
@@ -64,16 +64,26 @@
   # notify: reconfigure gitlab
   tags: gitlab
 
-- name: Copy gitlab.crt
+- name: Set port to 443
+  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+port:\\s(80|443)' line='    port: {{ https_port }}'"
+  notify: restart gitlab
+  tags: gitlab
+
+- name: Set HTTPS to true
+  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+https:' line='    https: true'"
+  notify: restart gitlab
+  tags: gitlab
+
+
+- name: Copy SSL gitlab.crt
   copy: src=gitlab.crt
         dest=/etc/pki/tls/private/gitlab.crt
         owner=root
         group=root
         mode=0644
-  when: update_ssl_cert
   tags: gitlab
 
-- name: Copy gitlab.key
+- name: Copy SSL gitlab.key
   template: src=gitlab.key.j2
             dest=/etc/pki/tls/private/gitlab.key
             owner=root

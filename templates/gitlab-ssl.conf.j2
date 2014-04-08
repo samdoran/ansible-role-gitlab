@@ -44,7 +44,7 @@ server {
 }
 
 server {
-    listen {{ https_port `}} ssl;
+    listen {{ https_port }} ssl;
     server_name {{ gitlab_server_name }};
     server_tokens off;
     root {{ gitlab_nginx_root }};

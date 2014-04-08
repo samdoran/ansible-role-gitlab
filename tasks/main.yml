@@ -1,5 +1,5 @@
 ---
-- name: Install GitLab deps
+- name: Install Gitlab deps
   yum: name={{ item }} state=latest
   with_items:
     - postfix
@@ -19,33 +19,53 @@
   notify: restart postfix
   tags: gitlab
 
-- name: Check if GitLab is already installed
+- name: Check if Gitlab is already installed
   command: rpm -q gitlab
   register: gitlab_status
   ignore_errors: true
-  tags: gitlab
+  tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: Get GitLab CE Omnibus rpm
+- name: Get Gitlab CE Omnibus rpm
   get_url: url=https://downloads-packages.s3.amazonaws.com/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
            dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.rc != 0
-  tags: gitlab
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
+  tags: [ "gitlab" , "gitlabupdate"]
 
-- name: Install GitLab
+- name: Stop unicorn for Gitlab update
+  command: gitlab-ctl stop unicorn
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
+  tags: [ "gitlab" , "gitlabupdate"]
+
+- name: Stop sidekiq for Gitlab update
+  command: gitlab-ctl stop sidekiq
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
+  tags: [ "gitlab" , "gitlabupdate"]
+
+- name: Backup Gitlab database before updating
+  command: gitlab-rake gitlab:backup:create
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
+  tags: [ "gitlab" , "gitlabupdate"]
+
+- name: Install Gitlab
   command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.rc != 0
-  tags: gitlab
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
+  tags: [ "gitlab" , "gitlabupdate"]
 
-- name: Remove GitLab rpm
+- name: Remove Gitlab rpm
   file: state=absent
         path=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.rc != 0
-  tags: gitlab
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
+  tags: [ "gitlab" , "gitlabupdate"]
 
-- name: Reconfigure GitLab
+- name: Reconfigure Gitlab
   command: gitlab-ctl reconfigure
-  when: gitlab_status.rc != 0
-  tags: gitlab
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
+  tags: [ "gitlab" , "gitlabupdate"]
+
+- name: Start Gitlab
+  command: gitlab-ctl reconfigure
+  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
+  tags: [ "gitlab" , "gitlabupdate"]
 
 - name: Create /etc/gitlab
   file: state=directory

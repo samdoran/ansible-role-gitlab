@@ -26,7 +26,7 @@
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: Get Gitlab CE Omnibus rpm
-  get_url: url=https://downloads-packages.s3.amazonaws.com/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  get_url: url=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
            dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
   when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
   tags: [ "gitlab" , "gitlabupdate" ]
@@ -94,6 +94,10 @@
   notify: restart gitlab
   tags: gitlab
 
+- name: Set secure Gravatar url
+  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+ssl_url:' line='    ssl_url:   \"https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=mm\"'"
+  notify: restart gitlab
+  tags: test
 
 - name: Copy SSL gitlab.crt
   copy: src=gitlab.crt

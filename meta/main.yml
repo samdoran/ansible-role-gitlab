@@ -1,0 +1,15 @@
+---
+galaxy_info:
+  author: Sam Doran
+  description:
+  company: "Royall & Company"
+  license: MIT
+  min_ansible_version: 1.2
+
+  platforms:
+  - name: EL
+    versions:
+      - 6
+
+  categories:
+    - system

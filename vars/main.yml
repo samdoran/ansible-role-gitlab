@@ -1,4 +1,1 @@
 ---
-gitlab_version: 6.8.1_omnibus.4-1
-ssl_cert_path: /etc/pki/tls/private
-gitlab_nginx_root: /opt/gitlab/embedded/service/gitlab-rails/public

@@ -1,2 +1,4 @@
 ---
-# defaults file for foo
+gitlab_version: 6.9.0_omnibus-1
+ssl_cert_path: /etc/pki/tls/private
+gitlab_nginx_root: /opt/gitlab/embedded/service/gitlab-rails/public

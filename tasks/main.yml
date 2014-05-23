@@ -43,7 +43,7 @@
   tags: gitlab
 
 - name: Copy SSL gitlab.crt
-  copy: src=gitlab.crt
+  template: src=gitlab.crt.j2
         dest=/etc/pki/tls/private/gitlab.crt
         owner=root
         group=root

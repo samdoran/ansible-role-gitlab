@@ -1,0 +1,36 @@
+---
+- name: stop unicorn
+  command: gitlab-ctl stop unicorn
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: stop sidekiq
+  command: gitlab-ctl stop sidekiq
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: backup database
+  command: gitlab-rake gitlab:backup:create
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: get latest Gitlab rpm
+  get_url: url=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-{{ gitlab_version }}.el6.x86_64.rpm dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: install gitlab
+  command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: remove Gitlab rpm
+  file: dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm state=absent
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: reconfigure gitlab
+  command: gitlab-ctl reconfigure
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: start unicorn and sidekiq
+  command: gitlab-ctl start
+  tags: [ "gitlab" , "gitlabupdate" ]
+
+- name: wait for unicorn to come back up
+  wait_for: port=8080
+  tags: [ "gitlab" , "gitlabupdate" ]

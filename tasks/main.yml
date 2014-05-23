@@ -23,49 +23,7 @@
   command: rpm -q gitlab
   register: gitlab_status
   ignore_errors: true
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Get Gitlab CE Omnibus rpm
-  get_url: url=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-           dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Stop unicorn for Gitlab update
-  command: gitlab-ctl stop unicorn
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Stop sidekiq for Gitlab update
-  command: gitlab-ctl stop sidekiq
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Backup Gitlab database before updating
-  command: gitlab-rake gitlab:backup:create
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Install Gitlab
-  command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Remove Gitlab rpm
-  file: state=absent
-        path=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Reconfigure Gitlab
-  command: gitlab-ctl reconfigure
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Start Gitlab
-  command: gitlab-ctl reconfigure
-  when: gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64" and gitlab_status.rc == 0
-  tags: [ "gitlab" , "gitlabupdate" ]
+  tags: gitlab
 
 - name: Create /etc/gitlab
   file: state=directory
@@ -81,23 +39,8 @@
             owner=root
             group=root
             mode=0600
-  # notify: reconfigure gitlab
+  notify: reconfigure gitlab
   tags: gitlab
-
-- name: Set port to 443
-  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+port:\\s(80|443)' line='    port: {{ https_port }}'"
-  notify: restart gitlab
-  tags: gitlab
-
-- name: Set HTTPS to true
-  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+https:' line='    https: true'"
-  notify: restart gitlab
-  tags: gitlab
-
-- name: Set secure Gravatar url
-  lineinfile: "dest=/var/opt/gitlab/gitlab-rails/etc/gitlab.yml state=present regexp='^\\s+ssl_url:' line='    ssl_url:   \"https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=mm\"'"
-  notify: restart gitlab
-  tags: test
 
 - name: Copy SSL gitlab.crt
   copy: src=gitlab.crt
@@ -115,19 +58,4 @@
             mode=0600
   tags: gitlab
 
-- name: Copy nginx SSL config
-  template: src=gitlab-ssl.conf.j2
-            dest=/var/opt/gitlab/nginx/etc/gitlab-ssl.conf
-            owner=root
-            group=root
-            mode=0644
-  notify: restart gitlab nginx
-  tags: gitlab
-
-- name: Point nginx.conf at gitlab-ssl.conf
-  lineinfile: dest=/var/opt/gitlab/nginx/etc/nginx.conf
-              state=present
-              regexp='include.*/gitlab-.*.conf'
-              line='  include /var/opt/gitlab/nginx/etc/gitlab-ssl.conf;'
-  notify: restart gitlab nginx
-  tags: gitlab
+- {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

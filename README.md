@@ -8,6 +8,8 @@ Requirements
 
 CentOS 6
 SSL private and public keys
+Postfix installed and configured to relay mail properly
+Ports 80 and 443 open in firewall
 
 Role Variables
 --------------

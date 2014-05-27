@@ -1,24 +1,4 @@
 ---
-- name: Install Gitlab deps
-  yum: name={{ item }} state=latest
-  with_items:
-    - postfix
-  tags: [ 'gitlab' , 'yum' ]
-
-- name: Enable services
-  service: name={{ item }} state=started enabled=yes
-  with_items:
-    - postfix
-  tags: gitlab
-
-- name: Configure mail relay
-  lineinfile: dest=/etc/postfix/main.cf
-              state=present
-              insertafter='#relayhost = '
-              line='relayhost = [{{ mail_relay }}]'
-  notify: restart postfix
-  tags: gitlab
-
 - name: Check if Gitlab is already installed
   command: rpm -q gitlab
   register: gitlab_status

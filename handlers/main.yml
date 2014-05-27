@@ -10,6 +10,3 @@
 
 - name: start gitlab
   command: gitlab-ctl start
-
-- name: restart postfix
-  service: name=postfix state=restarted

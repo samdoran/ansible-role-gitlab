@@ -28,6 +28,7 @@
         owner=root
         group=root
         mode=0644
+  notify: restart gitlab nginx
   tags: gitlab
 
 - name: Copy SSL gitlab.key
@@ -36,6 +37,7 @@
             owner=root
             group=root
             mode=0600
+  notify: restart gitlab nginx
   tags: gitlab
 
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

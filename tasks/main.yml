@@ -40,4 +40,18 @@
   notify: restart gitlab nginx
   tags: gitlab
 
+- name: Create cron job to backup Gitlab daily
+  cron: name="backup Gitlab"
+        minute="23"
+        hour="23"
+        job="gitlab-rake gitlab:backup:create"
+  tags: gitlab
+
+- name: Create cron job to remove Gitlab backups older than 10 days
+  cron: name="remove old Gitlab backups"
+        minute="51"
+        hour="23"
+        job="find /var/opt/gitlab/backup -type f -mtime +10 -exec rm {} \;"
+  tags: gitlab
+
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

@@ -1,6 +1,7 @@
 ---
-gitlab_version: 6.9.0_omnibus-1
-ssl_cert_path: /etc/pki/tls/private
+gitlab_version: 6.9.1_omnibus-1
+ssl_cert_path: /etc/pki/tls/certs
+ssl_key_path: /etc/pki/tls/private
 
 gitlab_ssl_crt: |
   -----BEGIN CERTIFICATE-----

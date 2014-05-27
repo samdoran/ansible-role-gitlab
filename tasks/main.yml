@@ -10,7 +10,7 @@
         path=/etc/gitlab
         owner=root
         group=root
-        mode=0700
+        mode=0775
   tags: gitlab
 
 - name: Copy gitlab.rb
@@ -24,7 +24,7 @@
 
 - name: Copy SSL gitlab.crt
   template: src=gitlab.crt.j2
-        dest=/etc/pki/tls/private/gitlab.crt
+        dest={{ ssl_cert_path }}/gitlab.crt
         owner=root
         group=root
         mode=0644
@@ -32,7 +32,7 @@
 
 - name: Copy SSL gitlab.key
   template: src=gitlab.key.j2
-            dest=/etc/pki/tls/private/gitlab.key
+            dest={{ ssl_key_path }}/gitlab.key
             owner=root
             group=root
             mode=0600

@@ -24,7 +24,7 @@
 
 - name: Copy SSL gitlab.crt
   template: src=gitlab.crt.j2
-        dest={{ ssl_cert_path }}/gitlab.crt
+        dest={{ ssl_cert_path }}/{{ ansible_fqdn }}.crt
         owner=root
         group=root
         mode=0644
@@ -33,7 +33,7 @@
 
 - name: Copy SSL gitlab.key
   template: src=gitlab.key.j2
-            dest={{ ssl_key_path }}/gitlab.key
+            dest={{ ssl_key_path }}/{{ ansible_fqdn }}.key
             owner=root
             group=root
             mode=0600

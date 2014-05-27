@@ -1,4 +1,4 @@
 external_url "https://{{ ansible_fqdn }}"
 nginx['redirect_http_to_https'] = true
-nginx['ssl_certificate'] = "{{ ssl_cert_path  }}/gitlab.crt"
-nginx['ssl_certificate_key'] = "{{ ssl_key_path  }}/gitlab.key"
+nginx['ssl_certificate'] = "{{ ssl_cert_path  }}/{{ ansible_fqdn }}.crt"
+nginx['ssl_certificate_key'] = "{{ ssl_key_path  }}/{{ ansible_fqdn }}.key"

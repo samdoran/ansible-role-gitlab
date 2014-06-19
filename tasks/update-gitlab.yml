@@ -1,39 +1,39 @@
 ---
-- name: stop unicorn
+- name: Stop Unicorn
   command: gitlab-ctl stop unicorn
   when: "'not installed' not in gitlab_status.stdout"
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: stop sidekiq
+- name: Stop sidekiq
   command: gitlab-ctl stop sidekiq
   when: "'not installed' not in gitlab_status.stdout"
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: backup database
+- name: Backup database
   command: gitlab-rake gitlab:backup:create
   when: "'not installed' not in gitlab_status.stdout"
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: download Gitlab rpm
+- name: Download Gitlab rpm
   get_url: url=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-{{ gitlab_version }}.el6.x86_64.rpm dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: install Gitlab
+- name: Install Gitlab
   command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: remove Gitlab rpm
+- name: Remove Gitlab rpm
   file: dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm state=absent
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: reconfigure Gitlab
+- name: Reconfigure Gitlab
   command: gitlab-ctl reconfigure
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: start unicorn and sidekiq
+- name: Start Unicorn and sidekiq
   command: gitlab-ctl start
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: wait for unicorn to come back up
+- name: Wait for Unicorn to come back up
   wait_for: port=8080
   tags: [ "gitlab" , "gitlabupdate" ]

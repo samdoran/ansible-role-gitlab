@@ -1,5 +1,5 @@
 ---
-- name: Check if Gitlab is already installed
+- name: Check if GitLab is already installed
   command: rpm -q gitlab
   register: gitlab_status
   ignore_errors: true
@@ -40,15 +40,15 @@
   notify: restart gitlab nginx
   tags: gitlab
 
-- name: Create cron job to backup Gitlab daily
-  cron: name="backup Gitlab"
+- name: Create cron job to backup GitLab daily
+  cron: name="backup GitLab"
         minute="23"
         hour="23"
         job="gitlab-rake gitlab:backup:create"
   tags: gitlab
 
-- name: Create cron job to remove Gitlab backups older than 10 days
-  cron: name="remove old Gitlab backups"
+- name: Create cron job to remove GitLab backups older than 10 days
+  cron: name="remove old GitLab backups"
         minute="51"
         hour="23"
         job="find /var/opt/gitlab/backup -type f -mtime +10 -exec rm {} \;"

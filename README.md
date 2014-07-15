@@ -1,4 +1,4 @@
-Role Name
+GitLab Omnibus
 ========
 
 Install GitLab Omnibus edition

@@ -1,5 +1,5 @@
 ---
-gitlab_version: 6.9.2_omnibus.2-1
+gitlab_version: 7.0.0_omnibus-1
 ssl_cert_path: /etc/pki/tls/certs
 ssl_key_path: /etc/pki/tls/private
 

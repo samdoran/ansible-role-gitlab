@@ -7,7 +7,7 @@
   tags: gitlab
 
 - name: Create /etc/gitlab
-  file: state=directory :path=/etc/gitlab :owner=root :group=root :mode=0775
+  file: state=directory path=/etc/gitlab owner=root group=root mode=0775
   tags: gitlab
 
 - name: Copy gitlab.rb

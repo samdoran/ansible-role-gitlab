@@ -3,55 +3,37 @@
   command: rpm -q gitlab
   register: gitlab_status
   ignore_errors: true
+  changed_when: false
   tags: gitlab
 
 - name: Create /etc/gitlab
-  file: state=directory
-        path=/etc/gitlab
-        owner=root
-        group=root
-        mode=0775
+  file: state=directory :path=/etc/gitlab :owner=root :group=root :mode=0775
   tags: gitlab
 
 - name: Copy gitlab.rb
-  template: src=gitlab.rb.j2
-            dest=/etc/gitlab/gitlab.rb
-            owner=root
-            group=root
-            mode=0600
+  template: src=gitlab.rb.j2 dest=/etc/gitlab/gitlab.rb owner=root group=root mode=0600
   notify: reconfigure gitlab
   tags: gitlab
 
 - name: Copy SSL gitlab.crt
-  template: src=gitlab.crt.j2
-        dest={{ ssl_cert_path }}/{{ ansible_fqdn }}.crt
-        owner=root
-        group=root
-        mode=0644
+  template: src=gitlab.crt.j2 dest={{ gitlab_ssl_cert_path }}/{{ ansible_fqdn }}.crt owner=root group=root mode=0644
   notify: restart gitlab nginx
-  tags: gitlab
+  tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy SSL gitlab.key
-  template: src=gitlab.key.j2
-            dest={{ ssl_key_path }}/{{ ansible_fqdn }}.key
-            owner=root
-            group=root
-            mode=0600
+  template: src=gitlab.key.j2 dest={{ gitlab_ssl_key_path }}/{{ ansible_fqdn }}.key owner=root group=root mode=0600
   notify: restart gitlab nginx
-  tags: gitlab
+  tags: [ "gitlab" ,  "ssl" ]
 
 - name: Create cron job to backup GitLab daily
-  cron: name="backup GitLab"
-        minute="23"
-        hour="23"
-        job="gitlab-rake gitlab:backup:create"
-  tags: gitlab
+  cron: name="backup GitLab" minute="23" hour="23" job="gitlab-rake gitlab:backup:create"
+  tags: [ "gitlab" , "cron" ]
 
-- name: Create cron job to remove GitLab backups older than 10 days
+- name: Create cron job to remove GitLab backups older than {{ gitlab_days_old_backups }} days
   cron: name="remove old GitLab backups"
         minute="51"
         hour="23"
-        job="find /var/opt/gitlab/backup -type f -mtime +10 -exec rm {} \;"
-  tags: gitlab
+        job="find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
+  tags: [ "gitlab" , "cron" ]
 
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

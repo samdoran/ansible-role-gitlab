@@ -1,4 +1,31 @@
+# Details of these configuration options are available at
+# https://gitlab.com/gitlab-org/omnibus-gitlab/blob/7-1-stable/README.md
+
+# SSL configuration
 external_url "https://{{ ansible_fqdn }}"
 nginx['redirect_http_to_https'] = true
-nginx['ssl_certificate'] = "{{ ssl_cert_path  }}/{{ ansible_fqdn }}.crt"
-nginx['ssl_certificate_key'] = "{{ ssl_key_path  }}/{{ ansible_fqdn }}.key"
+nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path  }}/{{ ansible_fqdn }}.crt"
+nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path  }}/{{ ansible_fqdn }}.key"
+
+# Directory where GitLab data is stored
+git_data_dir "{{ gitlab_git_data_dir }}"
+
+# User and group that owns GitLab data
+# User for SSH access to GitLab server
+user['username'] = '{{ gitlab_user }}'
+user['group'] = '{{ gitlab_group }}'
+
+{% if gitlab_ldap_enabled %}
+# LDAP sign-in
+# These settings are documented in more detail at
+# https://gitlab.com/gitlab-org/gitlab-ce/blob/master/config/gitlab.yml.example#L123
+gitlab_rails['ldap_enabled'] = {{ gitlab_ldap_enabled }}
+gitlab_rails['ldap_host'] = '{{ gitlab_ldap_host }}'
+gitlab_rails['ldap_port'] = {{ gitlab_ldap_port }}
+gitlab_rails['ldap_uid'] = '{{ gitlab_ldap_uid }}'
+gitlab_rails['ldap_method'] = '{{ gitlab_ldap_method }}'
+gitlab_rails['ldap_bind_dn'] = '{{ gitlab_ldap_bind_dn }}'
+gitlab_rails['ldap_password'] = '{{ gitlab_ldap_password }}'
+gitlab_rails['ldap_allow_username_or_email_login'] = {{ gitlab_ldap_allow_username_or_email_login }}
+gitlab_rails['ldap_base'] = '{{ gitlab_ldap_base }}'
+{% endif %}

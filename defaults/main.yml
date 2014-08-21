@@ -28,6 +28,7 @@ gitlab_ldap_base:
 # SSL paths and dummy certificate
 gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
+gitlab_ssl_filename: "{{ ansible_fqdn }}"
 
 gitlab_ssl_crt: |
   -----BEGIN CERTIFICATE-----

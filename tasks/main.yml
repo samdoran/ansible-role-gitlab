@@ -4,6 +4,7 @@
   register: gitlab_status
   ignore_errors: true
   changed_when: false
+  always_run: yes
   tags: gitlab
 
 - name: Create /etc/gitlab
@@ -16,12 +17,12 @@
   tags: gitlab
 
 - name: Copy SSL gitlab.crt
-  template: src=gitlab.crt.j2 dest={{ gitlab_ssl_cert_path }}/{{ ansible_fqdn }}.crt owner=root group=root mode=0644
+  template: backup=yes src=gitlab.crt.j2 dest={{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt owner=root group=root mode=0644 force=no
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy SSL gitlab.key
-  template: src=gitlab.key.j2 dest={{ gitlab_ssl_key_path }}/{{ ansible_fqdn }}.key owner=root group=root mode=0600
+  template: backup=yes src=gitlab.key.j2 dest={{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key owner=root group=root mode=0600 force=no
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 

@@ -16,7 +16,9 @@ Role Variables
 
 **gitlab_version**      Version of Gitlab. Also used to determine if an update is needed.
 
-**ssl_cert_path**       Where Gitlab SSL certs are stored
+**gitlab_ssl_cert_path**       Where Gitlab SSL certs are stored
+
+**gitlab_ssl_filename**     What the ssl certificate and key files will be named. A ".crt" extension is used for the public cert, a ".key" extension is used for the private cert. (Default: {{ ansibl_fqdn }})
 
 **gitlab_ssl_crt**      Public key
 
@@ -31,12 +33,20 @@ Role Variables
 **gitlab_days_old_backups** Passed to `find -time +[n]` in cron job that deletes GitLab backups (Default: 10)
 
 **gitlab_ldap_enabled**         Whether to enable LDAP authentication (Default: false)
+
 **gitlab_ldap_host**            IP or name of LDAP server (Default: _your_ldap_server)
+
 **gitlab_ldap_port**            LDAP port (Default: 636)
+
 **gitlab_ldap_uid**             SAM account used to authenticate to LDAP server (Default: SAMAccountName)
+
 **gitlab_ldap_method**          'ssl' or 'plain' connection method to LDAP server (Default: ssl)
+
 **gitlab_ldap_bind_dn**         Full DN of user that will bind to LDAP server (Default: _the_full_dn_of_the_user_you_will_bind_with)
+
 **gitlab_ldap_password**        Password of the bind user (Default: _the_password_of_the_bind_user)
+
 **gitlab_ldap_allow_username_or_email_login**       If you are using "uid: 'userPrincipalName'" on ActiveDirectory you need to disable this setting, because the userPrincipalName contains an '@'. (Default: true)
+
 **gitlab_ldap_base**            Base where we can search for users. Ex. ou=People,dc=gitlab,dc=example (Default: '')
 

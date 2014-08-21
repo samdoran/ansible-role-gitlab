@@ -4,8 +4,8 @@
 # SSL configuration
 external_url "https://{{ ansible_fqdn }}"
 nginx['redirect_http_to_https'] = true
-nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path  }}/{{ ansible_fqdn }}.crt"
-nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path  }}/{{ ansible_fqdn }}.key"
+nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt"
+nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key"
 
 # Directory where GitLab data is stored
 git_data_dir "{{ gitlab_git_data_dir }}"

@@ -37,4 +37,8 @@
         job="find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
   tags: [ "gitlab" , "cron" ]
 
+- name: Ensure git account never expires
+  lineinfile: "state=present dest=/etc/shadow regexp='^git:' line='git:!!:::::::'"
+  tags: [ 'gitlab' ]
+
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

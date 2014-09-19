@@ -1,15 +1,17 @@
 GitLab Omnibus
 ========
 
-Install GitLab Omnibus edition
+Install GitLab CE Omnibus on CentOS 6.
+The role will update GitLab if `gitlab_version` does not match the installed version.
+There is a cron job that creates daily backups of the database and another cron job that deletes backups older than `gitlab_days_old_backups` days.
 
 Requirements
 ------------
 
-CentOS 6
-SSL private and public keys
-Postfix installed and configured to relay mail properly
-Ports 80 and 443 open in firewall
+* CentOS 6
+* SSL private and public keys
+* Postfix installed and configured to relay mail properly
+* Ports 80 and 443 open in firewall
 
 Role Variables
 --------------
@@ -50,3 +52,21 @@ Role Variables
 
 **gitlab_ldap_base**            Base where we can search for users. Ex. ou=People,dc=gitlab,dc=example (Default: '')
 
+
+Example Playbook
+----------------
+
+    - hosts: servers
+
+      vars:
+         gitlab_version: 7.2.2_omnibus-1
+         gitlab_days_old_backups: 7
+
+      roles:
+         - role: sdoran.gitlab
+
+
+License
+-------
+
+MIT

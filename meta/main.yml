@@ -1,10 +1,10 @@
 ---
 galaxy_info:
   author: Sam Doran
-  description:
-  company: "Royall & Company"
+  description: Install GitLab CE Omnibus
+  company:
   license: MIT
-  min_ansible_version: 1.2
+  min_ansible_version: 1.6
 
   platforms:
   - name: EL
@@ -13,3 +13,5 @@ galaxy_info:
 
   categories:
     - system
+
+version: 1.0

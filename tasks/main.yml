@@ -30,7 +30,7 @@
   cron: name="backup GitLab" minute="23" hour="23" job="gitlab-rake gitlab:backup:create"
   tags: [ "gitlab" , "cron" ]
 
-- name: Create cron job to remove GitLab backups older than {{ gitlab_days_old_backups }} days
+- name: Create cron job to remove old GitLab backups
   cron: name="remove old GitLab backups"
         minute="51"
         hour="23"

@@ -2,10 +2,10 @@
 - name: Check if GitLab is already installed
   command: rpm -q gitlab
   register: gitlab_status
-  ignore_errors: true
+  failed_when: false
   changed_when: false
   always_run: yes
-  tags: gitlab
+  tags: [ 'gitlab' , 'gitlabupdate' ]
 
 - name: Create /etc/gitlab
   file: state=directory path=/etc/gitlab owner=root group=root mode=0775

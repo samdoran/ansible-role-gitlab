@@ -4,6 +4,7 @@ GitLab Omnibus
 Install GitLab CE Omnibus on CentOS 6.
 The role will update GitLab if `gitlab_version` does not match the installed version.
 There is a cron job that creates daily backups of the database and another cron job that deletes backups older than `gitlab_days_old_backups` days.
+To only run update tasks, run `ansible-playbook site.yml --tags gitlabupdate`.
 
 Requirements
 ------------

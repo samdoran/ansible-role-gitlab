@@ -1,12 +1,10 @@
 ---
-- name: Stop unicorn
-  command: gitlab-ctl stop unicorn
+- name: Stop unicorn and sidekiq
+  command: gitlab-ctl stop {{ item }}
   when: "'not installed' not in gitlab_status.stdout"
-  tags: [ "gitlab" , "gitlabupdate" ]
-
-- name: Stop sidekiq
-  command: gitlab-ctl stop sidekiq
-  when: "'not installed' not in gitlab_status.stdout"
+  with_items:
+    - unicorn
+    - sidekiq
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: Backup database
@@ -30,8 +28,8 @@
   command: gitlab-ctl reconfigure
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: Start unicorn and sidekiq
-  command: gitlab-ctl start
+- name: Restart all GitLab services
+  command: gitlab-ctl restart
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: Wait for unicorn to come back up

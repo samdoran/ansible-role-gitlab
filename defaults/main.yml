@@ -30,52 +30,19 @@ gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
 gitlab_ssl_filename: "{{ ansible_fqdn }}"
 
-gitlab_ssl_crt: |
-  -----BEGIN CERTIFICATE-----
-  MIIDBzCCAe+gAwIBAgIJAPIjslHvgWFrMA0GCSqGSIb3DQEBBQUAMBoxGDAWBgNV
-  BAMMD2dpdGxhYi5hY21lLmNvbTAeFw0xNDA1MjMxODM5MTRaFw0yNDA1MjAxODM5
-  MTRaMBoxGDAWBgNVBAMMD2dpdGxhYi5hY21lLmNvbTCCASIwDQYJKoZIhvcNAQEB
-  BQADggEPADCCAQoCggEBALKDgKio4PFD4mj/P+NyEZ8uj8V+KGPQtboohAZ3/2L6
-  t/AutM67aTehPrHDUe7gAQItUH4j7xG7afRB6ZoF8hyretvkKma+rzhJF6HY+1kF
-  W9iFVZZclF9O2QDzIOK3P3PnpLEBuapNg7i6KOuz3Ahok947WjwVbRbCgzqqt96Z
-  RZS2W2XRThUPhdBiLBj9wR+vQOpfD3NgWiX8cfrWIdCz3N6t31v4ix+L4XA5ZGA0
-  dN+f1HrqHTCHmeFs4srVPvFAYCCij18Uz4kib80wS/ArH7Qpkk5e2amoiEqQyL2h
-  YEUDgWDh8pJz3leFaA1DcexjrTCmpjt4l5MmYw4ZgvECAwEAAaNQME4wHQYDVR0O
-  BBYEFMScHlUTVswHFaRjQz9TJXnxxFJ7MB8GA1UdIwQYMBaAFMScHlUTVswHFaRj
-  Qz9TJXnxxFJ7MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQEFBQADggEBAIdcMXzz
-  LFWUSoAIaPUX/tmCSAC3Rvz7dicm1aJXUDyTQPMnN4VCmxTywf+sngbOOhd2AJSv
-  nfZUBm0Y5HeEKrvoGenjhXAz/Dc2JymUYRvab11uSjkWoksNeWQk5ZxfvOdExrsn
-  bVK/AIuq7KiVQ9rZmUlbG2i4MnHi9sHFwg8O5WPQsNX2ltt8RXHnjvjbt07kFcrQ
-  lVJfrYtjB3K2lm2uisvjxy2H1UtPDZUNZFRUxHkKFmHWADRoWrprSQJDTDGsNk2i
-  rydM8R9xKKtzZSck1ZIR1VQp/EMtcWzxTthwhioKb3V0OW5jwU7hhvM2aPVIG8C3
-  gH0wQhufRVa1Cmk=
-  -----END CERTIFICATE-----
 
-gitlab_ssl_key: |
-  -----BEGIN RSA PRIVATE KEY-----
-  MIIEpAIBAAKCAQEAsoOAqKjg8UPiaP8/43IRny6PxX4oY9C1uiiEBnf/Yvq38C60
-  zrtpN6E+scNR7uABAi1QfiPvEbtp9EHpmgXyHKt62+QqZr6vOEkXodj7WQVb2IVV
-  llyUX07ZAPMg4rc/c+eksQG5qk2DuLoo67PcCGiT3jtaPBVtFsKDOqq33plFlLZb
-  ZdFOFQ+F0GIsGP3BH69A6l8Pc2BaJfxx+tYh0LPc3q3fW/iLH4vhcDlkYDR035/U
-  euodMIeZ4WziytU+8UBgIKKPXxTPiSJvzTBL8CsftCmSTl7ZqaiISpDIvaFgRQOB
-  YOHyknPeV4VoDUNx7GOtMKamO3iXkyZjDhmC8QIDAQABAoIBAArEddE2hoLm9lQg
-  +UiNy9RPKare5i7HGv8EjJobSNM+jjO1jYBeu4T4e+CbCGkhJ85qz00ce8IVDNoH
-  08BPlX/3M+zpgUk7PTRm7D796INBGH4h5LyyDt0E04AEKjqilPg3w65NjVZhYI2W
-  5Pr6mU4EiM7Bw7qWDENwLhwuyfJqMGMhfEzQ1s/dP64knf2/J5LdMq3mKa56YEL/
-  A66v7/7efzj+4p87L86fu/h05i44lTVoHZb0Thmq9pRtUQc91eh5Uu3KYRWHUZGT
-  YPUCIC99vCwGoJXF0rJAqZS6K6PmkE/EeDSheZXbLG0rOQIr6N0uiuO6AntNOZIl
-  xfXG2TUCgYEA7VjvPYj7b15MFg89JZmhd6t2UiyQz3ioUGnaGig4joW7fcnqCeUf
-  UkLsnUEQatD7O5azSiFKNzdA6VHNxsmKW/m8tPlokUFVKikEUINXYEiG73PCol+F
-  HPInYHRuJM5jCuLr9za+nL2mzVqt7cQ2YZuZ6aO8U2tNYAl/iLXwlrMCgYEAwIrs
-  hUQvVDWgTQRpeBCLiqrEEZOXfUQ4BcKoOYiu4xdCUozjuJLF2yo8ReufcjOJkHQp
-  zfS73xxfWPqdAe9c0NBRpaQhZEALu9q2qhxhOtFJrKw9+ACRkCgJKhPu7/WTrLln
-  ZEXgW8SPyMHNbaGmOJdJVprpA8jerYINbWF/ccsCgYEA2bUj7VvC1kq2m91qhxy+
-  gRhjtchvI/9W1Dvj9O5DwmdkrWMSK/Vgn4IHq87Mkk4SxHvdBPg4LSGfhuSkTdz7
-  7pXKxG2pvuMgjUWGUZvH/+dG7klOlMXtQbnU6KKjjVtKeeff7ajnerpzUBYHR/sc
-  rrednDO2QQZBuP+9XdcVUgUCgYEAhO6lU3D6+Dm5/dKA+rr5jHhPvA7ZNUwnHZsC
-  SA6dJ/5D9Ph+tEzpO2JSkLeXsuHwJQJ+ZkqEdwqArc8BHXfj7esVo7XItA0fzMe4
-  +4NygYhDRGr6scG6vftWMG3otlUnasXqoyk3OERiPOnI6dsEBug0Yw26uLkzPDmh
-  CZaZxbcCgYAyvVO4Dy+KOvQ0tmSFHv03E0ms096DQLpDiAeCifXkU4ZBgwqWx5xW
-  wgC4LYIrSa8tXS0KvJ7beirOOrEuHZKklU9TFSkfTspEI7Cbe8UzJuFU1WHoh3up
-  pyZK/FBbOR0l0eiSaMpuc7HrYp2Ik5UDMdJ3RW1Wbfuu64qZJ7YyUw==
-  -----END RSA PRIVATE KEY-----
+# These are examples of storing a block varible in YAML using the "|" character
+# to indicate a literal style, preservic line breaks.
+# The private key should be stored in an Ansible vault.
+#
+# See http://yaml.org/spec/current.html#id2503232 for more information.
+#
+# gitlab_ssl_crt: |
+#   -----BEGIN CERTIFICATE-----
+#   # public cert goes here
+#   -----END CERTIFICATE-----
+
+# gitlab_ssl_key: |
+#   -----BEGIN RSA PRIVATE KEY-----
+#   # private cert goes here
+#   -----END RSA PRIVATE KEY-----

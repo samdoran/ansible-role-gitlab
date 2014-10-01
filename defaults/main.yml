@@ -32,7 +32,7 @@ gitlab_ssl_filename: "{{ ansible_fqdn }}"
 
 
 # These are examples of storing a block varible in YAML using the "|" character
-# to indicate a literal style, preservic line breaks.
+# to indicate a literal style, preserving line breaks.
 # The private key should be stored in an Ansible vault.
 #
 # See http://yaml.org/spec/current.html#id2503232 for more information.

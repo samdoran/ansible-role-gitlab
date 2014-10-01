@@ -10,3 +10,6 @@
 
 - name: start gitlab
   command: gitlab-ctl start
+
+- name: wait for unicorn
+  wait_for: port=8080

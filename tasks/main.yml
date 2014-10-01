@@ -18,13 +18,17 @@
 
 - name: Copy SSL gitlab.crt
   template: backup=yes src=gitlab.crt.j2 dest={{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt owner=root group=root mode=0644 force=no
+  when: gitlab_ssl_crt is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy SSL gitlab.key
   template: backup=yes src=gitlab.key.j2 dest={{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key owner=root group=root mode=0600 force=no
+  when: gitlab_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
+
+- {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}
 
 - name: Create cron job to backup GitLab daily
   cron: name="backup GitLab" minute="23" hour="23" job="gitlab-rake gitlab:backup:create"
@@ -41,4 +45,3 @@
   lineinfile: "state=present dest=/etc/shadow regexp='^git:' line='git:!!:::::::'"
   tags: [ 'gitlab' ]
 
-- {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}

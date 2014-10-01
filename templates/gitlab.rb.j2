@@ -1,11 +1,16 @@
 # Details of these configuration options are available at
 # https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
+{% if gitlab_ssl_key is defined %}
 # SSL configuration
 external_url "https://{{ ansible_fqdn }}"
 nginx['redirect_http_to_https'] = true
 nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt"
 nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key"
+{% else %}
+external_url "http://{{ ansible_fqdn }}"
+nginx['redirect_http_to_https'] = false
+{% endif %}
 
 # Directory where GitLab data is stored
 git_data_dir "{{ gitlab_git_data_dir }}"

@@ -1,7 +1,7 @@
 # Details of these configuration options are available at
 # https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
 
-{% if gitlab_ssl_key is defined %}
+{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
 # SSL configuration
 external_url "https://{{ ansible_fqdn }}"
 nginx['redirect_http_to_https'] = true

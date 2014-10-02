@@ -19,6 +19,8 @@ Role Variables
 
 **gitlab_version**      Version of Gitlab. Also used to determine if an update is needed.
 
+**gitlab_ssl_enabled** Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_ssl_crt` and `gitlab_ssl_key`. (Default: False)
+
 **gitlab_ssl_cert_path**       Where Gitlab SSL certs are stored
 
 **gitlab_ssl_filename**     What the ssl certificate and key files will be named. A ".crt" extension is used for the public cert, a ".key" extension is used for the private cert. (Default: {{ ansibl_fqdn }})

@@ -25,7 +25,8 @@ gitlab_ldap_password: _the_password_of_the_bind_user
 gitlab_ldap_allow_username_or_email_login: true
 gitlab_ldap_base:
 
-# SSL paths and dummy certificate
+# SSL configuration
+gitlab_ssl_enabled: False
 gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
 gitlab_ssl_filename: "{{ ansible_fqdn }}"

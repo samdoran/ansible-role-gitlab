@@ -30,6 +30,13 @@
 
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}
 
+# FIXME
+# This is a fragile fix as it will be overridden if restorecon is run.
+# This needs to be impvode with a module that will create a local custom rule.
+- name: Set SELinux context of gitlab home direcotiry
+  file: dest=/var/opt/gitlab/.ssh setype=user_home_t recurse=yes
+  tags: [ 'gitlab' , 'selinux' ]
+
 - name: Create cron job to backup GitLab daily
   cron: name="backup GitLab" minute="23" hour="23" job="gitlab-rake gitlab:backup:create"
   tags: [ "gitlab" , "cron" ]

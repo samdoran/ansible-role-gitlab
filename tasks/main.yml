@@ -8,22 +8,46 @@
   tags: [ 'gitlab' , 'gitlabupdate' ]
 
 - name: Create /etc/gitlab
-  file: state=directory path=/etc/gitlab owner=root group=root mode=0775
+  file:
+    state=directory
+    path=/etc/gitlab
+    owner=root
+    group=root
+    mode=0775
   tags: gitlab
 
 - name: Copy gitlab.rb
-  template: src=gitlab.rb.j2 dest=/etc/gitlab/gitlab.rb owner=root group=root mode=0600
+  template:
+    src=gitlab.rb.j2
+    dest=/etc/gitlab/gitlab.rb
+    owner=root
+    group=root
+    mode=0600
   notify: reconfigure gitlab
   tags: gitlab
 
 - name: Copy SSL gitlab.crt
-  template: backup=yes src=gitlab.crt.j2 dest={{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt owner=root group=root mode=0644 force=no
+  template:
+    backup=yes
+    src=gitlab.crt.j2
+    dest={{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt
+    owner=root
+    group=root
+    mode=0644
+    force=no
   when: gitlab_ssl_crt is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy SSL gitlab.key
-  template: backup=yes src=gitlab.key.j2 dest={{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key owner=root group=root mode=0600 force=no
+  template:
+    backup=yes
+    src=gitlab.key.j2
+    dest={{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key
+    owner=root
+    group=root
+    mode=0600
+    force=no
   when: gitlab_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
@@ -34,21 +58,33 @@
 # This is a fragile fix as it will be overridden if restorecon is run.
 # This needs to be impvode with a module that will create a local custom rule.
 - name: Set SELinux context of gitlab home direcotiry
-  file: dest=/var/opt/gitlab/.ssh setype=user_home_t recurse=yes
+  file:
+    dest=/var/opt/gitlab/.ssh
+    setype=user_home_t
+    recurse=yes
   tags: [ 'gitlab' , 'selinux' ]
 
 - name: Create cron job to backup GitLab daily
-  cron: name="backup GitLab" minute="23" hour="23" job="gitlab-rake gitlab:backup:create"
+  cron:
+    name="backup GitLab"
+    minute="23"
+    hour="23"
+    job="gitlab-rake gitlab:backup:create"
   tags: [ "gitlab" , "cron" ]
 
 - name: Create cron job to remove old GitLab backups
-  cron: name="remove old GitLab backups"
-        minute="51"
-        hour="23"
-        job="find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
+  cron:
+    name="remove old GitLab backups"
+    minute="51"
+    hour="23"
+    job="find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
   tags: [ "gitlab" , "cron" ]
 
 - name: Ensure git account never expires
-  lineinfile: "state=present dest=/etc/shadow regexp='^git:' line='git:!!:::::::'"
+  lineinfile:
+    state=present
+    dest=/etc/shadow
+    regexp='^git:'
+    line='git:!!:::::::'
   tags: [ 'gitlab' ]
 

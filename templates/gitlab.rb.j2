@@ -34,3 +34,8 @@ gitlab_rails['ldap_password'] = '{{ gitlab_ldap_password }}'
 gitlab_rails['ldap_allow_username_or_email_login'] = {{ gitlab_ldap_allow_username_or_email_login }}
 gitlab_rails['ldap_base'] = '{{ gitlab_ldap_base }}'
 {% endif %}
+
+{%- if gitlab_ci_enabled %}
+# External URL to reach the GitLab CI Coordinator at
+ci_external_url 'http{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}s{% endif %}://{{ gitlab_ci_fqdn }}'
+{% endif %}

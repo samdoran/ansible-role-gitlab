@@ -1,5 +1,5 @@
 ---
-gitlab_version: 7.4.3_omnibus.1-1
+gitlab_version: 7.4.3_omnibus.5.1.0.ci-1
 
 # Directory where GitLab data is stored
 gitlab_git_data_dir: /var/opt/gitlab/git-data
@@ -30,6 +30,10 @@ gitlab_ssl_enabled: False
 gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
 gitlab_ssl_filename: "{{ ansible_fqdn }}"
+
+# GitLab CI Configuration
+gitlab_ci_enabled: False
+gitlab_ci_fqdn: ci.{{ ansible_domain }}
 
 
 # These are examples of storing a block varible in YAML using the "|" character

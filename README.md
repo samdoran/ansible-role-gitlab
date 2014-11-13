@@ -55,6 +55,9 @@ Role Variables
 
 **gitlab_ldap_base**            Base where we can search for users. Ex. ou=People,dc=gitlab,dc=example (Default: '')
 
+**gitlab_ci_enabled**           Whether or not to enable GitLab CI (Default: False)
+**gitlab_ci_fqdn**          FQDN of GitLab CI host (Default: ci.{{ ansible_domain }})
+
 
 Example Playbook
 ----------------

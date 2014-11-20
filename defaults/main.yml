@@ -34,7 +34,7 @@ gitlab_ssl_filename: "{{ ansible_fqdn }}"
 # GitLab CI Configuration
 gitlab_ci_enabled: False
 gitlab_ci_fqdn: ci.{{ ansible_domain }}
-
+gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
 
 # These are examples of storing a block varible in YAML using the "|" character
 # to indicate a literal style, preserving line breaks.
@@ -48,6 +48,16 @@ gitlab_ci_fqdn: ci.{{ ansible_domain }}
 #   -----END CERTIFICATE-----
 
 # gitlab_ssl_key: |
+#   -----BEGIN RSA PRIVATE KEY-----
+#   # private cert goes here
+#   -----END RSA PRIVATE KEY-----
+#
+# gitlab_ci_ssl_crt: |
+#   -----BEGIN CERTIFICATE-----
+#   # public cert goes here
+#   -----END CERTIFICATE-----
+
+# gitlab_ci_ssl_key: |
 #   -----BEGIN RSA PRIVATE KEY-----
 #   # private cert goes here
 #   -----END RSA PRIVATE KEY-----

@@ -36,6 +36,13 @@ gitlab_rails['ldap_base'] = '{{ gitlab_ldap_base }}'
 {% endif %}
 
 {%- if gitlab_ci_enabled %}
-# External URL to reach the GitLab CI Coordinator at
-ci_external_url 'http{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}s{% endif %}://{{ gitlab_ci_fqdn }}'
+{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
+# GitLab CI SSL configuration
+ci_external_url "https://{{ gitlab_ci_fqdn }}"
+ci_nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ci_ssl_filename }}.crt"
+ci_nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ci_ssl_filename }}.key"
+{% else %}
+# GitLab CI Configuration
+ci_external_url "http://{{ gitlab_ci_fqdn }}"
+{% endif %}
 {% endif %}

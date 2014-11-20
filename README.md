@@ -2,9 +2,22 @@ GitLab Omnibus
 ========
 
 Install GitLab CE Omnibus on CentOS 6.
+
 The role will update GitLab if `gitlab_version` does not match the installed version.
+
 There is a cron job that creates daily backups of the database and another cron job that deletes backups older than `gitlab_days_old_backups` days.
+
 To only run update tasks, run `ansible-playbook site.yml --tags gitlabupdate`.
+
+With the addition of GitLab CI, there are more variables that should bo configured before running the role. GitLab CI is disabled by default, but if you enable it and plan to use SSL (which you should), you will also need to look at and/or define the following variables:
+
+    gitalb_ci_enabled
+    gitalb_ci_fqdn
+    gitalb_ci_ssl_filename
+    gitlab_ci_ssl_crt
+    gitlab_ci_ssl_key
+
+It is possible to use the same SSL certificates for both listeners (if you are using a wildcard cert, for example) by setting `gitlab_ci_ssl_filename` to `"{{ gitlab_ssl_filename }}"` (double quotes are needed.)
 
 Requirements
 ------------
@@ -56,21 +69,33 @@ Role Variables
 **gitlab_ldap_base**            Base where we can search for users. Ex. ou=People,dc=gitlab,dc=example (Default: '')
 
 **gitlab_ci_enabled**           Whether or not to enable GitLab CI (Default: False)
+
 **gitlab_ci_fqdn**          FQDN of GitLab CI host (Default: ci.{{ ansible_domain }})
+
+**gitlab_ci_ssl_filename** Name of GitLab CI certificate files (Default: gitlab_ci_fqdn) 
+
+**gitlab_ci_ssl_crt**   Public certificate used for GitLab CI server (Default: undefined)
+
+**gitlab_ci_ssl_key**   Private key used for GitLab CI server (Default: undefined)
 
 
 Example Playbook
 ----------------
 
-    - hosts: servers
+```yaml
+- hosts: gitlab
+  sudo: yes
 
-      vars:
-         gitlab_version: 7.2.2_omnibus-1
-         gitlab_days_old_backups: 7
+  vars:
+     gitlab_version: 7.2.2_omnibus-1
+     gitlab_days_old_backups: 7
+     gitlab_ci_enabled: True
+     gitlab_ci_fqdn: "gitlab-ci.{{ ansible_domain }}"
+     gitlab_ci_ssl_filename: "{{ gitlab_ssl_filename }}"
 
-      roles:
-         - role: sdoran.gitlab
-
+  roles:
+     - role: sdoran.gitlab
+```
 
 License
 -------

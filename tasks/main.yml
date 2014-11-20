@@ -24,9 +24,9 @@
     group=root
     mode=0600
   notify: reconfigure gitlab
-  tags: gitlab
+  tags: [ 'gitlab' , 'gitlabrb' ]
 
-- name: Copy SSL gitlab.crt
+- name: Copy GitLab SSL certifacte
   template:
     backup=yes
     src=gitlab.crt.j2
@@ -39,7 +39,7 @@
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
-- name: Copy SSL gitlab.key
+- name: Copy GitLab SSL private key
   template:
     backup=yes
     src=gitlab.key.j2
@@ -49,6 +49,32 @@
     mode=0600
     force=no
   when: gitlab_ssl_key is defined
+  notify: restart gitlab nginx
+  tags: [ "gitlab" ,  "ssl" ]
+
+- name: Copy GitLab CI SSL certifacte
+  template:
+    backup=yes
+    src=gitlab-ci.crt.j2
+    dest={{ gitlab_ci_ssl_cert_path }}/{{ gitlab_ci_ssl_filename }}.crt
+    owner=root
+    group=root
+    mode=0644
+    force=no
+  when: gitlab_ci_ssl_crt is defined
+  notify: restart gitlab nginx
+  tags: [ "gitlab" ,  "ssl" ]
+
+- name: Copy GitLab CI SSL private key
+  template:
+    backup=yes
+    src=gitlab-ci.key.j2
+    dest={{ gitlab_ci_ssl_key_path }}/{{ gitlab_ci_ssl_filename }}.key
+    owner=root
+    group=root
+    mode=0600
+    force=no
+  when: gitlab_ci_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 

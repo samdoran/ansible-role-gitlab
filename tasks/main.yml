@@ -24,7 +24,7 @@
     group=root
     mode=0600
   notify: reconfigure gitlab
-  tags: [ 'gitlab' , 'gitlabrb' ]
+  tags: [ 'gitlab' , 'gitlabrb' , 'ssl' ]
 
 - name: Copy GitLab SSL certifacte
   template:

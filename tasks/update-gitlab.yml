@@ -1,10 +1,11 @@
 ---
-- name: UPDATE | Stop unicorn and sidekiq
+- name: UPDATE | Stop unicorn, sidekiq, and nginx
   command: gitlab-ctl stop {{ item }}
   when: "'not installed' not in gitlab_status.stdout"
   with_items:
     - unicorn
     - sidekiq
+    - nginx
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: UPDATE | Backup database

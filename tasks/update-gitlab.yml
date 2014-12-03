@@ -15,7 +15,7 @@
 
 - name: UPDATE | Download GitLab rpm
   get_url:
-    url=https://downloads-packages.s3.amazonaws.com/centos-6.5/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+    url=https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
     dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
   tags: [ "gitlab" , "gitlabupdate" ]
 

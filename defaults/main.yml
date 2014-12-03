@@ -1,5 +1,5 @@
 ---
-gitlab_version: 7.4.3_omnibus.5.1.0.ci-1
+gitlab_version: 7.5.2_omnibus.5.2.1.ci-1
 
 # Directory where GitLab data is stored
 gitlab_git_data_dir: /var/opt/gitlab/git-data
@@ -15,21 +15,26 @@ gitlab_group: git
 # LDAP sign-in
 # These settings are documented in more detail at
 # https://gitlab.com/gitlab-org/gitlab-ce/blob/master/config/gitlab.yml.example#L123
-gitlab_ldap_enabled: false
+gitlab_ldap_enabled: False
+gitlab_ldap_label: LDAP
 gitlab_ldap_host: _your_ldap_server
 gitlab_ldap_port: 636
 gitlab_ldap_uid: SAMAccountName
 gitlab_ldap_method: ssl
 gitlab_ldap_bind_dn: _the_full_dn_of_the_user_you_will_bind_with
 gitlab_ldap_password: _the_password_of_the_bind_user
-gitlab_ldap_allow_username_or_email_login: true
-gitlab_ldap_base:
+gitlab_ldap_ad: True
+gitlab_ldap_allow_username_or_email_login: True
+gitlab_ldap_base: ''
+gitlab_ldap_user_filter: ''
 
 # SSL configuration
 gitlab_ssl_enabled: False
+gitlab_redirect_http: False
 gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
 gitlab_ssl_filename: "{{ ansible_fqdn }}"
+gitlab_ssl_port: 443
 
 # GitLab CI Configuration
 gitlab_ci_enabled: False

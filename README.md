@@ -34,9 +34,13 @@ Role Variables
 
 **gitlab_ssl_enabled** Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_ssl_crt` and `gitlab_ssl_key`. (Default: False)
 
+**gitlab_redirect_http**    Whether or not to redirect HTTP to HTTPS (Default: False)
+
 **gitlab_ssl_cert_path**       Where Gitlab SSL certs are stored
 
 **gitlab_ssl_filename**     What the ssl certificate and key files will be named. A ".crt" extension is used for the public cert, a ".key" extension is used for the private cert. (Default: {{ ansibl_fqdn }})
+
+**gitlab_ssl_port**     Listening port for HTTPS (Default: 443)
 
 **gitlab_ssl_crt**      Public key
 
@@ -52,6 +56,8 @@ Role Variables
 
 **gitlab_ldap_enabled**         Whether to enable LDAP authentication (Default: false)
 
+**gitlab_ldap_label**         A human-friendly name for your LDAP server. (Default: LDAP)
+
 **gitlab_ldap_host**            IP or name of LDAP server (Default: _your_ldap_server)
 
 **gitlab_ldap_port**            LDAP port (Default: 636)
@@ -64,9 +70,13 @@ Role Variables
 
 **gitlab_ldap_password**        Password of the bind user (Default: _the_password_of_the_bind_user)
 
+**gitlab_ldap_ad**        This setting specifies if LDAP server is Active Directory LDAP server. If your LDAP server is not AD, set this to False. (Default: True)
+
 **gitlab_ldap_allow_username_or_email_login**       If you are using "uid: 'userPrincipalName'" on ActiveDirectory you need to disable this setting, because the userPrincipalName contains an '@'. (Default: true)
 
 **gitlab_ldap_base**            Base where we can search for users. Ex. ou=People,dc=gitlab,dc=example (Default: '')
+
+**gitlab_ldap_user_filter**   Filter LDAP users. Format: RFC 4515 http://tools.ietf.org/search/rfc4515. Ex. (employeeType=developer) (Default: '')
 
 **gitlab_ci_enabled**           Whether or not to enable GitLab CI (Default: False)
 

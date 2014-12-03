@@ -3,8 +3,8 @@
 
 {% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
 # SSL configuration
-external_url "https://{{ ansible_fqdn }}"
-nginx['redirect_http_to_https'] = true
+external_url "https://{{ ansible_fqdn }}{% if gitlab_ssl_port != 443 %}:{{ gitlab_ssl_port }}{% endif %}"
+nginx['redirect_http_to_https'] = {{ gitlab_redirect_http | lower }}
 nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt"
 nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key"
 {% else %}
@@ -38,7 +38,8 @@ gitlab_rails['ldap_base'] = '{{ gitlab_ldap_base }}'
 {%- if gitlab_ci_enabled %}
 {% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
 # GitLab CI SSL configuration
-ci_external_url "https://{{ gitlab_ci_fqdn }}"
+ci_external_url "https://{{ gitlab_ci_fqdn }}{% if gitlab_ssl_port != 443 %}:{{ gitlab_ssl_port }}{% endif %}"
+ci_nginx['redirect_http_to_https'] = {{ gitlab_redirect_http | lower }}
 ci_nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ci_ssl_filename }}.crt"
 ci_nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ci_ssl_filename }}.key"
 {% else %}

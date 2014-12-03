@@ -34,9 +34,13 @@ Role Variables
 
 **gitlab_ssl_enabled** Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_ssl_crt` and `gitlab_ssl_key`. (Default: False)
 
+**gitlab_redirect_http**    Whether or not to redirect HTTP to HTTPS (Default: False)
+
 **gitlab_ssl_cert_path**       Where Gitlab SSL certs are stored
 
 **gitlab_ssl_filename**     What the ssl certificate and key files will be named. A ".crt" extension is used for the public cert, a ".key" extension is used for the private cert. (Default: {{ ansibl_fqdn }})
+
+**gitlab_ssl_port**     Listening port for HTTPS (Default: 443)
 
 **gitlab_ssl_crt**      Public key
 

@@ -27,9 +27,11 @@ gitlab_ldap_base:
 
 # SSL configuration
 gitlab_ssl_enabled: False
+gitlab_redirect_http: False
 gitlab_ssl_cert_path: /etc/pki/tls/certs
 gitlab_ssl_key_path: /etc/pki/tls/private
 gitlab_ssl_filename: "{{ ansible_fqdn }}"
+gitlab_ssl_port: 443
 
 # GitLab CI Configuration
 gitlab_ci_enabled: False

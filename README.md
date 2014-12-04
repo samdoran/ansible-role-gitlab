@@ -1,7 +1,6 @@
 GitLab Omnibus
 ========
-
-Install GitLab CE Omnibus on CentOS 6.
+[![Galaxy](https://img.shields.io/badge/galaxy-sdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/1759)
 
 The role will update GitLab if `gitlab_version` does not match the installed version.
 
@@ -11,11 +10,13 @@ To only run update tasks, run `ansible-playbook site.yml --tags gitlabupdate`.
 
 With the addition of GitLab CI, there are more variables that should bo configured before running the role. GitLab CI is disabled by default, but if you enable it and plan to use SSL (which you should), you will also need to look at and/or define the following variables:
 
-    gitalb_ci_enabled
-    gitalb_ci_fqdn
-    gitalb_ci_ssl_filename
-    gitlab_ci_ssl_crt
-    gitlab_ci_ssl_key
+```shell
+gitalb_ci_enabled
+gitalb_ci_fqdn
+gitalb_ci_ssl_filename
+gitlab_ci_ssl_crt
+gitlab_ci_ssl_key
+```
 
 It is possible to use the same SSL certificates for both listeners (if you are using a wildcard cert, for example) by setting `gitlab_ci_ssl_filename` to `"{{ gitlab_ssl_filename }}"` (double quotes are needed.)
 

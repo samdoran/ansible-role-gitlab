@@ -13,6 +13,7 @@ nginx['redirect_http_to_https'] = false
 {% include 'gitlab_application.j2' %}
 {% include 'gitlab_database.j2' %}
 {% include 'gitlab_redis.j2' %}
+{% include 'gitlab_email.j2' %}
 
 # User and group that owns GitLab data
 # User for SSH access to GitLab server

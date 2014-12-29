@@ -166,15 +166,25 @@ gitlab_ssl_port: 443
 
 # --- GitLab Redis Settigs --- #
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/redis.md#redis-settings
-# Connect to your own redis instance.
-gitlab_redis_host: 127.0.0.1
-gitlab_redis_port: nil
-gitlab_redis_socket: /var/opt/gitlab/redis/redis.socket
+## Connect to your own redis instance.
+# gitlab_redis_host: 127.0.0.1
+# gitlab_redis_port: nil
+# gitlab_redis_socket: /var/opt/gitlab/redis/redis.socket
 
 
 # --- GitLab email server settings --- #
-## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#changing-the-name-of-the-git-user-group
-## Modify default git user.
+## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings
+## Use smtp instead of sendmail/postfix.
+# gitlab_smtp_enable: True
+# gitlab_smtp_address: "smtp.server"
+# gitlab_smtp_port: 456
+# gitlab_smtp_user_name: "smtp user"
+# gitlab_smtp_password: "smtp password"
+# gitlab_smtp_domain: "example.com"
+# gitlab_smtp_authentication: "login"
+# gitlab_smtp_enable_starttls_auto: True
+# gitlab_smtp_tls: False
+# gitlab_smtp_openssl_verify_mode: False
 
 
 # --- GitLab user --- #

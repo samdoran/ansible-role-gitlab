@@ -91,12 +91,15 @@ gitlab_rails['omniauth_enabled'] = {{ gitlab_omniauth_enabled | lower }}
 gitlab_rails['omniauth_allow_single_sign_on'] = {{ gitlab_omniauth_allow_single_sign_on | lower }}
 gitlab_rails['omniauth_block_auto_created_users'] = {{ gitlab_omniauth_block_auto_created_users | lower }}
 gitlab_rails['omniauth_providers'] = [
+{% for provider in gitlab_omniauth_providers %}
   {
-    "name" => "{{ gitlab_omniauth_providers.name }}",
-    "app_id" => "{{ gitlab_omniauth_providers.app_id }}",
-    "app_secret" => "{{ gitlab_omniauth_providers.app_secret }}",
-    "args" => { "access_type" => "offline", "approval_prompt" => "" }
+    "name" => "{{ provider.name }}",
+    "app_id" => "{{ provider.app_id }}",
+    "app_secret" => "{{ provider.app_secret }}",
+    "args" => { {{ provider.args }} }
   }
+
+{% endfor %}
 ]
 {% endif -%}
 

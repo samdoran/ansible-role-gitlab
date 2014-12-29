@@ -37,10 +37,12 @@
   gitlab_dir is defined or
   gitlab_log_directory is defined
 %}
+
 ############################
 # gitlab.yml configuration #
 ############################
 {% endif %}
+
 {% if gitlab_ssh_host is defined %}gitlab_rails['gitlab_ssh_host'] = '{{ gitlab_ssh_host }}'
 {% endif %}
 {% if gitlab_time_zone is defined %}gitlab_rails['time_zone'] = '{{ gitlab_time_zone }}'

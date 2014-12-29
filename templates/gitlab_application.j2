@@ -1,0 +1,23 @@
+{% if
+    gitlab_upload_directory  is defined or
+    gitlab_rate_limit_requests_per_period  is defined or
+    gitlab_rate_limit_period  is defined or
+    gitlab_root_password is defined
+%}
+
+###############################
+# GitLab application settings #
+###############################
+{% endif %}
+
+{% if gitlab_upload_directory is defined %}gitlab_rails['uploads_directory'] = "{{ gitlab_upload_directory }}"
+{% endif %}
+{% if gitlab_rate_limit_requests_per_period is defined %}gitlab_rails['rate_limit_requests_per_period'] = {{ gitlab_rate_limit_requests_per_period }}
+{% endif %}
+{% if gitlab_rate_limit_period is defined %}gitlab_rails['rate_limit_period'] = {{ gitlab_rate_limit_period }}
+{% endif %}
+
+{% if gitlab_root_password is defined %}
+# Change the default admin password.
+gitlab_rails['root_password'] = "{{ gitlab_root_password }}"
+{% endif %}

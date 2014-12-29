@@ -144,10 +144,10 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab Application Settings --- #
-gitlab_upload_directory: /var/opt/gitlab/gitlab-rails/uploads
-gitlab_rate_limit_requests_per_period: 10
-gitlab_rate_limit_period: 60
-gitlab_root_password: ''
+# gitlab_upload_directory: /var/opt/gitlab/gitlab-rails/uploads
+# gitlab_rate_limit_requests_per_period: 10
+# gitlab_rate_limit_period: 60
+# gitlab_root_password: '5iveL!fe'
 
 
 # --- GitLab Database Settings --- #

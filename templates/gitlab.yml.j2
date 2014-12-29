@@ -103,21 +103,27 @@ gitlab_rails['omniauth_providers'] = [
 ]
 {% endif -%}
 
-{% if gitlab_backup_path is defined %}
+{% if
+  gitlab_backup_path is defined or
+  gitlab_backup_keep_time is defined or
+  gitlab_backup_upload_connection is defined
+%}
 ## For setting up backups
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#backups
 
-gitlab_rails['backup_path'] = "{{ gitlab_backup_path | default('/var/opt/gitlab/backups') }}"
-{% if gitlab_backup_keep_time is defined %}gitlab_rails['backup_keep_time'] = {{ gitlab_backup_keep_time | default('604800') }}{% endif %}
+{% if gitlab_backup_path is defined %}gitlab_rails['backup_path'] = "{{ gitlab_backup_path | default('/var/opt/gitlab/backups') }}"
+{% endif %}
+{% if gitlab_backup_keep_time is defined %}gitlab_rails['backup_keep_time'] = {{ gitlab_backup_keep_time | default('604800') }}
+{% endif %}
 {% if gitlab_backup_upload_connection is defined %}
 gitlab_rails['backup_upload_connection'] = {
-  'provider' => '{{ gitlab_backup_upload_connection.provider | default('AWS') }}',
-  'region' => '{{ gitlab_backup_upload_connection.region | default('eu-west-1') }}',
-  'aws_access_key_id' => 'AKIAKIAKI',
-  'aws_secret_access_key' => 'secret123'
+  'provider' => '{{ gitlab_backup_upload_connection.provider }}',
+  'region' => '{{ gitlab_backup_upload_connection.region }}',
+  'aws_access_key_id' => '{{ gitlab_backup_upload_connection.aws_access_key_id }}',
+  'aws_secret_access_key' => '{{ gitlab_backup_upload_connection.aws_secret_access_key }}'
 }
+gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_remote_directory }}'
 {% endif %}
-{% if gitlab_backup_upload_remote_directory is defined %}gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_remote_directory | default('my.s3.bucket') }}'{% endif %}
 {% endif %}
 
 {% if gitlab_git_data_dir is defined %}

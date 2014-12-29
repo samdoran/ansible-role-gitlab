@@ -66,19 +66,19 @@ gitlab_rails['webhook_timeout'] = {{ gitlab_webhook_timeout}}
 
 gitlab_rails['ldap_enabled'] = {{ gitlab_ldap_enabled | lower }}
 gitlab_rails['ldap_servers'] = YAML.load <<-EOS
-{% for key, value in gitlab_ldap_servers.items() recursive %}
-  {{ value.provider_id }}:
-    label: '{{ value.label }}'
-    host: '{{ value.host }}'
-    port: {{ value.port }}
-    uid: '{{ value.uid }}'
-    method: '{{ value.method }}'
-    bind_dn: '{{ value.bind_dn }}'
-    password: '{{ value.password }}'
-    active_directory: '{{ value.active_directory }}'
-    allow_username_or_email_login: '{{ value.allow_username_or_email_login }}'
-    base: '{{ value.base }}'
-    user_filter: '{{ value.user_filter }}'
+{% for server in gitlab_ldap_servers %}
+  {{ server.provider_id }}:
+    label: '{{ server.label }}'
+    host: '{{ server.host }}'
+    port: {{ server.port }}
+    uid: '{{ server.uid }}'
+    method: '{{ server.method }}'
+    bind_dn: '{{ server.bind_dn }}'
+    password: '{{ server.password }}'
+    active_directory: '{{ server.active_directory }}'
+    allow_username_or_email_login: '{{ server.allow_username_or_email_login }}'
+    base: '{{ server.base }}'
+    user_filter: '{{ server.user_filter }}'
 {% endfor %}
 EOS
 {% endif -%}

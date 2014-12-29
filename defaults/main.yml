@@ -61,7 +61,7 @@ gitlab_ssl_port: 443
 ## Each item in gitlab_ldap_servers is inserted into gitlab.rb
 ## Make sure to define all variablse for each server or template will fail.
 # gitlab_ldap_servers:
-#   gitlab_ldap_main:
+#   - name: gitlab_ldap_main
 #     provider_id: main
 #     label: 'LDAP'
 #     host: '_your_ldap_server'
@@ -75,7 +75,7 @@ gitlab_ssl_port: 443
 #     base: ''
 #     user_filter: ''
 
-#   gitlab_ldap_secondary:
+#   - name: gitlab_ldap_secondary
 #     provider_id: secondary
 #     label: 'LDAP2'
 #     host: '_your_ldap_server'

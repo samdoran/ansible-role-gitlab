@@ -1,6 +1,46 @@
+{% if
+  gitlab_ssh_host is defined or
+  gitlab_time_zone is defined or
+  gitlab_email_from is defined or
+  gitlab_default_projects_limit is defined or
+  gitlab_default_can_create_group is defined or
+  gitlab_username_changing_enabled is defined or
+  gitlab_default_theme is defined or
+  gitlab_signup_enabled is defined or
+  gitlab_signin_enabled is defined or
+  gitlab_restricted_visibility_levels is defined or
+  gitlab_default_projects_features_issues is defined or
+  gitlab_default_projects_features_merge_requests is defined or
+  gitlab_default_projects_features_wiki is defined or
+  gitlab_default_projects_features_snippets is defined or
+  gitlab_default_projects_features_visibility_level is defined or
+  gitlab_repository_downloads_path is defined or
+  gitlab_issues_tracker_redmine is defined or
+  gitlab_issues_tracker_jira is defined or
+  gitlab_gravatar_enabled is defined or
+  gitlab_ldap_enabled is defined or
+  gitlab_omniauth_enabled is defined or
+  gitlab_backup_path is defined or
+  gitlab_backup_keep_time is defined or
+  gitlab_backup_upload_connection is defined or
+  gitlab_backup_path is defined or
+  gitlab_backup_keep_time is defined or
+  gitlab_backup_upload_connection is defined or
+  gitlab_git_data_dir is defined or
+  gitlab_satellites_timeout is defined or
+  gitlab_shell_ssh_port is defined or
+  gitlab_extra_piwik_url is defined or
+  gitlab_extra_piwik_id is defined or
+  gitlab_extra_sign_in_text is defined or
+  gitlab_env is defined or
+  gitlab_extra_google_analytics_id is defined or
+  gitlab_dir is defined or
+  gitlab_log_directory is defined
+%}
 ############################
 # gitlab.yml configuration #
 ############################
+{% endif %}
 {% if gitlab_ssh_host is defined %}gitlab_rails['gitlab_ssh_host'] = '{{ gitlab_ssh_host }}'
 {% endif %}
 {% if gitlab_time_zone is defined %}gitlab_rails['time_zone'] = '{{ gitlab_time_zone }}'

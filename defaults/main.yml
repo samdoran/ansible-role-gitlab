@@ -31,28 +31,64 @@ gitlab_ssl_port: 443
 # gitlab_default_projects_features_visibility_level: private
 # gitlab_repository_downloads_path: tmp/repositories
 
-gitlab_issues_tracker_redmine: False
-gitlab_issues_tracker_redmine_title: Redmine
-gitlab_issues_tracker_redmine_project_url: "http://redmine.sample/projects/:issues_tracker_id"
-gitlab_issues_tracker_redmine_issues_url: "http://redmine.sample/issues/:id"
-gitlab_issues_tracker_redmine_new_issue_url: "http://redmine.sample/projects/:issues_tracker_id/issues/new"
+## If gitlab_issues_tracker_redmin is set to True, make sure to define
+## the remaining variables. Otherwise the template will fail.
+# gitlab_issues_tracker_redmine: False
+# gitlab_issues_tracker_redmine_title: Redmine
+# gitlab_issues_tracker_redmine_project_url: "http://redmine.sample/projects/:issues_tracker_id"
+# gitlab_issues_tracker_redmine_issues_url: "http://redmine.sample/issues/:id"
+# gitlab_issues_tracker_redmine_new_issue_url: "http://redmine.sample/projects/:issues_tracker_id/issues/new"
 
-gitlab_issues_tracker_jira: True
-gitlab_issues_tracker_jira_title: Atlassian Jira
-gitlab_issues_tracker_jira_project_url: "http://jira.sample/issues/?jql=project=:issues_tracker_id"
-gitlab_issues_tracker_jira_issues_url: "http://jira.sample/browse/:id"
-gitlab_issues_tracker_jira_new_issue_url: "http://jira.sample/secure/CreateIssue.jspa"
+## If gitlab_issues_tracker_jira is set to True, make sure to define
+## the remaining variables. Otherwise the template will fail.
+# gitlab_issues_tracker_jira: False
+# gitlab_issues_tracker_jira_title: Atlassian Jira
+# gitlab_issues_tracker_jira_project_url: "http://jira.sample/issues/?jql=project=:issues_tracker_id"
+# gitlab_issues_tracker_jira_issues_url: "http://jira.sample/browse/:id"
+# gitlab_issues_tracker_jira_new_issue_url: "http://jira.sample/secure/CreateIssue.jspa"
 
+## If gitlab_gravatar_ssl_url is defined, gitlab_gravator_plain_url will be ignored.
 # gitlab_gravatar_enabled: True
-# gitlab_gravatar_plain_url:
-# gitlab_gravatar_ssl_url:
-# gitlab_webhook_timeout:
+# gitlab_gravatar_plain_url: "http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
+# gitlab_gravatar_ssl_url: "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
+# gitlab_webhook_timeout: 10
 
 ## LDAP sign-in
 # These settings are documented in more detail at
 # https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#setting-up-ldap-sign-in
 
-# gitlab_ldap_enabled: False
+# gitlab_ldap_enabled: True
+## Each item in gitlab_ldap_servers is inserted into gitlab.rb
+## Make sure to define all variablse for each server or template will fail.
+# gitlab_ldap_servers:
+#   gitlab_ldap_main:
+#     provider_id: main
+#     label: 'LDAP'
+#     host: '_your_ldap_server'
+#     port: 636
+#     uid: 'sAMAccountName'
+#     method: 'ssl'
+#     bind_dn: '_the_full_dn_of_the_user_you_will_bind_with'
+#     password: '_the_password_of_the_bind_user'
+#     active_directory: True
+#     allow_username_or_email_login: False
+#     base: ''
+#     user_filter: ''
+
+#   gitlab_ldap_secondary:
+#     provider_id: secondary
+#     label: 'LDAP2'
+#     host: '_your_ldap_server'
+#     port: 636
+#     uid: 'sAMAccountName'
+#     method: 'ssl'
+#     bind_dn: '_the_full_dn_of_the_user_you_will_bind_with'
+#     password: '_the_password_of_the_bind_user'
+#     active_directory: True
+#     allow_username_or_email_login: False
+#     base: ''
+#     user_filter: ''
+
 # gitlab_ldap_label: LDAP
 # gitlab_ldap_host: _your_ldap_server
 # gitlab_ldap_port: 636

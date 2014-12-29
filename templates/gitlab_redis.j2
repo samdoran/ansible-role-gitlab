@@ -1,0 +1,17 @@
+{% if
+    gitlab_redis_host is defined or
+    gitlab_redis_port is defined or
+    gitlab_redis_socket is defined
+%}
+
+#########################
+# GitLab redis settings #
+#########################
+{% endif %}
+
+{% if gitlab_redis_host is defined %}gitlab_redis_host: "{{ gitlab_redis_host }}"
+{% endif %}
+{% if gitlab_redis_port is defined %}gitlab_redis_port: {{ gitlab_redis_port }}
+{% endif %}
+{% if gitlab_redis_socket is defined %}gitlab_redis_socket: "{{ gitlab_redis_socket }}"
+{% endif %}

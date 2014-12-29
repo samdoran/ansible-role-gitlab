@@ -103,7 +103,7 @@ gitlab_rails['omniauth_providers'] = [
 ]
 {% endif -%}
 
-{% if
+{%- if
   gitlab_backup_path is defined or
   gitlab_backup_keep_time is defined or
   gitlab_backup_upload_connection is defined
@@ -126,14 +126,15 @@ gitlab_rails['backup_upload_remote_directory'] = '{{ gitlab_backup_upload_remote
 {% endif %}
 {% endif %}
 
-{% if gitlab_git_data_dir is defined %}
+{%- if gitlab_git_data_dir is defined %}
 ## For setting up different data storing directory
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#storing-git-data-in-an-alternative-directory
 ## If you want to use a single non-default directory to store git data use:
 git_data_dir "{{ gitlab_git_data_dir }}"
 {% endif %}
 
-{%- if gitlab_satellites_timeout is defined %}gitlab_rails['satellites_timeout'] = {{ gitlab_satellites_timeout | default('30') }}{% endif %}
+{%- if gitlab_satellites_timeout is defined %}gitlab_rails['satellites_timeout'] = {{ gitlab_satellites_timeout | default('30') }}
+{% endif %}
 
 {%- if
   gitlab_shell_ssh_port is defined or
@@ -141,12 +142,15 @@ git_data_dir "{{ gitlab_git_data_dir }}"
   gitlab_git_timeout is defined
 %}
 ## GitLab Shell settings for GitLab
-{% endif -%}
-{% if gitlab_shell_ssh_port is defined %} gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_shell_ssh_port | default('22') }}{% endif %}
-{% if gitlab_git_max_size is defined %} gitlab_rails['git_max_size'] = {{ gitlab_git_max_sizet | default('20971520') }}{% endif %}
-{% if gitlab_git_timeout is defined %} gitlab_rails['git_timeout'] = {{ gitlab_git_timeout | default('10') }}{% endif %}
+{% if gitlab_shell_ssh_port is defined %}gitlab_rails['gitlab_shell_ssh_port'] = {{ gitlab_shell_ssh_port }}
+{% endif %}
+{% if gitlab_git_max_size is defined %}gitlab_rails['git_max_size'] = {{ gitlab_git_max_size }}
+{% endif %}
+{% if gitlab_git_timeout is defined %}gitlab_rails['git_timeout'] = {{ gitlab_git_timeout }}
+{% endif %}
+{% endif %}
 
-{% if
+{%- if
   gitlab_extra_google_analytics_id is defined or
   gitlab_extra_piwik_url is defined or
   gitlab_extra_piwik_id is defined or
@@ -154,7 +158,6 @@ git_data_dir "{{ gitlab_git_data_dir }}"
   gitlab_env is defined
 %}
 ## Extra customization
-{% endif -%}
 {% if gitlab_extra_google_analytics_id is defined %}gitlab_rails['extra_google_analytics_id'] = '{{ gitlab_extra_google_analytics_id }}'
 {% endif %}
 {% if gitlab_extra_piwik_url is defined %}gitlab_rails['extra_piwik_url'] = '{{ gitlab_extra_piwik_url }}'
@@ -165,18 +168,26 @@ git_data_dir "{{ gitlab_git_data_dir }}"
     ![Company Logo]({{ gitlab_extra_sign_in_text.company_logo_url }})
     [Learn more about {{ gitlab_extra_sign_in_text.company_name }}]({{ gitlab_extra_sign_in_text.company_url }})'
 {% endif %}
+{% endif %}
 
-{% if gitlab_env is defined %}
+{%- if gitlab_env is defined %}
 gitlab_rails['env'] =
   {% if gitlab_env.bundle_gemfile is defined %}
-  'BUNDLE_GEMFILE' => "{{ gitlab_env.bundle_gemfile | default('/opt/gitlab/embedded/service/gitlab-rails/Gemfile') }}",
+  'BUNDLE_GEMFILE' => "{{ gitlab_env.bundle_gemfile }}",
   {% endif %}
   {% if gitlab_env.path is defined -%}
-  'PATH' => "{{ gitlab_env.path | default('/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin') }}"
+  'PATH' => "{{ gitlab_env.path }}"
   {% endif %}
 }
 {% endif %}
 
-{% if gitlab_dir is defined or gitlab_log_directory is defined %}# We do not recommend changing these directories.{% endif %}
-{% if gitlab_dir is defined %} gitlab_rails['dir'] = "{{ gitlab_dir | default('/var/opt/gitlab/gitlab-rails') }}"{% endif %}
-{% if gitlab_log_directory is defined %} gitlab_rails['log_directory'] = "{{ gitlab_log_directory | default('/var/log/gitlab/gitlab-rails') }}"{% endif %}
+{%- if
+  gitlab_dir is defined or
+  gitlab_log_directory is defined
+%}
+# We do not recommend changing these directories.
+{% if gitlab_dir is defined %}gitlab_rails['dir'] = "{{ gitlab_dir }}"
+{% endif %}
+{% if gitlab_log_directory is defined %}gitlab_rails['log_directory'] = "{{ gitlab_log_directory }}"
+{% endif %}
+{% endif %}

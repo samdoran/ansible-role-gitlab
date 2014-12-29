@@ -118,20 +118,29 @@ gitlab_ssl_port: 443
 ## If you want to use a single non-default directory to store git data use:
 # gitlab_git_data_dir: /var/opt/gitlab/git-data
 
+# gitlab_satellites_timeout: 30
+
 ## GitLab Shell settings for GitLab
+# gitlab_shell_ssh_port: 22
+# gitlab_git_max_size: 20971520
+# gitlab_git_timeout: 10
 
 ## Extra customization
-gitlab_extra_google_analytics_id: '_your_tracking_id'
-gitlab_extra_piwik_url: '_your_piwik_url'
-gitlab_extra_piwik_id: '_your_piwik_site_id'
-gitlab_extra_sign_in_text:
-  company_name: CompanyName
-  company_url: http://www.companydomain.com/
-  company_logo_url: http://www.companydomain.com/logo.png
+# gitlab_extra_google_analytics_id: '_your_tracking_id'
+# gitlab_extra_piwik_url: '_your_piwik_url'
+# gitlab_extra_piwik_id: '_your_piwik_site_id'
+# gitlab_extra_sign_in_text:
+#   company_name: CompanyName
+#   company_url: http://www.companydomain.com/
+#   company_logo_url: http://www.companydomain.com/logo.png
 
-gitlab_env:
-  bundle_gemfile: "/opt/gitlab/embedded/service/gitlab-rails/Gemfile"
-  path: "/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin"
+# gitlab_env:
+#   bundle_gemfile: "/opt/gitlab/embedded/service/gitlab-rails/Gemfile"
+#   path: "/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin"
+
+## It is not recommended to change these directories
+# gitlab_dir: "/var/opt/gitlab/gitlab-rails"
+# gitlab_log_directory: "/var/log/gitlab/gitlab-rails"
 
 
 # --- GitLab Application Settings --- #

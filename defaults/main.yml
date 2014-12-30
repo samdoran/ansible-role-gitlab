@@ -4,8 +4,6 @@ gitlab_version: 7.6.1_omnibus.5.3.0.ci-1
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10
 
-# FIXME
-# Write variable translation table
 # Basic GitLab settings for configuring SSL
 # More options are available in the GitLab Nginx section
 gitlab_nginx_ssl_enabled: False

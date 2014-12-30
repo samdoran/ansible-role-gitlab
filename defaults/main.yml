@@ -475,9 +475,24 @@ gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 
 
 
-# --- GitLaB CI Redis Settings --- #
+# --- GitLab CI Redis Settings --- #
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/redis.md#redis-settings
 ## Connect to your own redis instance.
 # gitlab_ci_redis_host: "127.0.0.1"
 # gitlab_ci_redis_port: nil
 # gitlab_ci_redis_socket: "/var/opt/gitlab/ci-redis/redis.socket"
+
+
+
+# --- GitLab CI Email Server Settings --- #
+## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings
+# gitlab_ci_smtp_enable: True
+# gitlab_ci_smtp_address: "smtp.server"
+# gitlab_ci_smtp_port: 456
+# gitlab_ci_smtp_user_name: "smtp user"
+# gitlab_ci_smtp_password: "smtp password"
+# gitlab_ci_smtp_domain: "{{ ansible_domain }}"
+# gitlab_ci_smtp_authentication: "login"
+# gitlab_ci_smtp_enable_starttls_auto: True
+# gitlab_ci_smtp_tls: False
+# gitlab_ci_smtp_openssl_verify_mode: False

@@ -231,6 +231,41 @@ gitlab_ssl_port: 443
 
 
 
+# --- GitLab PostgreSQL --- #
+# postgresql_enable: true
+# postgresql_listen_address: nil
+# postgresql_port: 5432
+# postgresql_data_dir: "/var/opt/gitlab/postgresql/data"
+
+## Recommend value is 1/4 of total RAM, up to 14GB. Default is 256MB.
+# postgresql_shared_buffers: "{{ ansible_memtotal_mb // 4 }}MB"
+
+## Advanced settings
+# postgresql_ha: False
+# postgresql_dir: "/var/opt/gitlab/postgresql"
+# postgresql_log_directory: "/var/log/gitlab/postgresql"
+# postgresql_username: "gitlab-psql"
+# postgresql_uid: nil
+# postgresql_gid: nil
+# postgresql_shell: "/bin/sh"
+# postgresql_home: "/var/opt/gitlab/postgresql"
+# postgresql_user_path: "/opt/gitlab/embedded/bin:/opt/gitlab/bin:$PATH"
+# postgresql_sql_user: "gitlab"
+# postgresql_sql_ci_user: "gitlab_ci"
+# postgresql_max_connections: 200
+# postgresql_md5_auth_cidr_addresses: []
+# postgresql_trust_auth_cidr_addresses: []
+# postgresql_shmmax: 17179869184
+# postgresql_shmall: 4194304
+# postgresql_work_mem: "8MB"
+# postgresql_effective_cache_size: "1MB"
+# postgresql_checkpoint_segments: 10
+# postgresql_checkpoint_timeout: "5min"
+# postgresql_checkpoint_completion_target: 0.9
+# postgresql_checkpoint_warning: "30s"
+
+
+
 
 
 # GitLab CI Configuration

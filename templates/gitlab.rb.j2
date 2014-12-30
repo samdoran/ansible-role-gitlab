@@ -18,6 +18,7 @@ nginx['redirect_http_to_https'] = false
 {% include 'gitlab_unicorn.j2' %}
 {% include 'gitlab_sidekiq.j2' %}
 {% include 'gitlab_shell.j2' %}
+{% include 'gitlab_postgresql.j2' %}
 
 {%- if gitlab_ci_enabled %}
 {% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}

@@ -6,7 +6,7 @@ gitlab_days_old_backups: 10
 
 # FIXME
 # Write variable translation table
-# Basic settings for configuring SSL
+# Basic GitLab settings for configuring SSL
 # More options are available in the GitLab Nginx section
 gitlab_nginx_ssl_enabled: False
 gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs
@@ -17,10 +17,12 @@ gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitla
 gitlab_nginx_ssl_port: 443
 
 
-# GitLab CI Configuration
+# Basic GitLab CI Configuration
 gitlab_ci_enabled: False
 gitlab_ci_fqdn: ci.{{ ansible_domain }}
+gitlab_ci_ssl_enabled: False
 gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
+gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 
 # These are examples of storing a block varible in YAML using the "|" character
 # to indicate a literal style, preserving line breaks.
@@ -454,3 +456,19 @@ gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
 ## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logrotate
 ## You can disable built in logrotate feature.
 # gitlab_logrotate_enabled: True
+
+
+
+# --- GitLab CI application.yml configuration --- #
+# gitlab_ci_gitlab_server_urls:
+#   - "http://gitlab.example.com"
+#   - "http://gitlab2.example.com"
+
+# gitlab_ci_email_from: "gitlab-ci@{{ ansible_fqdn }}"
+# gitlab_ci_support_email: "gitlab-ci@{{ ansible_fqdn }}"
+# gitlab_ci_all_broken_builds: True
+# gitlab_ci_add_committer: True
+
+# gitlab_ci_gravatar_enabled: True
+# gitlab_ci_gravatar_plain_url: "http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=mm"
+# gitlab_ci_gravatar_ssl_url:  "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=mm"

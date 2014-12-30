@@ -23,7 +23,7 @@ external_url "http://{{ ansible_fqdn }}"
 
 
 # --- GitLab CI Configuration --- #
-{% if gitlab_ci_ssl_key is defined or gitlab_ci_ssl_enabled == True %}
+{% if gitlab_ci_nginx_ssl_key is defined or gitlab_ci_nginx_ssl_enabled == True %}
 ci_external_url "https://{{ gitlab_ci_fqdn }}{% if gitlab_ci_nginx_ssl_port != "443" %}:{{ gitlab_ci_nginx_ssl_port }}{% endif %}"
 {% else %}
 ci_external_url "http://{{ gitlab_ci_fqdn }}"

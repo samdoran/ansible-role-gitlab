@@ -38,7 +38,7 @@
 {% endif %}
 {% if gitlab_ci_nginx_client_max_body_size is defined %}ci_nginx['client_max_body_size'] = '{{ gitlab_ci_nginx_client_max_body_size }}'
 {% endif %}
-{% if gitlab_ci_ssl_key is defined or gitlab_ci_nginx_ssl_enabled == True %}
+{% if gitlab_ci_nginx_ssl_key is defined or gitlab_ci_nginx_ssl_enabled == True %}
 {% if gitlab_ci_nginx_redirect_http_to_https is defined %}ci_nginx['redirect_http_to_https'] = {{ gitlab_ci_nginx_redirect_http_to_https | lower }}
 {% endif %}
 {% if gitlab_ci_nginx_redirect_http_to_https_port is defined %}ci_nginx['redirect_http_to_https_port'] = {{ gitlab_ci_nginx_redirect_http_to_https_port }}

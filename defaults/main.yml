@@ -44,12 +44,12 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 #   # private cert goes here
 #   -----END RSA PRIVATE KEY-----
 #
-# gitlab_ci_ssl_crt: |
+# gitlab_ci_nginx_ssl_crt: |
 #   -----BEGIN CERTIFICATE-----
 #   # public cert goes here
 #   -----END CERTIFICATE-----
 
-# gitlab_ci_ssl_key: |
+# gitlab_ci_nginx_ssl_key: |
 #   -----BEGIN RSA PRIVATE KEY-----
 #   # private cert goes here
 #   -----END RSA PRIVATE KEY-----
@@ -349,6 +349,7 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_nginx_enable: True
 # gitlab_nginx_client_max_body_size: '250m'
 # gitlab_nginx_ssl_enabled: False
+# gitlab_nginx_redirect_http_to_https: False
 # gitlab_nginx_redirect_http_to_https_port: 80
 # gitlab_nginx_ssl_ciphers:
 #   - ECDHE-RSA-AES256-GCM-SHA384
@@ -539,6 +540,7 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_ci_nginx_enabled: True
 # gitlab_ci_nginx_client_max_body_size: '250m'
 # gitlab_ci_nginx_ssl_enabled: False
+# gitlab_ci_nginx_redirect_http_to_https: False
 # gitlab_ci_nginx_redirect_http_to_https_port: 80
 # gitlab_ci_nginx_ssl_ciphers:
 #   - ECDHE-RSA-AES256-GCM-SHA384

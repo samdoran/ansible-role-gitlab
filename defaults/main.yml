@@ -496,3 +496,16 @@ gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_ci_smtp_enable_starttls_auto: True
 # gitlab_ci_smtp_tls: False
 # gitlab_ci_smtp_openssl_verify_mode: False
+
+
+
+# --- GitLab CI --- #
+# gitlab_ci_schedule_builds_minute: "0"
+
+# gitlab_ci_env:
+#   bundle_gemfile: "/opt/gitlab/embedded/service/gitlab-ci/Gemfile"
+#   path: "/opt/gitlab/bin:/opt/gitlab/embedded/bin:/bin:/usr/bin"
+
+# gitlab_ci_username: "gitlab-ci"
+# gitlab_ci_uid: nil
+# gitlab_ci_gid: nil

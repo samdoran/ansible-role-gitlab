@@ -218,8 +218,8 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab Sidekiq --- #
-gitlab_sidekiq_log_directory: "/var/log/gitlab/sidekiq"
-gitlab_sidekiq_shutdown_timeout: 4
+# gitlab_sidekiq_log_directory: "/var/log/gitlab/sidekiq"
+# gitlab_sidekiq_shutdown_timeout: 4
 
 
 

@@ -280,7 +280,19 @@ gitlab_ssl_port: 443
 
 
 
+# --- GitLab Web Server --- #
+## see: https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/doc/settings/nginx.md#using-a-non-bundled-web-server
+## When bundled nginx is disabled we need to add the external webserver user to the GitLab webserver group.
 
+# List of users is inserted into an array in gitlab.rb
+# gitlab_web_server_external_users:
+#   - jean
+#   - logan
+#   - scott
+# gitlab_web_server_username: 'gitlab-www'
+# gitlab_web_server_group: 'gitlab-www'
+# gitlab_web_server_uid: nil
+# gitlab_web_server_gid: nil
 
 
 

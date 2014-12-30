@@ -232,37 +232,58 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab PostgreSQL --- #
-# postgresql_enable: true
-# postgresql_listen_address: nil
-# postgresql_port: 5432
-# postgresql_data_dir: "/var/opt/gitlab/postgresql/data"
+# gitlab_postgresql_enable: true
+# gitlab_postgresql_listen_address: nil
+# gitlab_postgresql_port: 5432
+# gitlab_postgresql_data_dir: "/var/opt/gitlab/postgresql/data"
 
 ## Recommend value is 1/4 of total RAM, up to 14GB. Default is 256MB.
-# postgresql_shared_buffers: "{{ ansible_memtotal_mb // 4 }}MB"
+# gitlab_postgresql_shared_buffers: "{{ ansible_memtotal_mb // 4 }}MB"
 
 ## Advanced settings
-# postgresql_ha: False
-# postgresql_dir: "/var/opt/gitlab/postgresql"
-# postgresql_log_directory: "/var/log/gitlab/postgresql"
-# postgresql_username: "gitlab-psql"
-# postgresql_uid: nil
-# postgresql_gid: nil
-# postgresql_shell: "/bin/sh"
-# postgresql_home: "/var/opt/gitlab/postgresql"
-# postgresql_user_path: "/opt/gitlab/embedded/bin:/opt/gitlab/bin:$PATH"
-# postgresql_sql_user: "gitlab"
-# postgresql_sql_ci_user: "gitlab_ci"
-# postgresql_max_connections: 200
-# postgresql_md5_auth_cidr_addresses: []
-# postgresql_trust_auth_cidr_addresses: []
-# postgresql_shmmax: 17179869184
-# postgresql_shmall: 4194304
-# postgresql_work_mem: "8MB"
-# postgresql_effective_cache_size: "1MB"
-# postgresql_checkpoint_segments: 10
-# postgresql_checkpoint_timeout: "5min"
-# postgresql_checkpoint_completion_target: 0.9
-# postgresql_checkpoint_warning: "30s"
+# gitlab_postgresql_ha: False
+# gitlab_postgresql_dir: "/var/opt/gitlab/postgresql"
+# gitlab_postgresql_log_directory: "/var/log/gitlab/postgresql"
+# gitlab_postgresql_username: "gitlab-psql"
+# gitlab_postgresql_uid: nil
+# gitlab_postgresql_gid: nil
+# gitlab_postgresql_shell: "/bin/sh"
+# gitlab_postgresql_home: "/var/opt/gitlab/postgresql"
+# gitlab_postgresql_user_path: "/opt/gitlab/embedded/bin:/opt/gitlab/bin:$PATH"
+# gitlab_postgresql_sql_user: "gitlab"
+# gitlab_postgresql_sql_ci_user: "gitlab_ci"
+# gitlab_postgresql_max_connections: 200
+# gitlab_postgresql_md5_auth_cidr_addresses: []
+# gitlab_postgresql_trust_auth_cidr_addresses: []
+# gitlab_postgresql_shmmax: 17179869184
+# gitlab_postgresql_shmall: 4194304
+# gitlab_postgresql_work_mem: "8MB"
+# gitlab_postgresql_effective_cache_size: "1MB"
+# gitlab_postgresql_checkpoint_segments: 10
+# gitlab_postgresql_checkpoint_timeout: "5min"
+# gitlab_postgresql_checkpoint_completion_target: 0.9
+# gitlab_postgresql_checkpoint_warning: "30s"
+
+
+
+# --- GitLab Redis --- #
+## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/redis.md#redis-settings
+## Connect to your own redis instance.
+
+# gitlab_redis_host: 127.0.0.1
+# gitlab_redis_port: nil
+# gitlab_redis_socket: /var/opt/gitlab/redis/redis.socket
+# gitlab_redis_enable: True
+# gitlab_redis_username: gitlab-redis
+# gitlab_redis_uid: nil
+# gitlab_redis_gid: nil
+
+
+
+
+
+
+
 
 
 

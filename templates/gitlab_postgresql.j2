@@ -1,31 +1,31 @@
 {% if
-    postgresql_enable is defined or
-    postgresql_listen_address is defined or
-    postgresql_port is defined or
-    postgresql_data_dir is defined or
-    postgresql_shared_buffers is defined or
-    postgresql_ha is defined or
-    postgresql_dir is defined or
-    postgresql_log_directory is defined or
-    postgresql_username is defined or
-    postgresql_uid is defined or
-    postgresql_gid is defined or
-    postgresql_shell is defined or
-    postgresql_home is defined or
-    postgresql_user_path is defined or
-    postgresql_sql_user is defined or
-    postgresql_sql_ci_user is defined or
-    postgresql_max_connections is defined or
-    postgresql_md5_auth_cidr_addresses is defined or
-    postgresql_trust_auth_cidr_addresses is defined or
-    postgresql_shmmax is defined or
-    postgresql_shmall is defined or
-    postgresql_work_mem is defined or
-    postgresql_effective_cache_size is defined or
-    postgresql_checkpoint_segments is defined or
-    postgresql_checkpoint_timeout is defined or
-    postgresql_checkpoint_completion_target is defined or
-    postgresql_checkpoint_warning is defined
+    gitlab_postgresql_enable is defined or
+    gitlab_postgresql_listen_address is defined or
+    gitlab_postgresql_port is defined or
+    gitlab_postgresql_data_dir is defined or
+    gitlab_postgresql_shared_buffers is defined or
+    gitlab_postgresql_ha is defined or
+    gitlab_postgresql_dir is defined or
+    gitlab_postgresql_log_directory is defined or
+    gitlab_postgresql_username is defined or
+    gitlab_postgresql_uid is defined or
+    gitlab_postgresql_gid is defined or
+    gitlab_postgresql_shell is defined or
+    gitlab_postgresql_home is defined or
+    gitlab_postgresql_user_path is defined or
+    gitlab_postgresql_sql_user is defined or
+    gitlab_postgresql_sql_ci_user is defined or
+    gitlab_postgresql_max_connections is defined or
+    gitlab_postgresql_md5_auth_cidr_addresses is defined or
+    gitlab_postgresql_trust_auth_cidr_addresses is defined or
+    gitlab_postgresql_shmmax is defined or
+    gitlab_postgresql_shmall is defined or
+    gitlab_postgresql_work_mem is defined or
+    gitlab_postgresql_effective_cache_size is defined or
+    gitlab_postgresql_checkpoint_segments is defined or
+    gitlab_postgresql_checkpoint_timeout is defined or
+    gitlab_postgresql_checkpoint_completion_target is defined or
+    gitlab_postgresql_checkpoint_warning is defined
 %}
 
 #####################
@@ -33,57 +33,57 @@
 #####################
 
 {% endif %}
-{% if postgresql_enable is defined %}postgresql['enable'] = {{ postgresql_enable | lower }}
+{% if gitlab_postgresql_enable is defined %}postgresql['enable'] = {{ gitlab_postgresql_enable | lower }}
 {% endif %}
-{% if postgresql_listen_address is defined %}postgresql['listen_address'] = {{ postgresql_listen_address }}
+{% if gitlab_postgresql_listen_address is defined %}postgresql['listen_address'] = {{ gitlab_postgresql_listen_address }}
 {% endif %}
-{% if postgresql_port is defined %}postgresql['port'] = {{ postgresql_port }}
+{% if gitlab_postgresql_port is defined %}postgresql['port'] = {{ gitlab_postgresql_port }}
 {% endif %}
-{% if postgresql_data_dir is defined %}postgresql['data_dir'] = "{{ postgresql_data_dir }}"
+{% if gitlab_postgresql_data_dir is defined %}postgresql['data_dir'] = "{{ gitlab_postgresql_data_dir }}"
 {% endif %}
-{% if postgresql_shared_buffers is defined %}postgresql['shared_buffers'] = "{{ postgresql_shared_buffers }}"
+{% if gitlab_postgresql_shared_buffers is defined %}postgresql['shared_buffers'] = "{{ gitlab_postgresql_shared_buffers }}"
 {% endif %}
-{% if postgresql_ha is defined %}postgresql['ha'] = {{ postgresql_ha | lower }}
+{% if gitlab_postgresql_ha is defined %}postgresql['ha'] = {{ gitlab_postgresql_ha | lower }}
 {% endif %}
-{% if postgresql_dir is defined %}postgresql['dir'] = "{{ postgresql_dir }}"
+{% if gitlab_postgresql_dir is defined %}postgresql['dir'] = "{{ gitlab_postgresql_dir }}"
 {% endif %}
-{% if postgresql_log_directory is defined %}postgresql['log_directory'] = "{{ postgresql_log_directory }}"
+{% if gitlab_postgresql_log_directory is defined %}postgresql['log_directory'] = "{{ gitlab_postgresql_log_directory }}"
 {% endif %}
-{% if postgresql_username is defined %}postgresql['username'] = "{{ postgresql_username }}"
+{% if gitlab_postgresql_username is defined %}postgresql['username'] = "{{ gitlab_postgresql_username }}"
 {% endif %}
-{% if postgresql_uid is defined %}postgresql['uid'] = {{ postgresql_uid }}
+{% if gitlab_postgresql_uid is defined %}postgresql['uid'] = {{ gitlab_postgresql_uid }}
 {% endif %}
-{% if postgresql_gid is defined %}postgresql['gid'] = {{ postgresql_gid }}
+{% if gitlab_postgresql_gid is defined %}postgresql['gid'] = {{ gitlab_postgresql_gid }}
 {% endif %}
-{% if postgresql_shell is defined %}postgresql['shell'] = "{{ postgresql_shell }}"
+{% if gitlab_postgresql_shell is defined %}postgresql['shell'] = "{{ gitlab_postgresql_shell }}"
 {% endif %}
-{% if postgresql_home is defined %}postgresql['home'] = "{{ postgresql_home }}"
+{% if gitlab_postgresql_home is defined %}postgresql['home'] = "{{ gitlab_postgresql_home }}"
 {% endif %}
-{% if postgresql_user_path is defined %}postgresql['user_path'] = "{{ postgresql_user_path }}"
+{% if gitlab_postgresql_user_path is defined %}postgresql['user_path'] = "{{ gitlab_postgresql_user_path }}"
 {% endif %}
-{% if postgresql_sql_user is defined %}postgresql['sql_user'] = "{{ postgresql_sql_user }}"
+{% if gitlab_postgresql_sql_user is defined %}postgresql['sql_user'] = "{{ gitlab_postgresql_sql_user }}"
 {% endif %}
-{% if postgresql_sql_ci_user is defined %}postgresql['sql_ci_user'] = "{{ postgresql_sql_ci_user }}"
+{% if gitlab_postgresql_sql_ci_user is defined %}postgresql['sql_ci_user'] = "{{ gitlab_postgresql_sql_ci_user }}"
 {% endif %}
-{% if postgresql_max_connections is defined %}postgresql['max_connections'] = {{ postgresql_max_connections }}
+{% if gitlab_postgresql_max_connections is defined %}postgresql['max_connections'] = {{ gitlab_postgresql_max_connections }}
 {% endif %}
-{% if postgresql_md5_auth_cidr_addresses is defined %}postgresql['md5_auth_cidr_addresses'] = {{ postgresql_md5_auth_cidr_addresses }}
+{% if gitlab_postgresql_md5_auth_cidr_addresses is defined %}postgresql['md5_auth_cidr_addresses'] = {{ gitlab_postgresql_md5_auth_cidr_addresses }}
 {% endif %}
-{% if postgresql_trust_auth_cidr_addresses is defined %}postgresql['trust_auth_cidr_addresses'] = {{ postgresql_trust_auth_cidr_addresses }}
+{% if gitlab_postgresql_trust_auth_cidr_addresses is defined %}postgresql['trust_auth_cidr_addresses'] = {{ gitlab_postgresql_trust_auth_cidr_addresses }}
 {% endif %}
-{% if postgresql_shmmax is defined %}postgresql['shmmax'] = {{ postgresql_shmmax }}
+{% if gitlab_postgresql_shmmax is defined %}postgresql['shmmax'] = {{ gitlab_postgresql_shmmax }}
 {% endif %}
-{% if postgresql_shmall is defined %}postgresql['shmall'] = {{ postgresql_shmall }}
+{% if gitlab_postgresql_shmall is defined %}postgresql['shmall'] = {{ gitlab_postgresql_shmall }}
 {% endif %}
-{% if postgresql_work_mem is defined %}postgresql['work_mem'] = "{{ postgresql_work_mem }}"
+{% if gitlab_postgresql_work_mem is defined %}postgresql['work_mem'] = "{{ gitlab_postgresql_work_mem }}"
 {% endif %}
-{% if postgresql_effective_cache_size is defined %}postgresql['effective_cache_size'] = "{{ postgresql_effective_cache_size }}"
+{% if gitlab_postgresql_effective_cache_size is defined %}postgresql['effective_cache_size'] = "{{ gitlab_postgresql_effective_cache_size }}"
 {% endif %}
-{% if postgresql_checkpoint_segments is defined %}postgresql['checkpoint_segments'] = {{ postgresql_checkpoint_segments }}
+{% if gitlab_postgresql_checkpoint_segments is defined %}postgresql['checkpoint_segments'] = {{ gitlab_postgresql_checkpoint_segments }}
 {% endif %}
-{% if postgresql_checkpoint_timeout is defined %}postgresql['checkpoint_timeout'] = "{{ postgresql_checkpoint_timeout }}"
+{% if gitlab_postgresql_checkpoint_timeout is defined %}postgresql['checkpoint_timeout'] = "{{ gitlab_postgresql_checkpoint_timeout }}"
 {% endif %}
-{% if postgresql_checkpoint_completion_target is defined %}postgresql['checkpoint_completion_target'] = {{ postgresql_checkpoint_completion_target }}
+{% if gitlab_postgresql_checkpoint_completion_target is defined %}postgresql['checkpoint_completion_target'] = {{ gitlab_postgresql_checkpoint_completion_target }}
 {% endif %}
-{% if postgresql_checkpoint_warning is defined %}postgresql['checkpoint_warning'] = "{{ postgresql_checkpoint_warning }}"
+{% if gitlab_postgresql_checkpoint_warning is defined %}postgresql['checkpoint_warning'] = "{{ gitlab_postgresql_checkpoint_warning }}"
 {% endif %}

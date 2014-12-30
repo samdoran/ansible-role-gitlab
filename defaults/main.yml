@@ -13,16 +13,20 @@ gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs
 gitlab_nginx_ssl_key_path: /etc/pki/tls/private
 gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
 gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
-gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
+gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
 gitlab_nginx_ssl_port: 443
 
 
 # Basic GitLab CI Configuration
 gitlab_ci_enabled: False
 gitlab_ci_fqdn: ci.{{ ansible_domain }}
-gitlab_ci_ssl_enabled: False
-gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
-gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
+gitlab_ci_nginx_ssl_enabled: False
+gitlab_ci_nginx_ssl_cert_path: "{{ gitlab_nginx_ssl_cert_path }}"
+gitlab_ci_nginx_ssl_key_path: "{{ gitlab_nginx_ssl_key_path }}"
+gitlab_ci_nginx_ssl_filename: "{{ gitlab_ci_fqdn }}"
+gitlab_ci_nginx_ssl_certificate_path: "{{ gitlab_ci_nginx_ssl_cert_path }}/{{ gitlab_ci_nginx_ssl_filename }}.crt"
+gitlab_ci_nginx_ssl_certificate_key_path: "{{ gitlab_ci_nginx_ssl_key_path }}/{{ gitlab_ci_nginx_ssl_filename }}.key"
+gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 
 # These are examples of storing a block varible in YAML using the "|" character
 # to indicate a literal style, preserving line breaks.
@@ -533,3 +537,71 @@ gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 ## You can tell the bundled NGINX that it should not serve up GitLab CI by setting ci_nginx['enable'] to false.
 
 # gitlab_ci_nginx_enabled: True
+# gitlab_ci_nginx_client_max_body_size: '250m'
+# gitlab_ci_nginx_ssl_enabled: False
+# gitlab_ci_nginx_redirect_http_to_https_port: 80
+# gitlab_ci_nginx_ssl_ciphers:
+#   - ECDHE-RSA-AES256-GCM-SHA384
+#   - ECDHE-RSA-AES128-GCM-SHA256
+#   - DHE-RSA-AES256-GCM-SHA384
+#   - DHE-RSA-AES128-GCM-SHA256
+#   - ECDHE-RSA-AES256-SHA384
+#   - ECDHE-RSA-AES128-SHA256
+#   - ECDHE-RSA-AES256-SHA
+#   - ECDHE-RSA-AES128-SHA
+#   - DHE-RSA-AES256-SHA256
+#   - DHE-RSA-AES128-SHA256
+#   - DHE-RSA-AES256-SHA
+#   - DHE-RSA-AES128-SHA
+#   - ECDHE-RSA-DES-CBC3-SHA
+#   - EDH-RSA-DES-CBC3-SHA
+#   - AES256-GCM-SHA384
+#   - AES128-GCM-SHA256
+#   - AES256-SHA256
+#   - AES128-SHA256
+#   - AES256-SHA
+#   - AES128-SHA
+#   - DES-CBC3-SHA
+#   - HIGH
+#   - '!aNULL'
+#   - '!eNULL'
+#   - '!EXPORT'
+#   - '!DES'
+#   - '!MD5'
+#   - '!PSK'
+#   - '!RC4'
+# gitlab_ci_nginx_ssl_prefer_server_ciphers: "on"
+# gitlab_ci_nginx_ssl_protocols:
+#   - TLSv1
+#   - TLSv1.1
+#   - TLSv1.2
+# gitlab_ci_nginx_ssl_session_cache: "builtin:1000  shared:SSL:10m"
+# gitlab_ci_nginx_ssl_session_timeout: "5m"
+# gitlab_ci_nginx_listen_addresses:
+#   - '*'
+# gitlab_ci_nginx_custom_gitlab_server_config: 'location ^~ /foo-namespace/bar-project/raw/ {\n deny all;\n}\n'
+# gitlab_ci_nginx_custom_nginx_config: 'include /etc/nginx/conf.d/example.conf;'
+
+## Advanced settings
+# gitlab_ci_nginx_dir: "/var/opt/gitlab/nginx"
+# gitlab_ci_nginx_log_directory: "/var/log/gitlab/nginx"
+# gitlab_ci_nginx_worker_processes: 4
+# gitlab_ci_nginx_worker_connections: 10240
+# gitlab_ci_nginx_sendfile: 'on'
+# gitlab_ci_nginx_tcp_nopush: 'on'
+# gitlab_ci_nginx_tcp_nodelay: 'on'
+# gitlab_ci_nginx_gzip: "on"
+# gitlab_ci_nginx_gzip_http_version: "1.0"
+# gitlab_ci_nginx_gzip_comp_level: "2"
+# gitlab_ci_nginx_gzip_proxied: "any"
+# gitlab_ci_nginx_gzip_types:
+#   - "text/plain"
+#   - "text/css"
+#   - "application/x-javascript"
+#   - "text/xml"
+#   - "application/xml"
+#   - "application/xml+rss"
+#   - "text/javascript"
+#   - "application/json"
+# gitlab_ci_nginx_keepalive_timeout: 65
+# gitlab_ci_nginx_cache_max_size: '5000m'

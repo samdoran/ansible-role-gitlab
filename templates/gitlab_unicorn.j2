@@ -13,8 +13,8 @@
 ##################
 # GitLab Unicorn #
 ##################
-{% endif %}
 
+{% endif %}
 {% if gitlab_unicorn_worker_timeout is defined %}unicorn['worker_timeout'] = {{ gitlab_unicorn_worker_timeout }}
 {% endif %}
 {% if gitlab_unicorn_worker_processes is defined %}unicorn['worker_processes'] = {{ gitlab_unicorn_worker_processes }}

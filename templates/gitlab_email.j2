@@ -14,8 +14,8 @@
 ################################
 # GitLab email server settings #
 ################################
-{% endif %}
 
+{% endif %}
 {% if gitlab_smtp_enable is defined %}gitlab_smtp_enable: {{ gitlab_smtp_enable | lower }}
 {%endif %}
 {% if gitlab_smtp_address is defined %}gitlab_smtp_address: "{{ gitlab_smtp_address }}"

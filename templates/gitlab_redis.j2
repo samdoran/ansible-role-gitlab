@@ -7,8 +7,8 @@
 #########################
 # GitLab redis settings #
 #########################
-{% endif %}
 
+{% endif %}
 {% if gitlab_redis_host is defined %}gitlab_redis_host: "{{ gitlab_redis_host }}"
 {% endif %}
 {% if gitlab_redis_port is defined %}gitlab_redis_port: {{ gitlab_redis_port }}

@@ -35,4 +35,8 @@ ci_external_url "http://{{ gitlab_ci_fqdn }}"
 {% include 'gitlab_ci.j2' %}
 {% include 'gitlab_ci_unicorn.j2' %}
 
+{% if gitlab_ci_nginx_enabled is defined %}
+ci_nginx['enable'] = {{ gitlab_ci_nginx_enabled | lower }}
+{% endif %}
+
 {%- endif %}

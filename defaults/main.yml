@@ -224,10 +224,10 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab Shell --- #
-gitlab_shell_audit_usernames: false
-gitlab_shell_log_level: 'INFO'
-gitlab_shell_http_settings: { user: 'username', password: 'password', ca_file: '/etc/ssl/cert.pem', ca_path: '/etc/pki/tls/certs', self_signed_cert: false}
-gitlab_shell_log_directory: "/var/log/gitlab/gitlab-shell/"
+# gitlab_shell_audit_usernames: false
+# gitlab_shell_log_level: 'INFO'
+# gitlab_shell_http_settings: "{ user: 'username', password: 'password', ca_file: '/etc/ssl/cert.pem', ca_path: '/etc/pki/tls/certs', self_signed_cert: false}"
+# gitlab_shell_log_directory: "/var/log/gitlab/gitlab-shell/"
 
 
 

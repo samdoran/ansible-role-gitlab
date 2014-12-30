@@ -1,0 +1,20 @@
+{% if
+    gitlab_shell_audit_usernames is defined or
+    gitlab_shell_log_level is defined or
+    gitlab_shell_http_settings is defined or
+    gitlab_shell_log_directory is defined
+%}
+
+################
+# gitlab-shell #
+################
+{% endif %}
+
+{% if gitlab_shell_audit_usernames is defined %}gitlab_shell['audit_usernames'] = {{ gitlab_shell_audit_usernames }}
+{% endif %}
+{% if gitlab_shell_log_level is defined %}gitlab_shell['log_level'] = '{{ gitlab_shell_log_level }}'
+{% endif %}
+{% if gitlab_shell_http_settings is defined %}gitlab_shell['http_settings'] = {{ gitlab_shell_http_settings }}
+{% endif %}
+{% if gitlab_shell_log_directory is defined %}gitlab_shell['log_directory'] = "{{ gitlab_shell_log_directory }}"
+{% endif %}

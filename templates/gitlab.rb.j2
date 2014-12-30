@@ -15,6 +15,7 @@ nginx['redirect_http_to_https'] = false
 {% include 'gitlab_redis.j2' %}
 {% include 'gitlab_email.j2' %}
 {% include 'gitlab_user.j2' %}
+{% include 'gitlab_unicorn.j2' %}
 
 {%- if gitlab_ci_enabled %}
 {% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}

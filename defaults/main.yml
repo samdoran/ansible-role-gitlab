@@ -202,18 +202,18 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab Unicorn --- #
-gitlab_unicorn_worker_timeout: 60
-gitlab_unicorn_worker_processes: 2
+# gitlab_unicorn_worker_timeout: 60
+# gitlab_unicorn_worker_processes: 2
 
-# Advanced settings
-gitlab_unicorn_listen: '127.0.0.1'
-gitlab_unicorn_port: 8080
-gitlab_unicorn_socket: '/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket'
-gitlab_unicorn_pidfile: '/opt/gitlab/var/unicorn/unicorn.pid'
-gitlab_unicorn_tcp_nopush: true
-gitlab_unicorn_backlog_socket: 1024
-# We do not recommend changing this setting
-gitlab_unicorn_log_directory: "/var/log/gitlab/unicorn"
+## Advanced settings
+# gitlab_unicorn_listen: '127.0.0.1'
+# gitlab_unicorn_port: 8080
+# gitlab_unicorn_socket: '/var/opt/gitlab/gitlab-rails/sockets/gitlab.socket'
+# gitlab_unicorn_pidfile: '/opt/gitlab/var/unicorn/unicorn.pid'
+# gitlab_unicorn_tcp_nopush: true
+# gitlab_unicorn_backlog_socket: 1024
+## It is not recommend changing this setting
+# gitlab_unicorn_log_directory: "/var/log/gitlab/unicorn"
 
 
 

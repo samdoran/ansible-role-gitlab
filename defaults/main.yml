@@ -409,3 +409,48 @@ gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
 #   - "application/json"
 # gitlab_nginx_keepalive_timeout: 65
 # gitlab_nginx_cache_max_size: '5000m'
+
+
+
+# --- GitLab Logging --- #
+## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logs
+
+## rotate after 200 MB of log data
+# gitlag_logging_svlogd_size: "200 * 1024 * 1024"
+
+## keep 30 rotated log files
+# gitlag_logging_svlogd_num: 30
+
+## rotate after 24 hours
+# gitlag_logging_svlogd_timeout: "24 * 60 * 60"
+
+## compress logs with gzip
+# gitlag_logging_svlogd_filter: gzip
+
+## transmit log messages via UDP
+# gitlag_logging_svlogd_udp: nil
+
+## custom prefix for log messages
+# gitlag_logging_svlogd_prefix: nil
+
+## rotate logs daily
+# gitlag_logging_logrotate_frequency: daily
+
+## do not rotate by size by default
+# gitlag_logging_logrotate_size: nil
+
+## keep 30 rotated logs
+# gitlag_logging_logrotate_rotate: 30
+
+## see 'man logrotate'
+# gitlag_logging_logrotate_compress: compress
+
+## see 'man logrotate'
+# gitlag_logging_logrotate_method: copytruncate
+
+## no postrotate command by default
+# gitlag_logging_logrotate_postrotate: nil
+
+## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logrotate
+## You can disable built in logrotate feature.
+# gitlab_logrotate_enabled: True

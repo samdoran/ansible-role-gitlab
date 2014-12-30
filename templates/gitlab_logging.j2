@@ -1,0 +1,47 @@
+{% if
+    gitlag_logging_svlogd_size is defined or
+    gitlag_logging_svlogd_num is defined or
+    gitlag_logging_svlogd_timeout is defined or
+    gitlag_logging_svlogd_filter is defined or
+    gitlag_logging_svlogd_udp is defined or
+    gitlag_logging_svlogd_prefix is defined or
+    gitlag_logging_logrotate_frequency is defined or
+    gitlag_logging_logrotate_size is defined or
+    gitlag_logging_logrotate_rotate is defined or
+    gitlag_logging_logrotate_compress is defined or
+    gitlag_logging_logrotate_method is defined or
+    gitlag_logging_logrotate_postrotate is defined or
+    gitlab_logrotate_enabled is defined
+%}
+
+##################
+# GitLab Logging #
+##################
+
+{% endif %}
+{% if gitlag_logging_svlogd_size is defined %}logging['svlogd_size'] = {{ gitlag_logging_svlogd_size }}
+{% endif %}
+{% if gitlag_logging_svlogd_num is defined %}logging['svlogd_num'] = {{ gitlag_logging_svlogd_num }}
+{% endif %}
+{% if gitlag_logging_svlogd_timeout is defined %}logging['svlogd_timeout'] = {{ gitlag_logging_svlogd_timeout }}
+{% endif %}
+{% if gitlag_logging_svlogd_filter is defined %}logging['svlogd_filter'] = "{{ gitlag_logging_svlogd_filter }}"
+{% endif %}
+{% if gitlag_logging_svlogd_udp is defined %}logging['svlogd_udp'] = {{ gitlag_logging_svlogd_udp }}
+{% endif %}
+{% if gitlag_logging_svlogd_prefix is defined %}logging['svlogd_prefix'] = {{ gitlag_logging_svlogd_prefix }}
+{% endif %}
+{% if gitlag_logging_logrotate_frequency is defined %}logging['logrotate_frequency'] = "{{ gitlag_logging_logrotate_frequency }}"
+{% endif %}
+{% if gitlag_logging_logrotate_size is defined %}logging['logrotate_size'] = {{ gitlag_logging_logrotate_size }}
+{% endif %}
+{% if gitlag_logging_logrotate_rotate is defined %}logging['logrotate_rotate'] = {{ gitlag_logging_logrotate_rotate }}
+{% endif %}
+{% if gitlag_logging_logrotate_compress is defined %}logging['logrotate_compress'] = "{{ gitlag_logging_logrotate_compress }}"
+{% endif %}
+{% if gitlag_logging_logrotate_method is defined %}logging['logrotate_method'] = "{{ gitlag_logging_logrotate_method }}"
+{% endif %}
+{% if gitlag_logging_logrotate_postrotate is defined %}logging['logrotate_postrotate'] = {{ gitlag_logging_logrotate_postrotate }}
+{% endif %}
+{% if gitlab_logrotate_enabled is defined %}logrotate['enable'] = {{ gitlab_logrotate_enabled | lower }}
+{% endif %}

@@ -188,16 +188,16 @@ gitlab_ssl_port: 443
 
 
 # --- GitLab user --- #
-gitlab_user_username: git
-gitlab_user_group: git
-gitlab_user_uid: nil
-gitlab_user_gid: nil
-# The shell for the git user
-gitlab_user_shell: "/bin/sh"
-# The home directory for the git user
-gitlab_user_home: "/var/opt/gitlab"
-gitlab_user_git_user_name: "GitLab"
-gitlab_user_git_user_email: "gitlab@#{node['fqdn']}"
+# gitlab_user_username: git
+# gitlab_user_group: git
+# gitlab_user_uid: nil
+# gitlab_user_gid: nil
+## The shell for the git user
+# gitlab_user_shell: "/bin/sh"
+## The home directory for the git user
+# gitlab_user_home: "/var/opt/gitlab"
+# gitlab_user_git_user_name: "GitLab"
+# gitlab_user_git_user_email: "gitlab@#{node['fqdn']}"
 
 
 

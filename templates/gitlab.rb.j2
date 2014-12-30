@@ -33,5 +33,6 @@ ci_external_url "http://{{ gitlab_ci_fqdn }}"
 {% include 'gitlab_ci_redis.j2' %}
 {% include 'gitlab_ci_email.j2' %}
 {% include 'gitlab_ci.j2' %}
+{% include 'gitlab_ci_unicorn.j2' %}
 
 {%- endif %}

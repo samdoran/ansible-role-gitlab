@@ -509,3 +509,15 @@ gitlab_ci_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_ci_username: "gitlab-ci"
 # gitlab_ci_uid: nil
 # gitlab_ci_gid: nil
+
+
+
+# --- GitLab CI Unicorn --- #
+# gitlab_ci_unicorn_worker_processes: 2
+# gitlab_ci_unicorn_worker_timeout: 60
+# gitlab_ci_unicorn_listen: '127.0.0.1'
+# gitlab_ci_unicorn_port: 8181
+# gitlab_ci_unicorn_socket: '/var/opt/gitlab/gitlab-ci/sockets/gitlab.socket'
+# gitlab_ci_unicorn_pidfile: '/opt/gitlab/var/ci-unicorn/unicorn.pid'
+# gitlab_ci_unicorn_tcp_nopush: True
+# gitlab_ci_unicorn_backlog_socket: 1024

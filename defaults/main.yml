@@ -4,14 +4,55 @@ gitlab_version: 7.6.1_omnibus.5.3.0.ci-1
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10
 
-# SSL configuration
-gitlab_ssl_enabled: False
-gitlab_redirect_http: False
-gitlab_ssl_cert_path: /etc/pki/tls/certs
-gitlab_ssl_key_path: /etc/pki/tls/private
-gitlab_ssl_filename: "{{ ansible_fqdn }}"
-gitlab_ssl_port: 443
+# FIXME
+# Write variable translation table
+# Basic settings for configuring SSL
+# More options are available in the GitLab Nginx section
+gitlab_nginx_ssl_enabled: False
+gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs
+gitlab_nginx_ssl_key_path: /etc/pki/tls/private
+gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
+gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
+gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
+gitlab_nginx_ssl_port: 443
 
+
+# GitLab CI Configuration
+gitlab_ci_enabled: False
+gitlab_ci_fqdn: ci.{{ ansible_domain }}
+gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
+
+# These are examples of storing a block varible in YAML using the "|" character
+# to indicate a literal style, preserving line breaks.
+# The private key should be stored in an Ansible vault.
+#
+# See http://yaml.org/spec/current.html#id2503232 for more information.
+#
+# gitlab_nginx_ssl_crt: |
+#   -----BEGIN CERTIFICATE-----
+#   # public cert goes here
+#   -----END CERTIFICATE-----
+
+# gitlab_nginx_ssl_key: |
+#   -----BEGIN RSA PRIVATE KEY-----
+#   # private cert goes here
+#   -----END RSA PRIVATE KEY-----
+#
+# gitlab_ci_ssl_crt: |
+#   -----BEGIN CERTIFICATE-----
+#   # public cert goes here
+#   -----END CERTIFICATE-----
+
+# gitlab_ci_ssl_key: |
+#   -----BEGIN RSA PRIVATE KEY-----
+#   # private cert goes here
+#   -----END RSA PRIVATE KEY-----
+
+
+# These are all the variables available in gitlab.rb. They will only be included
+# in gitlab.rb if they are defined. Some variables are lists that generate arrays
+# in the final gitlab.rb. Sensitive data, such as passwords, should be stored
+# in a vault.
 
 # --- gitlab.yml configuration --- #
 # gitlab_ssh_host: ssh.host_example.com
@@ -59,7 +100,7 @@ gitlab_ssl_port: 443
 
 # gitlab_ldap_enabled: True
 ## Each item in gitlab_ldap_servers is inserted into gitlab.rb
-## Make sure to define all variablse for each server or template will fail.
+## Make sure to define all variables for each server or template will fail.
 # gitlab_ldap_servers:
 #   - name: gitlab_ldap_main
 #     provider_id: main
@@ -296,38 +337,75 @@ gitlab_ssl_port: 443
 
 
 
+# --- GitLab Nginx --- #
+## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/nginx.md
 
+# gitlab_nginx_enable: True
+# gitlab_nginx_client_max_body_size: '250m'
+# gitlab_nginx_ssl_enabled: False
+# gitlab_nginx_redirect_http_to_https_port: 80
+# gitlab_nginx_ssl_ciphers:
+#   - ECDHE-RSA-AES256-GCM-SHA384
+#   - ECDHE-RSA-AES128-GCM-SHA256
+#   - DHE-RSA-AES256-GCM-SHA384
+#   - DHE-RSA-AES128-GCM-SHA256
+#   - ECDHE-RSA-AES256-SHA384
+#   - ECDHE-RSA-AES128-SHA256
+#   - ECDHE-RSA-AES256-SHA
+#   - ECDHE-RSA-AES128-SHA
+#   - DHE-RSA-AES256-SHA256
+#   - DHE-RSA-AES128-SHA256
+#   - DHE-RSA-AES256-SHA
+#   - DHE-RSA-AES128-SHA
+#   - ECDHE-RSA-DES-CBC3-SHA
+#   - EDH-RSA-DES-CBC3-SHA
+#   - AES256-GCM-SHA384
+#   - AES128-GCM-SHA256
+#   - AES256-SHA256
+#   - AES128-SHA256
+#   - AES256-SHA
+#   - AES128-SHA
+#   - DES-CBC3-SHA
+#   - HIGH
+#   - '!aNULL'
+#   - '!eNULL'
+#   - '!EXPORT'
+#   - '!DES'
+#   - '!MD5'
+#   - '!PSK'
+#   - '!RC4'
+# gitlab_nginx_ssl_prefer_server_ciphers: "on"
+# gitlab_nginx_ssl_protocols:
+#   - TLSv1
+#   - TLSv1.1
+#   - TLSv1.2
+# gitlab_nginx_ssl_session_cache: "builtin:1000  shared:SSL:10m"
+# gitlab_nginx_ssl_session_timeout: "5m"
+# gitlab_nginx_listen_addresses:
+#   - '*'
+# gitlab_nginx_custom_gitlab_server_config: 'location ^~ /foo-namespace/bar-project/raw/ {\n deny all;\n}\n'
+# gitlab_nginx_custom_nginx_config: 'include /etc/nginx/conf.d/example.conf;'
 
-
-
-
-# GitLab CI Configuration
-gitlab_ci_enabled: False
-gitlab_ci_fqdn: ci.{{ ansible_domain }}
-gitlab_ci_ssl_filename: "{{ gitlab_ci_fqdn }}"
-
-# These are examples of storing a block varible in YAML using the "|" character
-# to indicate a literal style, preserving line breaks.
-# The private key should be stored in an Ansible vault.
-#
-# See http://yaml.org/spec/current.html#id2503232 for more information.
-#
-# gitlab_ssl_crt: |
-#   -----BEGIN CERTIFICATE-----
-#   # public cert goes here
-#   -----END CERTIFICATE-----
-
-# gitlab_ssl_key: |
-#   -----BEGIN RSA PRIVATE KEY-----
-#   # private cert goes here
-#   -----END RSA PRIVATE KEY-----
-#
-# gitlab_ci_ssl_crt: |
-#   -----BEGIN CERTIFICATE-----
-#   # public cert goes here
-#   -----END CERTIFICATE-----
-
-# gitlab_ci_ssl_key: |
-#   -----BEGIN RSA PRIVATE KEY-----
-#   # private cert goes here
-#   -----END RSA PRIVATE KEY-----
+## Advanced settings
+# gitlab_nginx_dir: "/var/opt/gitlab/nginx"
+# gitlab_nginx_log_directory: "/var/log/gitlab/nginx"
+# gitlab_nginx_worker_processes: 4
+# gitlab_nginx_worker_connections: 10240
+# gitlab_nginx_sendfile: 'on'
+# gitlab_nginx_tcp_nopush: 'on'
+# gitlab_nginx_tcp_nodelay: 'on'
+# gitlab_nginx_gzip: "on"
+# gitlab_nginx_gzip_http_version: "1.0"
+# gitlab_nginx_gzip_comp_level: "2"
+# gitlab_nginx_gzip_proxied: "any"
+# gitlab_nginx_gzip_types:
+#   - "text/plain"
+#   - "text/css"
+#   - "application/x-javascript"
+#   - "text/xml"
+#   - "application/xml"
+#   - "application/xml+rss"
+#   - "text/javascript"
+#   - "application/json"
+# gitlab_nginx_keepalive_timeout: 65
+# gitlab_nginx_cache_max_size: '5000m'

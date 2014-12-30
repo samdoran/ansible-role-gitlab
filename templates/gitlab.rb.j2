@@ -12,13 +12,13 @@ nginx['redirect_http_to_https'] = false
 {%- include 'gitlab.yml.j2' %}
 {% include 'gitlab_application.j2' %}
 {% include 'gitlab_database.j2' %}
-{% include 'gitlab_redis.j2' %}
 {% include 'gitlab_email.j2' %}
 {% include 'gitlab_user.j2' %}
 {% include 'gitlab_unicorn.j2' %}
 {% include 'gitlab_sidekiq.j2' %}
 {% include 'gitlab_shell.j2' %}
 {% include 'gitlab_postgresql.j2' %}
+{% include 'gitlab_redis.j2' %}
 
 {%- if gitlab_ci_enabled %}
 {% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}

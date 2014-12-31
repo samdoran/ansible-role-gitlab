@@ -31,4 +31,5 @@
     - reconfigure gitlab
     - restart gitlab
     - wait for unicorn
+    - set SELinux context of gitlab home direcotry
   tags: [ "gitlab" , "gitlabupdate" ]

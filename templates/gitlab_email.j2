@@ -1,0 +1,38 @@
+{% if
+    gitlab_smtp_enable is defined or
+    gitlab_smtp_address is defined or
+    gitlab_smtp_port is defined or
+    gitlab_smtp_user_name is defined or
+    gitlab_smtp_password is defined or
+    gitlab_smtp_domain is defined or
+    gitlab_smtp_authentication is defined or
+    gitlab_smtp_enable_starttls_auto is defined or
+    gitlab_smtp_tls is defined or
+    gitlab_smtp_openssl_verify_mode is defined
+%}
+
+################################
+# GitLab email server settings #
+################################
+
+{% endif %}
+{% if gitlab_smtp_enable is defined %}gitlab_smtp_enable: {{ gitlab_smtp_enable | lower }}
+{%endif %}
+{% if gitlab_smtp_address is defined %}gitlab_smtp_address: "{{ gitlab_smtp_address }}"
+{%endif %}
+{% if gitlab_smtp_port is defined %}gitlab_smtp_port: {{ gitlab_smtp_port }}
+{%endif %}
+{% if gitlab_smtp_user_name is defined %}gitlab_smtp_user_name: "{{ gitlab_smtp_user_name }}"
+{%endif %}
+{% if gitlab_smtp_password is defined %}gitlab_smtp_password: "{{ gitlab_smtp_password }}"
+{%endif %}
+{% if gitlab_smtp_domain is defined %}gitlab_smtp_domain: "{{ gitlab_smtp_domain }}"
+{%endif %}
+{% if gitlab_smtp_authentication is defined %}gitlab_smtp_authentication: "{{ gitlab_smtp_authentication }}"
+{%endif %}
+{% if gitlab_smtp_enable_starttls_auto is defined %}gitlab_smtp_enable_starttls_auto: {{ gitlab_smtp_enable_starttls_auto | lower }}
+{%endif %}
+{% if gitlab_smtp_tls is defined %}gitlab_smtp_tls: {{ gitlab_smtp_tls | lower }}
+{%endif %}
+{% if gitlab_smtp_openssl_verify_mode is defined %}gitlab_smtp_openssl_verify_mode: {{ gitlab_smtp_openssl_verify_mode | lower }}
+{%endif %}

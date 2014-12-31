@@ -1,0 +1,27 @@
+{% if
+    gitlab_web_server_external_users is defined or
+    gitlab_web_server_username is defined or
+    gitlab_web_server_group is defined or
+    gitlab_web_server_uid is defined or
+    gitlab_web_server_gid is defined
+%}
+
+#####################
+# GitLab Web server #
+#####################
+
+{% endif %}
+{% if gitlab_web_server_external_users is defined %}web_server['external_users'] = [
+    {%- for name in gitlab_web_server_external_users -%}
+        '{{ name }}'
+        {%- if not loop.last %},{% endif %}
+    {%- endfor %}]
+{% endif %}
+{% if gitlab_web_server_username is defined %}web_server['username'] = {{ gitlab_web_server_username }}
+{% endif %}
+{% if gitlab_web_server_group is defined %}web_server['group'] = {{ gitlab_web_server_group }}
+{% endif %}
+{% if gitlab_web_server_uid is defined %}web_server['uid'] = {{ gitlab_web_server_uid }}
+{% endif %}
+{% if gitlab_web_server_gid is defined %}web_server['gid'] = {{ gitlab_web_server_gid }}
+{% endif %}

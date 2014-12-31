@@ -1,0 +1,34 @@
+{% if
+    gitlab_user_username is defined or
+    gitlab_user_group is defined or
+    gitlab_user_uid is defined or
+    gitlab_user_gid is defined or
+    gitlab_user_shell is defined or
+    gitlab_user_home is defined or
+    gitlab_user_git_user_name is defined or
+    gitlab_user_git_user_email is defined
+%}
+
+###############
+# GitLab user #
+###############
+## see https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#changing-the-name-of-the-git-user-group
+## Modify default git user.
+
+{% endif %}
+{% if gitlab_user_username is defined %}user['username'] = "{{ gitlab_user_username }}"
+{% endif %}
+{% if gitlab_user_group is defined %}user['group'] = "{{ gitlab_user_group }}"
+{% endif %}
+{% if gitlab_user_uid is defined %}user['uid'] = {{ gitlab_user_uid }}
+{% endif %}
+{% if gitlab_user_gid is defined %}user['gid'] = {{ gitlab_user_gid }}
+{% endif %}
+{% if gitlab_user_shell is defined %}user['shell'] = "{{ gitlab_user_shell }}"
+{% endif %}
+{% if gitlab_user_home is defined %}user['home'] = "{{ gitlab_user_home }}"
+{% endif %}
+{% if gitlab_user_git_user_name is defined %}user['git_user_name'] = "{{ gitlab_user_git_user_name }}"
+{% endif %}
+{% if gitlab_user_git_user_email is defined %}user['git_user_email'] = "{{ gitlab_user_git_user_email }}"
+{% endif %}

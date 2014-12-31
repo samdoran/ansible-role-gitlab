@@ -1,60 +1,39 @@
-# Details of these configuration options are available at
-# https://gitlab.com/gitlab-org/omnibus-gitlab/blob/master/README.md
-
-{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
-# SSL configuration
-external_url "https://{{ ansible_fqdn }}{% if gitlab_ssl_port != 443 %}:{{ gitlab_ssl_port }}{% endif %}"
-nginx['redirect_http_to_https'] = {{ gitlab_redirect_http | lower }}
-nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ssl_filename }}.crt"
-nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ssl_filename }}.key"
+# --- GitLab Configuration --- #
+{% if gitlab_nginx_ssl_key is defined or gitlab_nginx_ssl_enabled == True %}
+external_url "https://{{ ansible_fqdn }}{% if gitlab_nginx_ssl_port != 443 %}:{{ gitlab_nginx_ssl_port }}{% endif %}"
 {% else %}
 external_url "http://{{ ansible_fqdn }}"
-nginx['redirect_http_to_https'] = false
-{% endif %}
+{% endif -%}
 
-# Directory where GitLab data is stored
-git_data_dir "{{ gitlab_git_data_dir }}"
-
-# User and group that owns GitLab data
-# User for SSH access to GitLab server
-user['username'] = '{{ gitlab_user }}'
-user['group'] = '{{ gitlab_group }}'
-
-{% if gitlab_ldap_enabled %}
-# LDAP sign-in
-# These settings are documented in more detail at
-# https://gitlab.com/gitlab-org/gitlab-ce/blob/a0a826ebdcb783c660dd40d8cb217db28a9d4998/config/gitlab.yml.example#L136
-gitlab_rails['ldap_enabled'] = {{ gitlab_ldap_enabled | lower }}
-gitlab_rails['ldap_servers'] = YAML.load <<-EOS # remember to close this block with 'EOS' below
-main:
-  label: '{{ gitlab_ldap_label }}'
-
-  host: '{{ gitlab_ldap_host }}'
-  port: {{ gitlab_ldap_port }}
-  uid: '{{ gitlab_ldap_uid }}'
-  method: '{{ gitlab_ldap_method }}'
-  bind_dn: '{{ gitlab_ldap_bind_dn }}'
-  password: '{{ gitlab_ldap_password }}'
-
-  active_directory: {{ gitlab_ldap_ad | lower }}
-
-  allow_username_or_email_login: {{ gitlab_ldap_allow_username_or_email_login | lower }}
-
-  base: '{{ gitlab_ldap_base }}'
-
-  user_filter: '{{ gitlab_ldap_user_filter }}'
-EOS
-{% endif %}
+{% include 'gitlab.yml.j2' %}
+{% include 'gitlab_application.j2' %}
+{% include 'gitlab_database.j2' %}
+{% include 'gitlab_email.j2' %}
+{% include 'gitlab_user.j2' %}
+{% include 'gitlab_unicorn.j2' %}
+{% include 'gitlab_sidekiq.j2' %}
+{% include 'gitlab_shell.j2' %}
+{% include 'gitlab_postgresql.j2' %}
+{% include 'gitlab_redis.j2' %}
+{% include 'gitlab_webserver.j2' %}
+{% include 'gitlab_nginx.j2' %}
+{% include 'gitlab_logging.j2' %}
 
 {%- if gitlab_ci_enabled %}
-{% if gitlab_ssl_key is defined or gitlab_ssl_enabled == True %}
-# GitLab CI SSL configuration
-ci_external_url "https://{{ gitlab_ci_fqdn }}{% if gitlab_ssl_port != 443 %}:{{ gitlab_ssl_port }}{% endif %}"
-ci_nginx['redirect_http_to_https'] = {{ gitlab_redirect_http | lower }}
-ci_nginx['ssl_certificate'] = "{{ gitlab_ssl_cert_path }}/{{ gitlab_ci_ssl_filename }}.crt"
-ci_nginx['ssl_certificate_key'] = "{{ gitlab_ssl_key_path }}/{{ gitlab_ci_ssl_filename }}.key"
+
+
+# --- GitLab CI Configuration --- #
+{% if gitlab_ci_nginx_ssl_key is defined or gitlab_ci_nginx_ssl_enabled == True %}
+ci_external_url "https://{{ gitlab_ci_fqdn }}{% if gitlab_ci_nginx_ssl_port != "443" %}:{{ gitlab_ci_nginx_ssl_port }}{% endif %}"
 {% else %}
-# GitLab CI Configuration
 ci_external_url "http://{{ gitlab_ci_fqdn }}"
-{% endif %}
-{% endif %}
+{% endif -%}
+
+{% include 'gitlab_ci_application.j2' %}
+{% include 'gitlab_ci_redis.j2' %}
+{% include 'gitlab_ci_email.j2' %}
+{% include 'gitlab_ci.j2' %}
+{% include 'gitlab_ci_unicorn.j2' %}
+{% include 'gitlab_ci_nginx.j2' %}
+
+{%- endif %}

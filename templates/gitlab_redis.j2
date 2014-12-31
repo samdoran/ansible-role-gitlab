@@ -1,0 +1,29 @@
+{% if
+    gitlab_redis_host is defined or
+    gitlab_redis_port is defined or
+    gitlab_redis_socket is defined or
+    gitlab_redis_enable is defined or
+    gitlab_redis_username is defined or
+    gitlab_redis_uid is defined or
+    gitlab_redis_gid is defined
+%}
+
+#########################
+# GitLab redis settings #
+#########################
+
+{% endif %}
+{% if gitlab_redis_host is defined %}gitlab_rails['redis_host'] = "{{ gitlab_redis_host }}"
+{% endif %}
+{% if gitlab_redis_port is defined %}gitlab_rails['redis_port'] = {{ gitlab_redis_port }}
+{% endif %}
+{% if gitlab_redis_socket is defined %}gitlab_rails['redis_socket'] = "{{ gitlab_redis_socket }}"
+{% endif %}
+{% if gitlab_redis_enable is defined %}redis['enable'] = {{ gitlab_redis_enable | lower }}
+{% endif %}
+{% if gitlab_redis_username is defined %}redis['username'] = "{{ gitlab_redis_username }}"
+{% endif %}
+{% if gitlab_redis_uid is defined %}redis['uid'] = {{ gitlab_redis_uid }}
+{% endif %}
+{% if gitlab_redis_gid is defined %}redis['gid'] = {{ gitlab_redis_gid }}
+{% endif %}

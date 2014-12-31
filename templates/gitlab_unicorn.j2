@@ -1,0 +1,35 @@
+{% if
+    gitlab_unicorn_worker_timeout is defined or
+    gitlab_unicorn_worker_processes is defined or
+    gitlab_unicorn_listen is defined or
+    gitlab_unicorn_port is defined or
+    gitlab_unicorn_socket is defined or
+    gitlab_unicorn_pidfile is defined or
+    gitlab_unicorn_tcp_nopush is defined or
+    gitlab_unicorn_backlog_socket is defined or
+    gitlab_unicorn_log_directory is defined
+%}
+
+##################
+# GitLab Unicorn #
+##################
+
+{% endif %}
+{% if gitlab_unicorn_worker_timeout is defined %}unicorn['worker_timeout'] = {{ gitlab_unicorn_worker_timeout }}
+{% endif %}
+{% if gitlab_unicorn_worker_processes is defined %}unicorn['worker_processes'] = {{ gitlab_unicorn_worker_processes }}
+{% endif %}
+{% if gitlab_unicorn_listen is defined %}unicorn['listen'] = '{{ gitlab_unicorn_listen }}'
+{% endif %}
+{% if gitlab_unicorn_port is defined %}unicorn['port'] = {{ gitlab_unicorn_port }}
+{% endif %}
+{% if gitlab_unicorn_socket is defined %}unicorn['socket'] = '{{ gitlab_unicorn_socket }}'
+{% endif %}
+{% if gitlab_unicorn_pidfile is defined %}unicorn['pidfile'] = '{{ gitlab_unicorn_pidfile }}'
+{% endif %}
+{% if gitlab_unicorn_tcp_nopush is defined %}unicorn['tcp_nopush'] = {{ gitlab_unicorn_tcp_nopush }}
+{% endif %}
+{% if gitlab_unicorn_backlog_socket is defined %}unicorn['backlog_socket'] = {{ gitlab_unicorn_backlog_socket }}
+{% endif %}
+{% if gitlab_unicorn_log_directory is defined %}unicorn['log_directory'] = "{{ gitlab_unicorn_log_directory }}"
+{% endif %}

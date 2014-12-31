@@ -1,0 +1,14 @@
+{% if
+    gitlab_sidekiq_log_directory is defined or
+    gitlab_sidekiq_shutdown_timeout is defined
+%}
+
+##################
+# GitLab Sidekiq #
+##################
+
+{% endif %}
+{% if gitlab_sidekiq_log_directory is defined %}sidekiq['log_directory'] = "{{ gitlab_sidekiq_log_directory }}"
+{% endif %}
+{% if gitlab_sidekiq_shutdown_timeout is defined %}sidekiq['shutdown_timeout'] = {{ gitlab_sidekiq_shutdown_timeout }}
+{% endif %}

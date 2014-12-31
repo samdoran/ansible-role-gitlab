@@ -1,0 +1,36 @@
+{% if
+    gitlab_ci_gitlab_server_urls is defined or
+    gitlab_ci_email_from is defined or
+    gitlab_ci_support_email is defined or
+    gitlab_ci_all_broken_builds is defined or
+    gitlab_ci_add_committer is defined or
+    gitlab_ci_gravatar_enabled is defined or
+    gitlab_ci_gravatar_plain_url is defined or
+    gitlab_ci_gravatar_ssl_url is defined
+%}
+
+#################################
+# application.yml configuration #
+#################################
+
+{% endif %}
+{% if gitlab_ci_gitlab_server_urls is defined %}gitlab_ci['gitlab_server_urls'] = [
+{%- for url in gitlab_ci_gitlab_server_urls -%}
+    '{{ url }}'{% if not loop.last %}, {% endif %}
+{% endfor -%}
+]
+{% endif %}
+{% if gitlab_ci_email_from is defined %}gitlab_ci['gitlab_ci_email_from'] = {{ gitlab_ci_email_from }}
+{% endif %}
+{% if gitlab_ci_support_email is defined %}gitlab_ci['gitlab_ci_support_email'] = {{ gitlab_ci_support_email }}
+{% endif %}
+{% if gitlab_ci_all_broken_builds is defined %}gitlab_ci['gitlab_ci_all_broken_builds'] = {{ gitlab_ci_all_broken_builds | lower }}
+{% endif %}
+{% if gitlab_ci_add_committer is defined %}gitlab_ci['gitlab_ci_add_committer'] = {{ gitlab_ci_add_committer | lower }}
+{% endif %}
+{% if gitlab_ci_gravatar_enabled is defined %}gitlab_ci['gravatar_enabled'] = {{ gitlab_ci_gravatar_enabled | lower }}
+{% endif %}
+{% if gitlab_ci_gravatar_plain_url is defined %}gitlab_ci['gravatar_plain_url'] = "{{ gitlab_ci_gravatar_plain_url }}"
+{% endif %}
+{% if gitlab_ci_gravatar_ssl_url is defined %}gitlab_ci['gravatar_ssl_url'] = "{{ gitlab_ci_gravatar_ssl_url }}"
+{% endif %}

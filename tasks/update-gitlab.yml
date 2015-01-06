@@ -6,6 +6,8 @@
     - unicorn
     - sidekiq
     - nginx
+  register: status_check
+  changed_when: "': 0s' in status_check.stdout"
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: UPDATE | Backup database

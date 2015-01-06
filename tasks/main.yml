@@ -23,7 +23,9 @@
     owner=root
     group=root
     mode=0600
-  notify: reconfigure gitlab
+  notify:
+   - reconfigure gitlab
+   - restart gitlab
   tags: [ 'gitlab' , 'gitlabrb' , 'ssl' ]
 
 - name: Copy GitLab SSL certifacte

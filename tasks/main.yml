@@ -9,20 +9,20 @@
 
 - name: Create /etc/gitlab
   file:
-    state=directory
-    path=/etc/gitlab
-    owner=root
-    group=root
-    mode=0775
+    state: directory
+    path: /etc/gitlab
+    owner: root
+    group: root
+    mode: 0775
   tags: gitlab
 
 - name: Copy gitlab.rb
   template:
-    src=gitlab.rb.j2
-    dest=/etc/gitlab/gitlab.rb
-    owner=root
-    group=root
-    mode=0600
+    src: gitlab.rb.j2
+    dest: /etc/gitlab/gitlab.rb
+    owner: root
+    group: root
+    mode: 0600
   notify:
    - reconfigure gitlab
    - restart gitlab
@@ -30,79 +30,79 @@
 
 - name: Copy GitLab SSL certifacte
   template:
-    backup=yes
-    src=gitlab.crt.j2
-    dest={{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt
-    owner=root
-    group=root
-    mode=0644
-    force=no
+    backup: yes
+    src: gitlab.crt.j2
+    dest: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
+    owner: root
+    group: root
+    mode: 0644
+    force: no
   when: gitlab_nginx_ssl_crt is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy GitLab SSL private key
   template:
-    backup=yes
-    src=gitlab.key.j2
-    dest={{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key
-    owner=root
-    group=root
-    mode=0600
-    force=no
+    backup: yes
+    src: gitlab.key.j2
+    dest: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
+    owner: root
+    group: root
+    mode: 0600
+    force: no
   when: gitlab_nginx_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy GitLab CI SSL certifacte
   template:
-    backup=yes
-    src=gitlab-ci.crt.j2
-    dest={{ gitlab_ci_nginx_ssl_cert_path }}/{{ gitlab_ci_nginx_ssl_filename }}.crt
-    owner=root
-    group=root
-    mode=0644
-    force=no
+    backup: yes
+    src: gitlab-ci.crt.j2
+    dest: "{{ gitlab_ci_nginx_ssl_cert_path }}/{{ gitlab_ci_nginx_ssl_filename }}.crt"
+    owner: root
+    group: root
+    mode: 0644
+    force: no
   when: gitlab_ci_nginx_ssl_crt is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
 - name: Copy GitLab CI SSL private key
   template:
-    backup=yes
-    src=gitlab-ci.key.j2
-    dest={{ gitlab_ci_nginx_ssl_key_path }}/{{ gitlab_ci_nginx_ssl_filename }}.key
-    owner=root
-    group=root
-    mode=0600
-    force=no
+    backup: yes
+    src: gitlab-ci.key.j2
+    dest: "{{ gitlab_ci_nginx_ssl_key_path }}/{{ gitlab_ci_nginx_ssl_filename }}.key"
+    owner: root
+    group: root
+    mode: 0600
+    force: no
   when: gitlab_ci_nginx_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
-- {include: update-gitlab.yml, when: 'gitlab_status.stdout != "gitlab-{{ gitlab_version }}.el6.x86_64"'}
+- {include: update-gitlab.yml, when: 'gitlab_status.stdout !:  "gitlab-{{ gitlab_version }}.el6.x86_64"'}
 
 - name: Create cron job to backup GitLab daily
   cron:
-    name="backup GitLab"
-    minute="23"
-    hour="23"
-    job="gitlab-rake gitlab:backup:create"
+    name: "backup GitLab"
+    minute: "23"
+    hour: "23"
+    job: "gitlab-rake gitlab:backup:create"
   tags: [ "gitlab" , "cron" ]
 
 - name: Create cron job to remove old GitLab backups
   cron:
-    name="remove old GitLab backups"
-    minute="51"
-    hour="23"
-    job="find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
+    name: "remove old GitLab backups"
+    minute: "51"
+    hour: "23"
+    job: "find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
   tags: [ "gitlab" , "cron" ]
 
 - name: Ensure git account never expires
   lineinfile:
-    state=present
-    dest=/etc/shadow
-    regexp='^git:'
-    line='git:!!:::::::'
+    state: present
+    dest: /etc/shadow
+    regexp: '^git:'
+    line: 'git:!!:::::::'
   tags: [ 'gitlab' ]
 

@@ -19,6 +19,6 @@
 # This needs to be impvode with a module that will create a local custom rule.
 - name: set SELinux context of gitlab home direcotry
   file:
-    dest=/var/opt/gitlab/.ssh
-    setype=user_home_t
-    recurse=yes
+    dest: /var/opt/gitlab/.ssh
+    setype: user_home_t
+    recurse: yes

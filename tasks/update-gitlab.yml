@@ -17,8 +17,8 @@
 
 - name: UPDATE | Download GitLab rpm
   get_url:
-    url=https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-    dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+    url: "https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
+    dest: "/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: UPDATE | Install GitLab
@@ -27,8 +27,8 @@
 
 - name: UPDATE | Remove GitLab rpm
   file:
-    dest=/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
-    state=absent
+    dest: "/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
+    state: absent
   notify:
     - reconfigure gitlab
     - restart gitlab

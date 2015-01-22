@@ -1,6 +1,10 @@
 ---
+- name: Include distribution specific variables
+  include_vars: "{{ ansible_os_family }}.yml"
+  tags: [ 'gitlab' , 'gitlabupdate' ]
+
 - name: Check if GitLab is already installed
-  command: rpm -q gitlab
+  command: "{{ gitlab_check_command }} gitlab"
   register: gitlab_status
   failed_when: false
   changed_when: false
@@ -80,7 +84,10 @@
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
-- {include: update-gitlab.yml, when: 'gitlab_status.stdout !:  "gitlab-{{ gitlab_version }}.el6.x86_64"'}
+- debug: var=gitlab_package
+  tags: gitlab
+
+- {include: update-gitlab.yml, when: 'gitlab_status.stdout !=  "{{ gitlab_package }}"'}
 
 - name: Create cron job to backup GitLab daily
   cron:

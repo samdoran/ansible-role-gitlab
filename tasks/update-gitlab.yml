@@ -15,19 +15,19 @@
   when: "'not installed' not in gitlab_status.stdout"
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: UPDATE | Download GitLab rpm
+- name: UPDATE | Download GitLab package
   get_url:
-    url: "https://downloads-packages.s3.amazonaws.com/centos-6.6/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
-    dest: "/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
+    url: "{{ gitlab_package_url }}"
+    dest: "/tmp/{{ gitlab_package }}"
   tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: UPDATE | Install GitLab
-  command: rpm -Uvh /tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm
+  command: "{{ gitlab_install_command }} /tmp/{{ gitlab_package }}"
   tags: [ "gitlab" , "gitlabupdate" ]
 
-- name: UPDATE | Remove GitLab rpm
+- name: UPDATE | Remove GitLab package
   file:
-    dest: "/tmp/gitlab-{{ gitlab_version }}.el6.x86_64.rpm"
+    dest: "/tmp/{{ gitlab_package}}"
     state: absent
   notify:
     - reconfigure gitlab

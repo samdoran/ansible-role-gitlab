@@ -1,0 +1,4 @@
+---
+gitlab_package: "gitlab_{{ gitlab_version }}_amd64.deb"
+gitlab_check_command: 'dpkg-query'
+gitlab_install_command: 'dpkg -i'

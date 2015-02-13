@@ -1,0 +1,11 @@
+{% if
+    gitlab_omnibus_gitconfig is defined
+%}
+
+#######
+# Git #
+#######
+
+{% endif %}
+
+{% if gitlab_omnibus_gitconfig is defined %}omnibus_gitconfig['system'] = { {{ gitlab_omnibus_gitconfig }} }

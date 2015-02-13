@@ -1,5 +1,6 @@
 ---
-gitlab_version: 7.6.1_omnibus.5.3.0.ci-1
+gitlab_version: 7.7.2_omnibus.5.4.2.ci-1
+gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-{{ ansible_distribution_version }}/{{ gitlab_package}}"
 
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10
@@ -192,7 +193,7 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_upload_directory: /var/opt/gitlab/gitlab-rails/uploads
 # gitlab_rate_limit_requests_per_period: 10
 # gitlab_rate_limit_period: 60
-# gitlab_root_password: '5iveL!fe'
+# gitlab_initial_root_password: '5iveL!fe'
 
 
 # --- GitLab Database Settings --- #
@@ -462,10 +463,20 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 
 
 
+# --- GitLab Git --- #
+## Advanced setting for configuring git system settings for omnibus-gitlab internal git
+## For multiple options under one header use array of comma separated values, eg.
+## { "receive" => ["fsckObjects = true"], "alias" => ["st = status", "co = checkout"] }
+
+# gitlab_omnibus_gitconfig = '"receive" => ["fsckObjects = true"], "alias" => ["st = status", "co = checkout"]'
+
+
+
 # --- GitLab CI application.yml configuration --- #
-# gitlab_ci_gitlab_server_urls:
-#   - "http://gitlab.example.com"
-#   - "http://gitlab2.example.com"
+# gitlab_ci_gitlab_server:
+#     - url: "http://gitlab.example.com"
+#       app_id: 12345678
+#       app_secret: 'QWERTY12345'
 
 # gitlab_ci_email_from: "gitlab-ci@{{ ansible_fqdn }}"
 # gitlab_ci_support_email: "gitlab-ci@{{ ansible_fqdn }}"

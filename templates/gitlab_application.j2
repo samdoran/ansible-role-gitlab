@@ -2,7 +2,7 @@
     gitlab_upload_directory  is defined or
     gitlab_rate_limit_requests_per_period  is defined or
     gitlab_rate_limit_period  is defined or
-    gitlab_root_password is defined
+    gitlab_initial_root_password is defined
 %}
 
 ###############################
@@ -16,5 +16,5 @@
 {% endif %}
 {% if gitlab_rate_limit_period is defined %}gitlab_rails['rate_limit_period'] = {{ gitlab_rate_limit_period }}
 {% endif %}
-{% if gitlab_root_password is defined %}gitlab_rails['root_password'] = "{{ gitlab_root_password }}"
+{% if gitlab_initial_root_password is defined %}gitlab_rails['initial_root_password'] = "{{ gitlab_initial_root_password }}"
 {% endif %}

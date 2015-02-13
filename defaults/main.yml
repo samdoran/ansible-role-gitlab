@@ -463,6 +463,15 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 
 
 
+# --- GitLab Git --- #
+## Advanced setting for configuring git system settings for omnibus-gitlab internal git
+## For multiple options under one header use array of comma separated values, eg.
+## { "receive" => ["fsckObjects = true"], "alias" => ["st = status", "co = checkout"] }
+
+# gitlab_omnibus_gitconfig = '"receive" => ["fsckObjects = true"], "alias" => ["st = status", "co = checkout"]'
+
+
+
 # --- GitLab CI application.yml configuration --- #
 # gitlab_ci_gitlab_server:
 #     - url: "http://gitlab.example.com"

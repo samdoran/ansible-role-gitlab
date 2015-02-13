@@ -18,6 +18,7 @@ external_url "http://{{ ansible_fqdn }}"
 {% include 'gitlab_webserver.j2' %}
 {% include 'gitlab_nginx.j2' %}
 {% include 'gitlab_logging.j2' %}
+{% include 'gitlab_git.j2' %}
 
 {%- if gitlab_ci_enabled %}
 

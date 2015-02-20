@@ -2,3 +2,4 @@
 gitlab_package: "gitlab_{{ gitlab_version }}_amd64.deb"
 gitlab_check_command: 'dpkg-query'
 gitlab_install_command: 'dpkg -i'
+gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-{{ ansible_distribution_version }}/{{ gitlab_package}}"

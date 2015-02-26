@@ -27,7 +27,7 @@
 
 - name: UPDATE | Remove GitLab package
   file:
-    dest: "/tmp/{{ gitlab_package}}"
+    dest: "/tmp/{{ gitlab_package}}.{{ gitlab_package_extension }}"
     state: absent
   notify:
     - reconfigure gitlab

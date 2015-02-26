@@ -1,6 +1,7 @@
 ---
 gitlab_package: "gitlab-{{ gitlab_version }}.el{{ ansible_distribution_major_version }}.x86_64"
+gitlab_package_extension: "rpm"
 gitlab_check_command: 'rpm -q'
 gitlab_install_command: 'rpm -Uvh'
-gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-{% if ansible_distribution_major_version == '6'%}6.6{% elif ansible_distribution_version == '7' %}{{ ansible_distribution_version }}{% endif %}/{{ gitlab_package}}.rpm"
+gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-{% if ansible_distribution_major_version == '6'%}6.6{% elif ansible_distribution_version == '7' %}{{ ansible_distribution_version }}{% endif %}/{{ gitlab_package}}.{{ gitlab_package_extension }}"
 

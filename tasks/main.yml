@@ -84,9 +84,6 @@
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
 
-- debug: var=gitlab_package
-  tags: gitlab
-
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout !=  "{{ gitlab_package }}"'}
 
 - name: Create cron job to backup GitLab daily

@@ -30,6 +30,7 @@
   notify:
    - reconfigure gitlab
    - restart gitlab
+   - wait for unicorn
   tags: [ 'gitlab' , 'gitlabrb' , 'ssl' ]
 
 - name: Copy GitLab SSL certifacte

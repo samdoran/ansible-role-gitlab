@@ -3,5 +3,18 @@ gitlab_package: "gitlab-{{ gitlab_version }}.el{{ ansible_distribution_major_ver
 gitlab_package_extension: "rpm"
 gitlab_check_command: 'rpm -q'
 gitlab_install_command: 'rpm -Uvh'
-gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-{% if ansible_distribution_major_version == '6'%}6.6{% elif ansible_distribution_version == '7' %}{{ ansible_distribution_version }}{% endif %}/{{ gitlab_package}}.{{ gitlab_package_extension }}"
+gitlab_package_url: "https://downloads-packages.s3.amazonaws.com/{{ ansible_distribution | lower }}-
+    {%- if ansible_distribution_major_version == '6' -%}
+        {%- if '7.4.5' in gitlab_version or '7.5' in gitlab_version -%}
+            6.6
+        {%- elif '7.4' in gitlab_version -%}
+            6.5
+        {%- elif '7.3.3' in gitlab_version -%}
+            6.6
+        {%- elif '7.3' in gitlab_version -%}
+            6.5
+        {%- elif '6.' in gitlab_version -%}
+            6.5
+    {%- endif -%}
+  {%- elif ansible_distribution_version == '7' %}{{ ansible_distribution_version }}{% endif %}/{{ gitlab_package}}.{{ gitlab_package_extension }}"
 

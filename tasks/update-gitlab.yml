@@ -13,13 +13,13 @@
 - name: UPDATE | Backup database
   command: gitlab-rake gitlab:backup:create
   when: "'not installed' not in gitlab_status.stdout"
-  tags: [ "gitlab" , "gitlabupdate" ]
+  tags: [ "gitlab" , "gitlabupdate" , "gitlabbackup" ]
 
 - name: UPDATE | Download GitLab package
   get_url:
     url: "{{ gitlab_package_url }}"
     dest: "/tmp/"
-  tags: [ "gitlab" , "gitlabupdate" , "debug" ]
+  tags: [ "gitlab" , "gitlabupdate" ]
 
 - name: UPDATE | Install GitLab
   command: "{{ gitlab_install_command }} /tmp/{{ gitlab_package }}.{{ gitlab_package_extension }}"

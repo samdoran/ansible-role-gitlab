@@ -30,6 +30,7 @@
   notify:
    - reconfigure gitlab
    - restart gitlab
+   - wait for unicorn
   tags: [ 'gitlab' , 'gitlabrb' , 'ssl' ]
 
 - name: Copy GitLab SSL certifacte
@@ -83,9 +84,6 @@
   when: gitlab_ci_nginx_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
-
-- debug: var=gitlab_package
-  tags: gitlab
 
 - {include: update-gitlab.yml, when: 'gitlab_status.stdout !=  "{{ gitlab_package }}"'}
 

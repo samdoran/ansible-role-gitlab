@@ -13,25 +13,32 @@
 ############################
 # GitLab database settings #
 ############################
-## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/database.md#database-settings
-## Only needed if you use an external database.
 
 {% endif %}
-{% if gitlab_db_adapter is defined %}gitlab_db_adapter: "{{ gitlab_db_adapter }}"
+{% if gitlab_db_adapter is defined -%}
+    gitlab_rails['db_adapter'] = "{{ gitlab_db_adapter }}"
 {% endif %}
-{% if gitlab_db_encoding is defined %}gitlab_db_encoding: "{{ gitlab_db_encoding }}"
+{% if gitlab_db_encoding is defined -%}
+    gitlab_rails['db_encoding'] = "{{ gitlab_db_encoding }}"
 {% endif %}
-{% if gitlab_db_database is defined %}gitlab_db_database: "{{ gitlab_db_database }}"
+{% if gitlab_db_database is defined -%}
+    gitlab_rails['db_database'] = "{{ gitlab_db_database }}"
 {% endif %}
-{% if gitlab_db_pool is defined %}gitlab_db_pool: {{ gitlab_db_pool }}
+{% if gitlab_db_pool is defined -%}
+    gitlab_rails['db_pool'] = {{ gitlab_db_pool }}
 {% endif %}
-{% if gitlab_db_username is defined %}gitlab_db_username: "{{ gitlab_db_username }}"
+{% if gitlab_db_username is defined -%}
+    gitlab_rails['db_username'] = "{{ gitlab_db_username }}"
 {% endif %}
-{% if gitlab_db_password is defined %}gitlab_db_password: {{ gitlab_db_password }}
+{% if gitlab_db_password is defined -%}
+    gitlab_rails['db_password'] = {{ gitlab_db_password }}
 {% endif %}
-{% if gitlab_db_host is defined %}gitlab_db_host: {{ gitlab_db_host }}
+{% if gitlab_db_host is defined -%}
+    gitlab_rails['db_host'] = {{ gitlab_db_host }}
 {% endif %}
-{% if gitlab_db_port is defined %}gitlab_db_port: {{ gitlab_db_port }}
+{% if gitlab_db_port is defined -%}
+    gitlab_rails['db_port'] = {{ gitlab_db_port }}
 {% endif %}
-{% if gitlab_db_socket is defined %}gitlab_db_socket: {{ gitlab_db_socket }}
+{% if gitlab_db_socket is defined -%}
+    gitlab_rails['db_socket'] = {{ gitlab_db_socket }}
 {% endif %}

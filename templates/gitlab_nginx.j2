@@ -11,6 +11,7 @@
     gitlab_nginx_ssl_session_cache is defined or
     gitlab_nginx_ssl_session_timeout is defined or
     gitlab_nginx_listen_addresses is defined or
+    gitlab_nginx_listen_port is defined or
     gitlab_nginx_custom_gitlab_server_config is defined or
     gitlab_nginx_custom_nginx_config is defined or
     gitlab_nginx_dir is defined or
@@ -71,6 +72,9 @@
         '{{ address }}'{% if not loop.last %}, {% endif -%}
     {%- endfor %}
 ]
+{% endif %}
+{% if gitlab_nginx_listen_port is defined -%}
+    nginx['listen_port'] = {{ gitlab_nginx_listen_port }}
 {% endif %}
 {% if gitlab_nginx_custom_gitlab_server_config is defined %}nginx['custom_gitlab_server_config'] = "{{ gitlab_nginx_custom_gitlab_server_config }}"
 {% endif %}

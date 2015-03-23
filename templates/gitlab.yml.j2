@@ -1,13 +1,11 @@
 {% if
   gitlab_ssh_host is defined or
   gitlab_time_zone is defined or
+  gitlab_email_enabled is defined or
   gitlab_email_from is defined or
-  gitlab_default_projects_limit is defined or
   gitlab_default_can_create_group is defined or
   gitlab_username_changing_enabled is defined or
   gitlab_default_theme is defined or
-  gitlab_signup_enabled is defined or
-  gitlab_signin_enabled is defined or
   gitlab_restricted_visibility_levels is defined or
   gitlab_default_projects_features_issues is defined or
   gitlab_default_projects_features_merge_requests is defined or
@@ -15,9 +13,9 @@
   gitlab_default_projects_features_snippets is defined or
   gitlab_default_projects_features_visibility_level is defined or
   gitlab_repository_downloads_path is defined or
-  gitlab_issues_tracker_redmine is defined or
-  gitlab_issues_tracker_jira is defined or
-  gitlab_gravatar_enabled is defined or
+  gitlab_gravatar_plain_url is defined or
+  gitlab_gravatar_ssl_url is defined or
+  gitlab_webhook_timeout is defined or
   gitlab_ldap_enabled is defined or
   gitlab_omniauth_enabled is defined or
   gitlab_backup_path is defined or
@@ -47,9 +45,9 @@
 {% endif %}
 {% if gitlab_time_zone is defined %}gitlab_rails['time_zone'] = '{{ gitlab_time_zone }}'
 {% endif %}
-{% if gitlab_email_from is defined %}gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'
+{% if gitlab_email_enabled is defined %}gitlab_rails['gitlab_email_enabled'] = '{{ gitlab_email_enabled | lower }}'
 {% endif %}
-{% if gitlab_default_projects_limit is defined %}gitlab_rails['gitlab_default_projects_limit'] = {{ gitlab_default_projects_limit }}
+{% if gitlab_email_from is defined %}gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'
 {% endif %}
 {% if gitlab_default_can_create_group is defined %}gitlab_rails['gitlab_default_can_create_group'] = {{ gitlab_default_can_create_group }}
 {% endif %}
@@ -57,9 +55,11 @@
 {% endif %}
 {% if gitlab_default_theme is defined %}gitlab_rails['gitlab_default_theme'] = {{ gitlab_default_theme }}
 {% endif %}
-{% if gitlab_signup_enabled is defined %}gitlab_rails['gitlab_signup_enabled'] = {{ gitlab_signup_enabled | lower }}
-{% endif %}
-{% if gitlab_signin_enabled is defined %}gitlab_rails['gitlab_signin_enabled'] = {{ gitlab_signin_enabled | lower }}
+{% if gitlab_restricted_visibility_levels is defined %}
+    {%- for level in gitlab_restricted_visibility_levels -%}gitlab_rails['gitlab_restricted_visibility_levels'] = [
+        '{{ level }}'{% if not loop.last %}, {% endif -%}
+    ]
+    {%- endfor %}
 {% endif %}
 {% if gitlab_restricted_visibility_levels is defined %}gitlab_rails['gitlab_restricted_visibility_levels'] = {{ gitlab_restricted_visibility_levels }}
 {% endif %}
@@ -76,30 +76,14 @@
 {% if gitlab_repository_downloads_path is defined %}gitlab_rails['gitlab_repository_downloads_path'] = '{{ gitlab_repository_downloads_path }}'
 {% endif %}
 
-{%- if gitlab_issues_tracker_redmine is defined and gitlab_issues_tracker_redmine == True %}
-gitlab_rails['issues_tracker_redmine'] = {{ gitlab_issues_tracker_redmine | lower }}
-gitlab_rails['issues_tracker_redmine_title'] = "{{ gitlab_issues_tracker_redmine_title }}"
-gitlab_rails['issues_tracker_redmine_project_url'] = "{{ gitlab_issues_tracker_redmine_project_url }}"
-gitlab_rails['issues_tracker_redmine_issues_url'] = "{{ gitlab_issues_tracker_redmine_issues_url }}"
-gitlab_rails['issues_tracker_redmine_new_issue_url'] = "{{ gitlab_issues_tracker_redmine_new_issue_url }}"
-{% endif -%}
-
-{%- if gitlab_issues_tracker_jira is defined and gitlab_issues_tracker_jira == True %}
-gitlab_rails['issues_tracker_jira'] = {{ gitlab_issues_tracker_jira | lower }}
-gitlab_rails['issues_tracker_jira_title'] = "{{ gitlab_issues_tracker_jira_title }}"
-gitlab_rails['issues_tracker_jira_project_url'] = "{{ gitlab_issues_tracker_jira_project_url }}"
-gitlab_rails['issues_tracker_jira_issues_url'] = "{{ gitlab_issues_tracker_jira_issues_url }}"
-gitlab_rails['issues_tracker_jira_new_issue_url'] = "{{ gitlab_issues_tracker_jira_new_issue_url }}"
-{% endif -%}
-
-{%- if gitlab_gravatar_enabled is defined and gitlab_gravatar_enabled == True %}
-gitlab_rails['gravatar_enabled'] = {{ gitlab_gravatar_enabled | lower }}
-{% if gitlab_gravatar_ssl_url is not defined %}
-gitlab_rails['gravatar_plain_url'] = '{{ gitlab_gravatar_plain_url | default('http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon') }}'
-{% else %}
-gitlab_rails['gravatar_ssl_url'] = '{{ gitlab_gravatar_ssl_url | default('https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon') }}'
+{% if gitlab_gravatar_plain_url is defined -%}
+    gitlab_rails['gravatar_plain_url'] = '{{ gitlab_gravatar_plain_url | default('http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon') }}'
 {% endif %}
-gitlab_rails['webhook_timeout'] = {{ gitlab_webhook_timeout}}
+{% if gitlab_gravatar_ssl_url is defined -%}
+    gitlab_rails['gravatar_ssl_url'] = '{{ gitlab_gravatar_ssl_url | default('https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon') }}'
+{% endif %}
+{% if gitlab_webhook_timeout is defined -%}
+    gitlab_rails['webhook_timeout'] = {{ gitlab_webhook_timeout}}
 {% endif -%}
 
 {%- if gitlab_ldap_enabled is defined and gitlab_ldap_enabled == True %}

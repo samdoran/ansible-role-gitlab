@@ -3,7 +3,7 @@
     gitlab_ci_email_from is defined or
     gitlab_ci_support_email is defined or
     gitlab_ci_all_broken_builds is defined or
-    gitlab_ci_add_committer is defined or
+    gitlab_ci_add_pusher is defined or
     gitlab_ci_gravatar_enabled is defined or
     gitlab_ci_gravatar_plain_url is defined or
     gitlab_ci_gravatar_ssl_url is defined
@@ -22,7 +22,8 @@
 {% endif %}
 {% if gitlab_ci_all_broken_builds is defined %}gitlab_ci['gitlab_ci_all_broken_builds'] = {{ gitlab_ci_all_broken_builds | lower }}
 {% endif %}
-{% if gitlab_ci_add_committer is defined %}gitlab_ci['gitlab_ci_add_committer'] = {{ gitlab_ci_add_committer | lower }}
+{% if gitlab_ci_add_pusher is defined -%}
+    gitlab_ci['gitlab_ci_add_pusher'] = {{ gitlab_ci_add_pusher | lower }}
 {% endif %}
 {% if gitlab_ci_gravatar_enabled is defined %}gitlab_ci['gravatar_enabled'] = {{ gitlab_ci_gravatar_enabled | lower }}
 {% endif %}

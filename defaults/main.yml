@@ -1,5 +1,5 @@
 ---
-gitlab_version: 7.8.2_omnibus.1-1
+gitlab_version: 7.9.0_omnibus.2-1
 
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10

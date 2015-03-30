@@ -118,13 +118,15 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_omniauth_enabled: True
 # gitlab_omniauth_allow_single_sign_on: False
 # gitlab_omniauth_block_auto_created_users: True
-## Specify multiple providers if desired. All four variables are required for
-## each provider.
+## Specify multiple providers if desired.
+## name, app_id, and app_secret are required
+## url and args are optional
 # gitlab_omniauth_providers:
-#   - name: google_oauth2
-#     app_id: "YOUR APP ID"
-#     app_secret: "YOUR APP SECRET"
-#     args: '"access_type" => "offline", "approval_prompt" => ""'
+#   - name: github
+#     app_id: 'YOUR APP ID'
+#     app_secret: 'YOUR APP SECRET'
+#     url: 'https://github.com'
+#     args: '"scope" => "user:email"'
 
 ## Backups
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#backups

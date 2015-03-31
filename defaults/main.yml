@@ -6,6 +6,7 @@ gitlab_days_old_backups: 10
 
 # Basic GitLab settings for configuring SSL
 # More options are available in the GitLab Nginx section
+gitlab_fqdn: "{{ ansible_fqdn }}"
 gitlab_nginx_ssl_enabled: False
 gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs
 gitlab_nginx_ssl_key_path: /etc/pki/tls/private

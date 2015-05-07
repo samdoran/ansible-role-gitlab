@@ -47,6 +47,10 @@ Passed to `find -time +[n]` in cron job that deletes GitLab backups
 
     gitlab_days_old_backups: 10
 
+FQDN of GitLab host
+
+    gitlab_fqdn: "{{ ansible_fqdn }}"
+
 Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_nginx_ssl_crt` and `gitlab_nginx_ssl_key`. If `gitlab_nginx_ssl_crt` or `gitlab_nginx_ssl_key` are defined, SSL will be enabled.
 
     gitlab_nginx_ssl_enabled: False

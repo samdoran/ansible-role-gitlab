@@ -122,9 +122,13 @@ gitlab_rails['omniauth_providers'] = [
     "name" => "{{ provider.name }}",
     "app_id" => "{{ provider.app_id }}",
     "app_secret" => "{{ provider.app_secret }}",
+{% if provider.url is defined %}
+    "url" => "{{ provider.url }}",
+{% endif %}
+{% if provider.args is defined %}
     "args" => { {{ provider.args }} }
+{% endif %}
   }
-
 {% endfor %}
 ]
 {% endif -%}

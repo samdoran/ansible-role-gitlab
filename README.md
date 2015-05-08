@@ -188,7 +188,7 @@ Setup GitLab and GitLab CI using SSL with a shared certificate. Also redirect HT
     gitlab_ci_nginx_redirect_http_to_https: True
 
     gitlab_ci_gitlab_server:
-      url: "https://{{ ansible_fqdn }}"
+      url: "https://{{ gitlab_fqdn }}"
       app_id: '066527ae25ce2fe21831a44f0840a7f0c3f94de6ad593425b04080f929a5c887'
       app_secret: '35bc899dd1e48ac84b8f5b776106c55639842549fab48e55669badb087756077'
 

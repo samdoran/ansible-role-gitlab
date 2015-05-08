@@ -4,21 +4,21 @@
   tags: [ 'gitlab' , 'gitlabupdate' ]
 
 - name: Check if GitLab is already installed
-  command: "{{ gitlab_check_command }} gitlab"
+  command: "{{ gitlab_check_command }} gitlab gitlab-ce"
   register: gitlab_status
   failed_when: false
   changed_when: false
   always_run: yes
   tags: [ 'gitlab' , 'gitlabupdate' ]
 
-- name: Create /etc/gitlab
-  file:
-    state: directory
-    path: /etc/gitlab
-    owner: root
-    group: root
-    mode: 0775
-  tags: gitlab
+- name: Copy GitLab repo file
+  template:
+    src: "{{ gitlab_repo_file}}.j2"
+    dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
+  tags: [ 'gitlab' , 'gitlabupdate' ]
+
+- { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
+- { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
 
 - name: Copy gitlab.rb
   template:
@@ -84,8 +84,6 @@
   when: gitlab_ci_nginx_ssl_key is defined
   notify: restart gitlab nginx
   tags: [ "gitlab" ,  "ssl" ]
-
-- {include: update-gitlab.yml, when: 'gitlab_status.stdout !=  "{{ gitlab_package }}"'}
 
 - name: Create cron job to backup GitLab daily
   cron:

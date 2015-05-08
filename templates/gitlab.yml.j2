@@ -3,6 +3,8 @@
   gitlab_time_zone is defined or
   gitlab_email_enabled is defined or
   gitlab_email_from is defined or
+  gitlab_email_display_name is defined or
+  gitlab_email_reply_to is defined or
   gitlab_default_can_create_group is defined or
   gitlab_username_changing_enabled is defined or
   gitlab_default_theme is defined or
@@ -48,6 +50,10 @@
 {% if gitlab_email_enabled is defined %}gitlab_rails['gitlab_email_enabled'] = '{{ gitlab_email_enabled | lower }}'
 {% endif %}
 {% if gitlab_email_from is defined %}gitlab_rails['gitlab_email_from'] = '{{ gitlab_email_from }}'
+{% endif %}
+{% if gitlab_email_display_name is defined %}gitlab_rails['gitlab_email_display_name'] = '{{ gitlab_email_display_name }}'
+{% endif %}
+{% if gitlab_email_reply_to is defined %}gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
 {% endif %}
 {% if gitlab_default_can_create_group is defined %}gitlab_rails['gitlab_default_can_create_group'] = {{ gitlab_default_can_create_group }}
 {% endif %}

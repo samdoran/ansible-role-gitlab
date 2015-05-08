@@ -13,12 +13,3 @@
 
 - name: wait for unicorn
   wait_for: port=8080
-
-# FIXME
-# This is a fragile fix as it will be overridden if restorecon is run.
-# This needs to be impvode with a module that will create a local custom rule.
-- name: set SELinux context of gitlab home direcotry
-  file:
-    dest: /var/opt/gitlab/.ssh
-    setype: user_home_t
-    recurse: yes

@@ -1,6 +1,4 @@
 ---
-gitlab_version: 7.9.0_omnibus.2-1
-
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10
 
@@ -63,7 +61,9 @@ gitlab_ci_nginx_ssl_port: "{{ gitlab_nginx_ssl_port }}"
 # gitlab_ssh_host: ssh.host_example.com
 # gitlab_time_zone: UTC
 # gitlab_email_enabled: True
-# gitlab_email_from: "gitlab@{{ ansible_domain }}"
+# gitlab_email_from: "gitlab@{{ gitlab_fqdn }}"
+# gitlab_email_display_name: 'GitLab'
+# gitlab_email_reply_to: "noreply@{{ gitlab_fqdn }}"
 # gitlab_default_can_create_group: True
 # gitlab_username_changing_enabled: True
 # gitlab_default_theme: 2

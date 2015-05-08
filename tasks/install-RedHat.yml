@@ -1,0 +1,34 @@
+---
+- name: Install GitLab GPG key (RedHat)
+  rpm_key:
+    state: present
+    key: https://packages.gitlab.com/gpg.key
+  when: ansible_os_family == 'RedHat'
+  tags: [ 'gitlab' , 'gitlabgpg' ]
+
+- name: Install GitLab CE (RedHat)
+  yum:
+    name: gitlab-ce
+    state: latest
+  notify:
+   - upgrade gitlab
+   - restart gitlab
+   - wait for unicorn
+  tags: [ 'gitlab' , 'gitlabupdate' ]
+
+# Needed when upgrading to 7.10 from any prior release
+# https://about.gitlab.com/2015/04/23/gitlab-7-dot-10-dot-0-omnibus-patch-release/#rpm-upgrade-issues
+- name: Repair broken symlinks when upgrading from prior releases
+  file:
+    state: link
+    force: yes
+    src: "/opt/gitlab/bin/{{ item }}"
+    path: "/usr/bin/{{ item }}"
+  with_items:
+    - gitlab-ctl
+    - gitlab-rake
+    - gitlab-rails
+    - gitlab-ci-rake
+    - gitlab-ci-rails
+  when: '"7.10" not in gitlab_status.stdout'
+  tags: [ 'gitlab' , 'gitlabupdate' ]

@@ -11,7 +11,7 @@
     name: gitlab-ce
     state: latest
   notify:
-   - reconfigure gitlab
+   - upgrade gitlab
    - restart gitlab
    - wait for unicorn
   tags: [ 'gitlab' , 'gitlabupdate' ]

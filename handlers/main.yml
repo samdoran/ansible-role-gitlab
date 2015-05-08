@@ -5,6 +5,9 @@
 - name: restart gitlab
   command: gitlab-ctl restart
 
+- name: upgrade gitlab
+  command: gitlab-ctl upgrade
+
 - name: restart gitlab nginx
   command: gitlab-ctl restart nginx
 

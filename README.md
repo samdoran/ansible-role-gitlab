@@ -2,7 +2,7 @@ GitLab Omnibus
 ========
 [![Galaxy](https://img.shields.io/badge/galaxy-sdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/1759)
 
-The role will install GitLab Omnibus CE or update GitLab if `gitlab_version` does not match the installed version.
+The role will install the latest version of GitLab CE using the repositories.
 
 There is a cron job that creates daily backups of the database and another cron job that deletes backups older than `gitlab_days_old_backups` days.
 
@@ -38,10 +38,6 @@ Role Variables
 There are now far to many variable to describe each individually. I recommend looking through `defaults/main.yml` to see all available options and some useful links for further information.
 
 Here are the variables you will most likely need to set.
-
-Version of GitLab to install. Also used to determine if an update is needed.
-
-    gitlab_version: 7.8.2_omnibus.1-1
 
 Passed to `find -time +[n]` in cron job that deletes GitLab backups
 
@@ -162,7 +158,6 @@ Setup GitLab using SSL.
   sudo: yes
 
   vars:
-     gitlab_version: 7.2.2_omnibus-1
      gitlab_days_old_backups: 7
 
      gitlab_nginx_ssl_crt: "{{ ssl_cert_stored_in_vault }}"
@@ -178,7 +173,6 @@ Setup GitLab and GitLab CI using SSL with a shared certificate. Also redirect HT
   sudo: yes
 
   vars:
-    gitlab_version: 7.2.2_omnibus-1
     gitlab_days_old_backups: 7
 
     gitlab_nginx_ssl_crt: "{{ ssl_cert_stored_in_vault }}"

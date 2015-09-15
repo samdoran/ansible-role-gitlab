@@ -1,0 +1,65 @@
+---
+- hosts: gitlab
+  remote_user: vagrant
+  sudo: True
+  roles:
+    - gitlab
+
+  vars:
+    # gitlab_nginx_ssl_enabled: False
+    # gitlab_ci_enabled: True
+    # gitlab_nginx_ssl_crt: |
+    #   -----BEGIN CERTIFICATE-----
+    #   MIID+jCCAuKgAwIBAgIJAIhhb+yJTt/3MA0GCSqGSIb3DQEBCwUAMFsxCzAJBgNV
+    #   BAYTAlVTMQswCQYDVQQIEwJUTjEQMA4GA1UEBxMHTWVtcGhpczEQMA4GA1UEChMH
+    #   VmFncmFudDEbMBkGA1UEAxMSZ2l0bGFiLnZhZ3JhbnQuY29tMB4XDTE1MDkxNTA0
+    #   NTkzMFoXDTI1MDkxMjA0NTkzMFowWzELMAkGA1UEBhMCVVMxCzAJBgNVBAgTAlRO
+    #   MRAwDgYDVQQHEwdNZW1waGlzMRAwDgYDVQQKEwdWYWdyYW50MRswGQYDVQQDExJn
+    #   aXRsYWIudmFncmFudC5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIB
+    #   AQCs7zQrO1u7NXY4wH0jJRKI9dDm6ZtrQJHUx86tbvL7pQszy7HWSccJUZUQPAFQ
+    #   x9yonwVs5A9GrtCYWBzwYrvUtWA93Eqp/0XFnmdPD6r10PnQ1HLRgZ0ilXG/AJ9o
+    #   +peQKVM6XdbAlxtqCv8ru28Nl1LK3UqtEIyIBRUykw9pZ1GbAHcQGei/LAH8wNOV
+    #   alHuKiMKK04x/U6wPaRimSKjek3HwS6/g3nzRdInpgdkgy0wMpYOYIrzz3VZCJ0u
+    #   uodPdjj9UEmWeQ6FyzjFDKQ8X/AI+u+uUwucVz09JIHP5j9bCXSi/XwOf5t3RQhJ
+    #   nK77mPwbjvrLk/oAx8jR6TNxAgMBAAGjgcAwgb0wHQYDVR0OBBYEFAzNnGeU587q
+    #   kkkXXratXOfjJKo2MIGNBgNVHSMEgYUwgYKAFAzNnGeU587qkkkXXratXOfjJKo2
+    #   oV+kXTBbMQswCQYDVQQGEwJVUzELMAkGA1UECBMCVE4xEDAOBgNVBAcTB01lbXBo
+    #   aXMxEDAOBgNVBAoTB1ZhZ3JhbnQxGzAZBgNVBAMTEmdpdGxhYi52YWdyYW50LmNv
+    #   bYIJAIhhb+yJTt/3MAwGA1UdEwQFMAMBAf8wDQYJKoZIhvcNAQELBQADggEBAKuT
+    #   P+t7RHuMfG6ZcnbfXFtG1Na8pqmk9LkSS/3Lav2F0Ebs0DboXemRrIzJmmBp16xu
+    #   l4MguUtWtEMjehpXB1iKhu41AVVPgE1Xdbo/0zPW3KSdlWD1TS6nXrW00henB8g8
+    #   s123Bd9Y0DjaSzo00WcQXbpJadjM8/eTa9A7j6Emp1RsC5ymXsUrDkZQ2aC3wPKq
+    #   UP+wLF686W2R1+scr7qCYjWuLsAjlSzzx1oCmdTj6gOie6i/n7X1hoBIAsHD0tGS
+    #   9CIttCbmUpmfuoiYriLED3Afs8gCxdUJU6YmpDb5lqPL93hXgmRPEV9AfBhl6Jop
+    #   bibWdTeI8c0Oc8Ay16g=
+    #   -----END CERTIFICATE-----
+
+    # gitlab_nginx_ssl_key: |
+    #   -----BEGIN RSA PRIVATE KEY-----
+    #   MIIEogIBAAKCAQEArO80KztbuzV2OMB9IyUSiPXQ5umba0CR1MfOrW7y+6ULM8ux
+    #   1knHCVGVEDwBUMfcqJ8FbOQPRq7QmFgc8GK71LVgPdxKqf9FxZ5nTw+q9dD50NRy
+    #   0YGdIpVxvwCfaPqXkClTOl3WwJcbagr/K7tvDZdSyt1KrRCMiAUVMpMPaWdRmwB3
+    #   EBnovywB/MDTlWpR7iojCitOMf1OsD2kYpkio3pNx8Euv4N580XSJ6YHZIMtMDKW
+    #   DmCK8891WQidLrqHT3Y4/VBJlnkOhcs4xQykPF/wCPrvrlMLnFc9PSSBz+Y/Wwl0
+    #   ov18Dn+bd0UISZyu+5j8G476y5P6AMfI0ekzcQIDAQABAoIBAGUU8JZwfL7hkfe8
+    #   M6juS3Y40OGYHJtFQ7hvDhR77JVAtFqTLqDFwQxmXk399Prlx8ncIYyzhWZYWl8h
+    #   6dBstcOwPNALyqyxJHRNka85xkEm5E63T2G8dD+5wKHXWFZBW4QNU7OjFBrAeGq0
+    #   gNBsH45/LAqd7L9aE/qRlgFYykJeBqsI/xkochhotVtP9UhK3ZFHV+LTEpTwK82C
+    #   +FIm4r8H8GFZi4HioT+WA4i2BmiM+SvDMO6lqBoQQRu2mDhkgKGkUR1z7LxBUick
+    #   zE72Q3yLEBRlYs+A1adNucjEWB49bIxmaXsKjbFpFd7rnT7kpKVMEKTcoC35w+L2
+    #   9uzygG0CgYEA3I0v3ue6KV+t1W0LPeo5rFlhDMYxQpW6rUICY6FuilIkiH3dMuDi
+    #   WRHohe83gwUSQLCL3wl+lVHQ+XyxaDRsNUDviExwUcvG8sabw0yaYLv5UzIF5666
+    #   LWurnQN1Owo0G61UgpuZJzeSUZR4E1/GgqH/Nt0BhuzHPsYwNPeflOcCgYEAyLrD
+    #   OJk8sAe4uxRomdSYkqCuez+9dmweYLq2JtZvv/RKs3vMcO4nGvijmbyWijW0QxjH
+    #   mLoOuRFmyePQZqGlemZwfBXFtbJ6CVo9wdSSgxqCqcEq/m+eEqSU+iPKcWlgFQER
+    #   qEz1zjUCc4pFBsDU1UQjJMGTIfztKFCbPZB1kecCgYBDugNyQtyS6fO6r2KdX7jY
+    #   KRY5Uv87gDk0DSooqCEGztSzKVtszUwUqAAsaNo2HK+PN+er1QGPHvG6O0VLR5XX
+    #   AJrN0xNGuvncAYtBfNuHSxH0L09K5wf6/K5VaANu3uJDgYWLGfb86P7AmIQLBwUx
+    #   hkeV9GYMpddFepzBFy1lDwKBgGIZjGEz2sn47BpaDgjoMqyuZLeNXi3rBymk9nKi
+    #   qDi6zmtLXI3whiITU/lFhpkDSBbmnF2SyLE/xOl0MhyGcZYRTHYIOfjjweqiNL5v
+    #   Ai+anDMUWcvBhxJ7Zuec6EpnAnMhc5y6CAOAOrN25uc3BI054KcNB7g7oTfrtQLw
+    #   f9UPAoGAC5tn1Pt7ebrbWbOwgVxJYqHoYsiTIpqTaW7CrgTR+hzWr748/Atu3cXC
+    #   AErbCygxdiHa4lUXjBN5DDf8jbnt8A0L9qMzznEfkTf0ofuNIDUlPE/AqUFiJmIE
+    #   sN/sfVoCJDc1Q9fg37VoYAsUB4eZ5aN3JXD3Y860yHUzkWEUpW4=
+    #   -----END RSA PRIVATE KEY-----
+

@@ -17,6 +17,15 @@
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
   tags: [ 'gitlab' , 'gitlabupdate' ]
 
+# this is required when using CI for 8.0+
+- name: Add gitlab-ci user
+  user: >
+    name=gitlab-ci
+    comment="GitLab CI"
+    system=yes
+    state=present
+  tags: [ 'gitlab' ]
+
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
 

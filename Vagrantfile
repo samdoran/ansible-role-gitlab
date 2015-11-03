@@ -1,7 +1,7 @@
 Vagrant.configure(2) do |config|
 
   config.dns.tld = "dev"
-  config.dns.patterns = [/^.*vagrant.dev$/]
+  config.dns.patterns = [/^(gitlab|ci)\.vagrant\.dev$/]
 
   config.vm.define :gitlab do |cos6|
     cos6.vm.box = "geerlingguy/centos6"

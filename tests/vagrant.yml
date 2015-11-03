@@ -10,6 +10,8 @@
     # gitlab_ci_nginx_redirect_http_to_https: True
     # gitlab_ci_enabled: True
     # gitlab_ci_nginx_ssl_enabled: True
+    # gitlab_ci_ssl_crt: "{{ gitlab_nginx_ssl_crt }}"
+    # gitlab_ci_ssl_key: "{{ gitlab_nginx_ssl_key }}"
     # gitlab_nginx_ssl_crt: |
     #   -----BEGIN CERTIFICATE-----
     #   MIID9DCCAtygAwIBAgIJAOzBpg5UEOyYMA0GCSqGSIb3DQEBCwUAMFkxCzAJBgNV

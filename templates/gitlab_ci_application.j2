@@ -16,9 +16,9 @@
 {% endif %}
 {% if gitlab_ci_gitlab_server is defined %}gitlab_ci['gitlab_server'] = { "url" => '{{ gitlab_ci_gitlab_server.url }}', "app_id" => '{{ gitlab_ci_gitlab_server.app_id }}', "app_secret" => '{{ gitlab_ci_gitlab_server.app_secret }}' }
 {% endif %}
-{% if gitlab_ci_email_from is defined %}gitlab_ci['gitlab_ci_email_from'] = {{ gitlab_ci_email_from }}
+{% if gitlab_ci_email_from is defined %}gitlab_ci['gitlab_ci_email_from'] = '{{ gitlab_ci_email_from }}'
 {% endif %}
-{% if gitlab_ci_support_email is defined %}gitlab_ci['gitlab_ci_support_email'] = {{ gitlab_ci_support_email }}
+{% if gitlab_ci_support_email is defined %}gitlab_ci['gitlab_ci_support_email'] = '{{ gitlab_ci_support_email }}'
 {% endif %}
 {% if gitlab_ci_all_broken_builds is defined %}gitlab_ci['gitlab_ci_all_broken_builds'] = {{ gitlab_ci_all_broken_builds | lower }}
 {% endif %}

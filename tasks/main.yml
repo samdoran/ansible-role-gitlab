@@ -3,7 +3,7 @@
   include_vars: "{{ ansible_os_family }}.yml"
   tags: [ 'gitlab' , 'gitlabupdate' ]
 
-- name: Check if GitLab is already installed
+- name: Get current GitLab version
   command: "{{ gitlab_check_command }} gitlab gitlab-ce"
   register: gitlab_status
   failed_when: false
@@ -16,6 +16,14 @@
     src: "{{ gitlab_repo_file}}.j2"
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
   tags: [ 'gitlab' , 'gitlabupdate' ]
+
+- name: Add gitlab-ci user
+  user:
+    name: gitlab-ci
+    comment: "GitLab CI"
+    system: yes
+    state: present
+  tags: [ 'gitlab' ]
 
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}

@@ -1,6 +1,6 @@
 GitLab Omnibus
 ========
-[![Galaxy](https://img.shields.io/badge/galaxy-sdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/1759)
+[![Galaxy](https://img.shields.io/badge/galaxy-sdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/3269)
 
 The role will install the latest version of GitLab CE using the repositories.
 
@@ -39,52 +39,18 @@ There are now far to many variable to describe each individually. I recommend lo
 
 Here are the variables you will most likely need to set.
 
-Passed to `find -time +[n]` in cron job that deletes GitLab backups
-
-    gitlab_days_old_backups: 10
-
-FQDN of GitLab host
-
-    gitlab_fqdn: "{{ ansible_fqdn }}"
-
-Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_nginx_ssl_crt` and `gitlab_nginx_ssl_key`. If `gitlab_nginx_ssl_crt` or `gitlab_nginx_ssl_key` are defined, SSL will be enabled.
-
-    gitlab_nginx_ssl_enabled: False
-
-Whether or not to redirect HTTP to HTTPS.
-
-    gitlab_nginx_redirect_http_to_https: False
-
-Directory where Gitlab SSL certs are stored.
-
-    gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs/
-
-Directory where Gitlab SSL certificate keys are stored.
-
-    gitlab_nginx_ssl_key_path: /etc/pki/tls/private/
-
-
-What the SSL certificate and key files will be named. A `.crt` extension is used for the public cert, a `.key` extension is used for the private key.
-
-    gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
-
-Listening port for HTTPS.
-
-    gitlab_nginx_ssl_port: 443
-
-SSL Public certificate.
-
-    gitlab_nginx_ssl_crt: |
-      -----BEGIN CERTIFICATE-----
-      public cert goes here
-      -----END CERTIFICATE-----
-
-SSL Private key. I recommend putting this in an ansible vault.
-
-    gitlab_nginx_ssl_key: |
-      -----BEGIN RSA PRIVATE KEY-----
-      private cert goes here
-      -----END RSA PRIVATE KEY-----
+| Name           | Default                     | Description                |
+|----------------|-----------------------------|----------------------------|
+|  `gitlab_days_old_backups` | 10 | Passed to `find -time +[n]` in cron job that deletes GitLab backups |
+| `gitlab_fqdn` | `"{{ ansible_fqdn }}"` | FQDN of GitLab host |
+| `gitlab_nginx_ssl_enabled` | False | Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_nginx_ssl_crt` and `gitlab_nginx_ssl_key`. If `gitlab_nginx_ssl_crt` or `gitlab_nginx_ssl_key` are defined, SSL will be enabled |
+| `gitlab_nginx_redirect_http_to_https` | False | Whether or not to redirect HTTP to HTTPS. |
+| `gitlab_nginx_ssl_cert_path` | `/etc/pki/tls/certs/` | Directory where GitLab SSL certs are stored. |
+| `gitlab_nginx_ssl_key_path` | `/etc/pki/tls/private/` | Directory where GitLab SSL certificate keys are stored. |
+| `gitlab_nginx_ssl_filename` | `"{{ ansible_fqdn }}"` | What the SSL certificate and key files will be named. A `.crt` extension is used for the public cert, a `.key` extension is used for the private key. |
+| `gitlab_nginx_ssl_port` | 443 | Listening port for HTTPS. |
+| `gitlab_nginx_ssl_crt` | Undefined multi-line variable | SSL Public certificate. |
+| `gitlab_nginx_ssl_key` | Undefined multi-line variable | SSL Private key. I recommend putting this in an ansible vault. |
 
 #### GitLab CI Variables ####
 
@@ -97,53 +63,20 @@ SSL Private key. I recommend putting this in an ansible vault.
 
 These are the same variables as above but with a `gitlab_ci_` prefix.
 
-Whether or not to enable GitLab CI.
+| Name           | Default                     | Description                |
+|----------------|-----------------------------|----------------------------|
+| `gitlab_ci_enabled` | False | Whether or not to enable GitLab CI. |
+| `gitlab_ci_fqdn` | `"ci.{{ ansible_domain }}"` | FQDN of GitLab CI host |
+| `gitlab_ci_nginx_ssl_enabled` | False | Whether or not to configure GitLab CI to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_ci_nginx_ssl_crt` and `gitlab_ci_nginx_ssl_key`. |
+| `gitlab_ci_nginx_redirect_http_to_https` | False | Whether or not to redirect HTTP to HTTPS |
+| `gitlab_ci_nginx_ssl_cert_path` | `"{{ gitlab_nginx_ssl_cert_path }}"` | Directory where GitLab CI  SSL certs are stored |
+| `gitlab_ci_nginx_ssl_key_path` | `"{{ gitlab_nginx_ssl_key_path }}"` | Directory where GitLab CI SSL certificate keys are stored |
+| `gitlab_ci_nginx_ssl_filename` | `"{{ gitlab_ci_fqdn }}"` | Name of GitLab CI certificate files. A `.crt` extension is used for the public cert, a `.key` extension is used for the private key. |
+| `gitlab_ci_nginx_ssl_port` | 443 | Listening port for GitLab CI HTTPS |
+| `gitlab_ci_nginx_ssl_crt` | Undefined multi-line variable | Public certificate used for GitLab CI server |
+| `gitlab_ci_nginx_ssl_key` | Undefined multi-line variable | Private key used for GitLab CI server |
 
-    gitlab_ci_enabled: False
-
-FQDN of GitLab CI host
-
-    gitlab_ci_fqdn: "ci.{{ ansible_domain }}"
-
-Whether or not to configure GitLab CI to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_ci_nginx_ssl_crt` and `gitlab_ci_nginx_ssl_key`.
-
-    gitlab_ci_nginx_ssl_enabled: False
-
-Whether or not to redirect HTTP to HTTPS
-
-    gitlab_ci_nginx_redirect_http_to_https: False
-
-Directory where Gitlab CI  SSL certs are stored
-
-    gitlab_ci_nginx_ssl_cert_path: "{{ gitlab_nginx_ssl_cert_path }}"
-
-Directory where Gitlab CI SSL certificate keys are stored
-
-    gitlab_ci_nginx_ssl_key_path: "{{ gitlab_nginx_ssl_key_path }}"
-
-Name of GitLab CI certificate files. A `.crt` extension is used for the public cert, a `.key` extension is used for the private key.
-
-    gitlab_ci_nginx_ssl_filename: "{{ gitlab_ci_fqdn }}"
-
-Listening port for GitLab CI HTTPS
-
-    gitlab_ci_nginx_ssl_port: 443
-
-Public certificate used for GitLab CI server
-
-    gitlab_ci_nginx_ssl_crt: |
-      -----BEGIN CERTIFICATE-----
-      public cert goes here
-      -----END CERTIFICATE-----
-
-Private key used for GitLab CI server
-
-    gitlab_ci_nginx_ssl_key: |
-      -----BEGIN RSA PRIVATE KEY-----
-      private cert goes here
-      -----END RSA PRIVATE KEY-----
-
-OAuth token configuration for GitLab CI.
+OAuth token configuration for GitLab CI:
 
     gitlab_ci_gitlab_server:
       url: "https://{{ ansible_fqdn }}"

@@ -4,7 +4,9 @@
     state: present
     url: https://packages.gitlab.com/gpg.key
   when: ansible_os_family == 'Debian'
-  tags: [ 'gitlab' , 'gitlabgpg' ]
+  tags:
+    - gitlab
+    - gitlabgpg
 
 - name: Install GitLab CE (Debian)
   apt:
@@ -12,7 +14,9 @@
     state: latest
     update_cache: yes
   notify:
-   - reconfigure gitlab
-   - restart gitlab
-   - wait for unicorn
-  tags: [ 'gitlab' , 'gitlabupdate' ]
+    - reconfigure gitlab
+    - restart gitlab
+    - wait for unicorn
+  tags:
+    - gitlab
+    - gitlabupdate

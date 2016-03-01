@@ -1,0 +1,48 @@
+---
+language: python
+python: "2.7"
+
+sudo: required
+dist: trusty
+
+# Install ansible
+addons:
+  apt:
+    packages:
+      - python-pip
+
+install:
+  # Install ansible
+  - pip install ansible
+
+  # Check ansible version
+  - ansible --version
+
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
+
+script:
+  # Basic role syntax check
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
+
+  # Run the first time
+  - ansible-playbook tests/test.yml -i tests/inventory -c local -b
+
+  # Run again and expect no changes
+  #
+  - >
+    ansible-playbook tests/test.yml -i tests/inventory -c local -b
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)
+
+  # Check that GitLab is accessible
+  - >
+    curl --silent --insecure --location --write-out "%{http_code}" --output /dev/null https://localhost/
+    | grep -q '200'
+    && (echo 'GitLab server responded with 200.' && exit 0)
+    || ( echo 'GitLab server is not responding.' && exit 2)
+
+
+notifications:
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

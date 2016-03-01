@@ -1,6 +1,7 @@
 GitLab Omnibus
 ========
-[![Galaxy](https://img.shields.io/badge/galaxy-sdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/list#/roles/3269)
+[![Build Status](https://travis-ci.org/samdoran/ansible-role-gitlab.svg?branch=master)](https://travis-ci.org/samdoran/ansible-role-gitlab)
+[![Galaxy](https://img.shields.io/badge/galaxy-samdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/gitlab)
 
 The role will install the latest version of GitLab CE using the repositories.
 

@@ -1,7 +1,9 @@
 ---
 - name: Include distribution specific variables
   include_vars: "{{ ansible_os_family }}.yml"
-  tags: [ 'gitlab' , 'gitlabupdate' ]
+  tags:
+    - gitlab
+    - gitlabupdate
 
 - name: Get current GitLab version
   command: "{{ gitlab_check_command }} gitlab gitlab-ce"
@@ -9,24 +11,40 @@
   failed_when: false
   changed_when: false
   always_run: yes
-  tags: [ 'gitlab' , 'gitlabupdate' ]
+  tags:
+    - gitlab
+    - gitlab-update
 
 - name: Copy GitLab repo file
   template:
-    src: "{{ gitlab_repo_file}}.j2"
+    src: "{{ gitlab_repo_file }}.j2"
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
-  tags: [ 'gitlab' , 'gitlabupdate' ]
+  tags:
+    - gitlab
+    - gitlabupdate
 
-- name: Add gitlab-ci user
+- name: Create gitlab-ci user
   user:
     name: gitlab-ci
     comment: "GitLab CI"
     system: yes
     state: present
-  tags: [ 'gitlab' ]
+    createhome: no
+  tags:
+    - gitlab
+    - gitlab-users
 
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
+
+- name: Start and enable postfix
+  service:
+    name: postfix
+    enabled: yes
+    state: started
+  tags:
+    - gitlab
+    - gitlab-services
 
 - name: Copy gitlab.rb
   template:
@@ -39,7 +57,10 @@
    - reconfigure gitlab
    - restart gitlab
    - wait for unicorn
-  tags: [ 'gitlab' , 'gitlabrb' , 'ssl' ]
+  tags:
+    - gitlab
+    - gitlabrb
+    - ssl
 
 - name: Copy GitLab SSL certifacte
   template:
@@ -52,7 +73,9 @@
     force: no
   when: gitlab_nginx_ssl_crt is defined
   notify: restart gitlab nginx
-  tags: [ "gitlab" ,  "ssl" ]
+  tags:
+    - gitlab
+    - gitlab-ssl
 
 - name: Copy GitLab SSL private key
   template:
@@ -65,7 +88,9 @@
     force: no
   when: gitlab_nginx_ssl_key is defined
   notify: restart gitlab nginx
-  tags: [ "gitlab" ,  "ssl" ]
+  tags:
+    - gitlab
+    - gitlab-ssl
 
 - name: Copy GitLab CI SSL certifacte
   template:
@@ -78,7 +103,9 @@
     force: no
   when: gitlab_ci_nginx_ssl_crt is defined
   notify: restart gitlab nginx
-  tags: [ "gitlab" ,  "ssl" ]
+  tags:
+    - gitlab
+    - gitlab-ssl
 
 - name: Copy GitLab CI SSL private key
   template:
@@ -91,7 +118,9 @@
     force: no
   when: gitlab_ci_nginx_ssl_key is defined
   notify: restart gitlab nginx
-  tags: [ "gitlab" ,  "ssl" ]
+  tags:
+    - gitlab
+    - gitlab-ssl
 
 - name: Create cron job to backup GitLab daily
   cron:
@@ -99,7 +128,9 @@
     minute: "23"
     hour: "23"
     job: "gitlab-rake gitlab:backup:create"
-  tags: [ "gitlab" , "cron" ]
+  tags:
+    - gitlab
+    - gitlab-cron
 
 - name: Create cron job to remove old GitLab backups
   cron:
@@ -107,13 +138,20 @@
     minute: "51"
     hour: "23"
     job: "find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
-  tags: [ "gitlab" , "cron" ]
+  tags:
+    - gitlab
+    - gitlab-cron
 
-- name: Ensure git account never expires
-  lineinfile:
-    state: present
-    dest: /etc/shadow
-    regexp: '^git:'
-    line: 'git:!!:::::::'
-  tags: [ 'gitlab' ]
+- name: Ensure GitLab accounts never expire
+  user:
+    name: "{{ item }}"
+    expires: "4102444800"
+    createhome: no
+  changed_when: False     # Added because there is a bug with the module. https://github.com/ansible/ansible/issues/13235#issuecomment-190852303
+  with_items:
+    - git
+    - gitlab-ci
+  tags:
+    - gitlab
+    - gitlab-users
 

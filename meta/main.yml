@@ -10,10 +10,15 @@ galaxy_info:
   - name: EL
     versions:
       - 6
+      - 7
+
+  - name: Ubuntu
+    versions:
+      - precise
+      - trusty
 
   categories:
-    - system
-
-version: 2.5.1
+    - development
+    - git
 
 dependencies: []

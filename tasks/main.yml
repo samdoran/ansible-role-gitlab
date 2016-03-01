@@ -23,14 +23,16 @@
     - gitlab
     - gitlabupdate
 
-- name: Add gitlab-ci user
+- name: Create gitlab-ci user
   user:
     name: gitlab-ci
     comment: "GitLab CI"
     system: yes
     state: present
+    createhome: no
   tags:
     - gitlab
+    - gitlab-users
 
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
@@ -140,12 +142,16 @@
     - gitlab
     - gitlab-cron
 
-- name: Ensure git account never expires
-  lineinfile:
-    state: present
-    dest: /etc/shadow
-    regexp: '^git:'
-    line: 'git:!!:::::::'
+- name: Ensure GitLab accounts never expire
+  user:
+    name: "{{ item }}"
+    expires: "4102444800"
+    createhome: no
+  changed_when: False     # Added because there is a bug with the module. https://github.com/ansible/ansible/issues/13235#issuecomment-190852303
+  with_items:
+    - git
+    - gitlab-ci
   tags:
     - gitlab
+    - gitlab-users
 

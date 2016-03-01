@@ -1,14 +1,26 @@
 ---
-- name: Install GitLab GPG key (RedHat)
+- name: RHEL | Install GitLab GPG key
   rpm_key:
     state: present
     key: https://packages.gitlab.com/gpg.key
   when: ansible_os_family == 'RedHat'
   tags:
     - gitlab
-    - gitlabgpg
+    - gitlab-gpg
 
-- name: Install GitLab CE (RedHat)
+- name: RHEL | Install support packages
+  yum:
+    name: "{{ item }}"
+    state: latest
+  with_items:
+    - curl
+    - postfix
+    - cronie
+  tags:
+    - gitlab
+    - gitlab-packages
+
+- name: RHEL | Install GitLab CE
   yum:
     name: gitlab-ce
     state: latest
@@ -18,7 +30,7 @@
     - wait for unicorn
   tags:
     - gitlab
-    - gitlabupdate
+    - gitlab-update
 
 # Needed when upgrading to 7.10 from any prior release
 # https://about.gitlab.com/2015/04/23/gitlab-7-dot-10-dot-0-omnibus-patch-release/#rpm-upgrade-issues
@@ -37,4 +49,4 @@
   when: '"7.10" not in gitlab_status.stdout'
   tags:
     - gitlab
-    - gitlabupdate
+    - gitlab-update

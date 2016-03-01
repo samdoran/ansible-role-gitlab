@@ -1,14 +1,26 @@
 ---
-- name: Install GitLab GPG key (Debian)
+- name: DEBIAN | Install GitLab GPG key
   apt_key:
     state: present
     url: https://packages.gitlab.com/gpg.key
-  when: ansible_os_family == 'Debian'
   tags:
     - gitlab
-    - gitlabgpg
+    - gitlab-gpg
 
-- name: Install GitLab CE (Debian)
+- name: DEBIAN | Install support packages
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: yes
+  with_items:
+      - curl
+      - ca-certificates
+      - postfix
+  tags:
+    - gitlab
+    - gitlab-packages
+
+- name: DEBIAN | Install GitLab CE
   apt:
     name: gitlab-ce
     state: latest
@@ -19,4 +31,4 @@
     - wait for unicorn
   tags:
     - gitlab
-    - gitlabupdate
+    - gitlab-update

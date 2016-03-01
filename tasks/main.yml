@@ -13,11 +13,11 @@
   always_run: yes
   tags:
     - gitlab
-    - gitlabupdate
+    - gitlab-update
 
 - name: Copy GitLab repo file
   template:
-    src: "{{ gitlab_repo_file}}.j2"
+    src: "{{ gitlab_repo_file }}.j2"
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
   tags:
     - gitlab
@@ -34,6 +34,15 @@
 
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
+
+- name: Start and enable postfix
+  service:
+    name: postfix
+    enabled: yes
+    state: started
+  tags:
+    - gitlab
+    - gitlab-services
 
 - name: Copy gitlab.rb
   template:
@@ -64,7 +73,7 @@
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - ssl
+    - gitlab-ssl
 
 - name: Copy GitLab SSL private key
   template:
@@ -79,7 +88,7 @@
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - ssl
+    - gitlab-ssl
 
 - name: Copy GitLab CI SSL certifacte
   template:
@@ -94,7 +103,7 @@
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - ssl
+    - gitlab-ssl
 
 - name: Copy GitLab CI SSL private key
   template:
@@ -109,7 +118,7 @@
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - ssl
+    - gitlab-ssl
 
 - name: Create cron job to backup GitLab daily
   cron:
@@ -119,7 +128,7 @@
     job: "gitlab-rake gitlab:backup:create"
   tags:
     - gitlab
-    - cron
+    - gitlab-cron
 
 - name: Create cron job to remove old GitLab backups
   cron:
@@ -129,7 +138,7 @@
     job: "find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
   tags:
     - gitlab
-    - cron
+    - gitlab-cron
 
 - name: Ensure git account never expires
   lineinfile:

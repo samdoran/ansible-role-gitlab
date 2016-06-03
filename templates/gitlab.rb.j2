@@ -1,6 +1,6 @@
 # --- GitLab Configuration --- #
 {% if gitlab_nginx_ssl_key is defined or gitlab_nginx_ssl_enabled == True %}
-external_url "https://{{ gitlab_fqdn }}{% if gitlab_nginx_ssl_port != 443 %}:{{ gitlab_nginx_ssl_port }}{% endif %}"
+external_url "https://{{ gitlab_fqdn }}{% if gitlab_nginx_ssl_port | int != 443 %}:{{ gitlab_nginx_ssl_port }}{% endif %}"
 {% else %}
 external_url "http://{{ gitlab_fqdn }}"
 {% endif -%}

@@ -5,7 +5,7 @@ Vagrant.configure(2) do |config|
     el6.vm.box = "geerlingguy/centos6"
     el6.vm.network "forwarded_port", guest: 80, host: 8080
     el6.vm.network "forwarded_port", guest: 443, host: 8443
-    el6.vm.hostname = "apache-el6.vagrant.dev"
+    el6.vm.hostname = "gitlab-el6.vagrant.dev"
     config.vm.provider "virtualbox" do |vbox|
       vbox.memory = 2048
       vbox.cpus = 2
@@ -17,7 +17,7 @@ Vagrant.configure(2) do |config|
     el7.vm.box = "geerlingguy/centos7"
     el7.vm.network "forwarded_port", guest: 80, host: 8081
     el7.vm.network "forwarded_port", guest: 443, host: 8444
-    el7.vm.hostname = "apache-el7.vagrant.dev"
+    el7.vm.hostname = "gitlab-el7.vagrant.dev"
     config.vm.provider "virtualbox" do |vbox|
       vbox.memory = 2048
       vbox.cpus = 2
@@ -29,7 +29,7 @@ Vagrant.configure(2) do |config|
     ub12.vm.box = "geerlingguy/ubuntu1204"
     ub12.vm.network "forwarded_port", guest: 80, host: 8082
     ub12.vm.network "forwarded_port", guest: 443, host: 8445
-    ub12.vm.hostname = "apache-ub12.vagrant.dev"
+    ub12.vm.hostname = "gitlab-ub12.vagrant.dev"
     config.vm.provider "virtualbox" do |vbox|
       vbox.memory = 2048
       vbox.cpus = 2
@@ -41,7 +41,7 @@ Vagrant.configure(2) do |config|
     ub14.vm.box = "geerlingguy/ubuntu1404"
     ub14.vm.network "forwarded_port", guest: 80, host: 8084
     ub14.vm.network "forwarded_port", guest: 443, host: 8446
-    ub14.vm.hostname = "apache-ub14.vagrant.dev"
+    ub14.vm.hostname = "gitlab-ub14.vagrant.dev"
     config.vm.provider "virtualbox" do |vbox|
       vbox.memory = 2048
       vbox.cpus = 2

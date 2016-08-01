@@ -22,8 +22,8 @@
 
 - name: RHEL | Install GitLab CE
   yum:
-    name: gitlab-ce
-    state: latest
+    pkg: gitlab-ce-{{ gitlab_version | default('*') }}
+    state: "{{ 'present' if gitlab_version is defined else 'latest' }}"
   notify:
     - upgrade gitlab
     - restart gitlab

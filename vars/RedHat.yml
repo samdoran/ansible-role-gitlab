@@ -1,4 +1,3 @@
----
 gitlab_repo_dir: /etc/yum.repos.d
 gitlab_repo_file: gitlab-ce.repo
 gitlab_check_command: 'rpm -q'

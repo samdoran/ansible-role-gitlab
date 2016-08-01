@@ -1,4 +1,3 @@
----
 - name: DEBIAN | Install GitLab GPG key
   apt_key:
     state: present

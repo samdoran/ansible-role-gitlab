@@ -1,4 +1,3 @@
----
 # Passed to find -mitme +n when deleting GitLab backups
 gitlab_days_old_backups: 10
 

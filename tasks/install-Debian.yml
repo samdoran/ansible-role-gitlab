@@ -21,7 +21,7 @@
 
 - name: DEBIAN | Install GitLab CE
   apt:
-    name: gitlab-ce-{{ gitlab_version | default('*') }}
+    name: "gitlab-ce{{ '-' + gitlab_version if gitlab_version is defined else ''}}"
     state: "{{ 'present' if gitlab_version is defined else 'latest' }}"
     update_cache: yes
   notify:

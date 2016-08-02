@@ -1,4 +1,3 @@
----
 - hosts: all
   remote_user: vagrant
   become: yes
@@ -6,6 +5,8 @@
     - gitlab
 
   vars:
+    # gitlab_version: "8.6.9"
+    # gitlab_version_suffix: "-ce.2"
     gitlab_nginx_redirect_http_to_https: True
     gitlab_ci_nginx_redirect_http_to_https: True
     gitlab_ci_enabled: True

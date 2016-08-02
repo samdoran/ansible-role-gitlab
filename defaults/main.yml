@@ -10,6 +10,8 @@ gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_n
 gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
 gitlab_nginx_ssl_port: 443
 
+# gitlab_version: "8.6.3"         # If undefined, install the latest. Make sure this is a string by quoting it.
+gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version is defined.
 
 
 # These are examples of storing a block varible in YAML using the "|" character

@@ -7,10 +7,10 @@ env:
   - distro: centos6
     init: /sbin/init
     run_opts: ""
-  - distro: ubuntu1604
+  - distro: ubuntu16
     init: /lib/systemd/systemd
     run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu1404
+  - distro: ubuntu14
     init: /sbin/init
     run_opts: ""
 

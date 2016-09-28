@@ -1,4 +1,3 @@
----
 - name: RHEL | Install GitLab GPG key
   rpm_key:
     state: present

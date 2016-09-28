@@ -1,4 +1,4 @@
 - hosts: all
-  remote_user: root
+
   roles:
-    - ansible-role-gitlab
+    - role_under_test

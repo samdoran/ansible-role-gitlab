@@ -1,43 +1,45 @@
-services: docker
+language: python
+python: "2.7"
 
-env:
-  - distro: centos7
-    init: /usr/lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: centos6
-    init: /sbin/init
-    run_opts: ""
-  - distro: ubuntu16
-    init: /lib/systemd/systemd
-    run_opts: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
-  - distro: ubuntu14
-    init: /sbin/init
-    run_opts: ""
+sudo: required
 
-before_install:
-  # Pull container.
-  - 'docker pull samdoran/${distro}-ansible:latest'
+branches:
+  only:
+    - master
+    - develop
+
+install:
+  # Install ansible
+  - pip install ansible
+
+  # Check ansible version
+  - ansible --version
+
+  # Create ansible.cfg with correct roles_path
+  - printf '[defaults]\nroles_path=../' >ansible.cfg
 
 script:
-  - container_id=$(mktemp)
+  # Basic role syntax check
+  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
 
-  # Run container in detached state.
-  - 'docker run --detach --volume="${PWD}":/etc/ansible/roles/role_under_test:ro ${run_opts} samdoran/${distro}-ansible:latest "${init}" > "${container_id}"'
+  # Run the first time
+  - ansible-playbook tests/test.yml -i tests/inventory -c local -b
 
-  # Ansible syntax check.
-  - 'docker exec --tty "$(cat ${container_id})" env TERM=xterm ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml --syntax-check'
-
-  # Test role.
-  - 'docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml'
-
-  # Test role idempotence.
-  - idempotence=$(mktemp)
-  - docker exec "$(cat ${container_id})" ansible-playbook /etc/ansible/roles/role_under_test/tests/test.yml | tee -a ${idempotence}
+  # Run again and expect no changes
+  #
   - >
-    tail ${idempotence}
+    ansible-playbook tests/test.yml -i tests/inventory -c local -b
     | grep -q 'changed=0.*failed=0'
     && (echo 'Idempotence test: pass' && exit 0)
     || (echo 'Idempotence test: fail' && exit 1)
+
+  # Check that GitLab is accessible
+  - >
+    curl -s -k -o /dev/null -w "%{http_code}" https://localhost/users/sign_in
+    | grep -q '200'
+    && (echo 'GitLab server responded with 200.' && exit 0)
+    || (echo 'GitLab server is not responding.' && exit 2)
+
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/

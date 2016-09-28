@@ -2,17 +2,6 @@
   include_vars: "{{ ansible_os_family }}.yml"
   tags:
     - gitlab
-    - gitlabupdate
-
-- name: Get current GitLab version
-  command: "{{ gitlab_check_command }} gitlab gitlab-ce"
-  register: gitlab_status
-  failed_when: false
-  changed_when: false
-  always_run: yes
-  tags:
-    - gitlab
-    - gitlab-update
 
 - name: Copy GitLab repo file
   template:
@@ -20,7 +9,6 @@
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
   tags:
     - gitlab
-    - gitlabupdate
 
 - name: Create gitlab-ci user
   user:
@@ -33,8 +21,7 @@
     - gitlab
     - gitlab-users
 
-- { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
-- { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
+- include: install-{{ ansible_os_family }}.yml
 
 - name: Start and enable postfix
   service:

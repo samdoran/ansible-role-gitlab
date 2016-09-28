@@ -1,15 +1,12 @@
----
 language: python
 python: "2.7"
 
 sudo: required
-dist: trusty
 
-# Install ansible
-addons:
-  apt:
-    packages:
-      - python-pip
+branches:
+  only:
+    - master
+    - develop
 
 install:
   # Install ansible
@@ -37,11 +34,11 @@ script:
     || (echo 'Idempotence test: fail' && exit 1)
 
   # Check that GitLab is accessible
-  - >
-    curl --silent --insecure --location --write-out "%{http_code}" --output /dev/null https://localhost/
-    | grep -q '200'
-    && (echo 'GitLab server responded with 200.' && exit 0)
-    || ( echo 'GitLab server is not responding.' && exit 2)
+  # - >
+  #   curl -s -k -o /dev/null -w "%{http_code}" https://localhost/users/sign_in
+  #   | grep -q '200'
+  #   && (echo 'GitLab server responded with 200.' && exit 0)
+  #   || (echo 'GitLab server is not responding.' && exit 2)
 
 
 notifications:

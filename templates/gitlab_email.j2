@@ -49,8 +49,8 @@
     gitlab_rails['smtp_openssl_verify_mode'] = {{ gitlab_smtp_openssl_verify_mode | lower }}
 {% endif %}
 {% if gitlab_smtp_ca_path is defined -%}
-    gilab_rails['smtp_ca_path'] = "{{ gitlab_smtp_ca_path}}"
+    gitlab_rails['smtp_ca_path'] = "{{ gitlab_smtp_ca_path}}"
 {% endif %}
 {% if gitlab_smtp_ca_file is defined -%}
-    gilab_rails['smtp_ca_file'] = "{{ gitlab_smtp_ca_file}}"
+    gitlab_rails['smtp_ca_file'] = "{{ gitlab_smtp_ca_file}}"
 {% endif %}

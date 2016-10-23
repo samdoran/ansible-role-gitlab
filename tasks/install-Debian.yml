@@ -14,7 +14,7 @@
   with_items:
       - curl
       - ca-certificates
-      - postfix
+      - "{{ gitlab_smtp_service }}"
   tags:
     - gitlab
     - gitlab-packages

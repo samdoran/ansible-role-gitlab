@@ -12,6 +12,10 @@ galaxy_info:
       - 6
       - 7
 
+  - name: Debian
+    versions:
+      - jessie
+
   - name: Ubuntu
     versions:
       - precise

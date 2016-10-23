@@ -38,9 +38,9 @@
 - { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
 - { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
 
-- name: Start and enable postfix
+- name: Start and enable mail
   service:
-    name: postfix
+    name: "{{ gitlab_smtp_service }}"
     enabled: yes
     state: started
   tags:

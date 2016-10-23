@@ -1,6 +1,7 @@
 gitlab_repo_dir: /etc/yum.repos.d
 gitlab_repo_file: gitlab-ce.repo
 gitlab_check_command: 'rpm -q'
+gitlab_smtp_service: postfix
 
 gitlab_nginx_ssl_cert_path: /etc/pki/tls/certs
 gitlab_nginx_ssl_key_path: /etc/pki/tls/private

@@ -6,6 +6,10 @@
     - gitlab
     - gitlab-gpg
 
+- name: DEBIAN | Install apt-transport-https
+  apt:
+    name: apt-transport-https
+
 - name: DEBIAN | Install support packages
   apt:
     name: "{{ item }}"
@@ -14,7 +18,7 @@
   with_items:
       - curl
       - ca-certificates
-      - postfix
+      - "{{ gitlab_smtp_service }}"
   tags:
     - gitlab
     - gitlab-packages

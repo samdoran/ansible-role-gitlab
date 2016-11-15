@@ -179,8 +179,9 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 
 # --- GitLab email server settings --- #
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/smtp.md#smtp-settings
-## Use smtp instead of sendmail/postfix.
+## Use remote smtp server instead of local (sendmail/postfix).
 # gitlab_smtp_enable: True
+# gitlab_smtp_service: postfix
 # gitlab_smtp_address: "smtp.server"
 # gitlab_smtp_port: 456
 # gitlab_smtp_user_name: "smtp user"

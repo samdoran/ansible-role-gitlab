@@ -6,19 +6,16 @@
     - gitlab
     - gitlab-gpg
 
-- name: DEBIAN | Install apt-transport-https
-  apt:
-    name: apt-transport-https
-
 - name: DEBIAN | Install support packages
   apt:
-    name: "{{ item }}"
-    state: latest
-    update_cache: yes
-  with_items:
+    name:
       - curl
       - ca-certificates
       - "{{ gitlab_smtp_service }}"
+      - apt-transport-https
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
   tags:
     - gitlab
     - gitlab-packages
@@ -28,6 +25,7 @@
     name: gitlab-ce{{ '=' + gitlab_version + gitlab_version_suffix if gitlab_version is defined else '' }}
     state: "{{ 'present' if gitlab_version is defined else 'latest' }}"
     update_cache: yes
+    cache_valid_time: 3600
   notify:
     - reconfigure gitlab
     - restart gitlab

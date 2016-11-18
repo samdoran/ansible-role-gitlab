@@ -1,8 +1,7 @@
----
 galaxy_info:
   author: Sam Doran
   description: Install GitLab CE Omnibus
-  company:
+  company: Ansible by Red Hat
   license: MIT
   min_ansible_version: 1.9
 

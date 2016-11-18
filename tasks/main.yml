@@ -10,7 +10,7 @@
   register: gitlab_status
   failed_when: false
   changed_when: false
-  always_run: yes
+  check_mode: no
   tags:
     - gitlab
     - gitlab-update

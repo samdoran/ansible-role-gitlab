@@ -35,11 +35,11 @@ script:
 
   # Run again and expect no changes
   #
-  - >
-    ansible-playbook tests/test.yml -i tests/inventory -c local -b
-    | grep -q 'changed=0.*failed=0'
-    && (echo 'Idempotence test: pass' && exit 0)
-    || (echo 'Idempotence test: fail' && exit 1)
+  # - >
+  #   ansible-playbook tests/test.yml -i tests/inventory -c local -b
+  #   | grep -q 'changed=0.*failed=0'
+  #   && (echo 'Idempotence test: pass' && exit 0)
+  #   || (echo 'Idempotence test: fail' && exit 1)
 
   # Check that GitLab is accessible
   # - >

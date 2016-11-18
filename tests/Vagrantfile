@@ -30,8 +30,8 @@ Vagrant.configure(2) do |config|
   # Debian 8 (Jessie)
   config.vm.define "deb8" do |deb8|
     deb8.vm.box = "debian/jessie64"
-    deb8.vm.network "forwarded_port", guest: 80, host: 8084
-    deb8.vm.network "forwarded_port", guest: 443, host: 8446
+    deb8.vm.network "forwarded_port", guest: 80, host: 8083
+    deb8.vm.network "forwarded_port", guest: 443, host: 8447
     deb8.vm.hostname = "gitlab-deb8.vagrant.dev"
     config.vm.provider "virtualbox" do |vbox|
       vbox.memory = 2048

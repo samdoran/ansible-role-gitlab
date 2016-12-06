@@ -13,7 +13,7 @@
     state: latest
   with_items:
     - curl
-    - postfix
+    - "{{ gitlab_smtp_service }}"
     - cronie
   tags:
     - gitlab
@@ -21,8 +21,8 @@
 
 - name: RHEL | Install GitLab CE
   yum:
-    name: gitlab-ce
-    state: latest
+    name: gitlab-ce{{ '-' + gitlab_version if gitlab_version is defined else '' }}
+    state: "{{ 'present' if gitlab_version is defined else 'latest' }}"
   notify:
     - upgrade gitlab
     - restart gitlab

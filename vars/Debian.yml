@@ -1,6 +1,6 @@
----
 gitlab_repo_dir: /etc/apt/sources.list.d
 gitlab_repo_file: gitlab-ce.list
+gitlab_smtp_service: exim4
 gitlab_check_command: 'dpkg-query'
 
 gitlab_nginx_ssl_cert_path: /etc/ssl/certs

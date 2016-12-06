@@ -2,6 +2,19 @@
   include_vars: "{{ ansible_os_family }}.yml"
   tags:
     - gitlab
+    - gitlabupdate
+    - always
+
+- name: Get current GitLab version
+  command: "{{ gitlab_check_command }} gitlab gitlab-ce"
+  register: gitlab_status
+  failed_when: false
+  changed_when: false
+  check_mode: no
+  tags:
+    - gitlab
+    - gitlab-update
+    - always
 
 - name: Copy GitLab repo file
   template:
@@ -23,9 +36,9 @@
 
 - include: install-{{ ansible_os_family }}.yml
 
-- name: Start and enable postfix
+- name: Start and enable mail
   service:
-    name: postfix
+    name: "{{ gitlab_smtp_service }}"
     enabled: yes
     state: started
   tags:

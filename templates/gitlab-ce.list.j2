@@ -1,4 +1,4 @@
 # the repository at https://packages.gitlab.com/gitlab/gitlab-ce
 
-deb https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ {{ ansible_distribution_release }} main
-deb-src https://packages.gitlab.com/gitlab/gitlab-ce/ubuntu/ {{ ansible_distribution_release }} main
+deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main
+deb-src https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_distribution|lower }}/ {{ ansible_distribution_release }} main

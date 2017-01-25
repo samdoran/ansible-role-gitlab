@@ -22,7 +22,6 @@
     dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
   tags:
     - gitlab
-    - gitlabupdate
 
 - name: Create gitlab-ci user
   user:
@@ -35,8 +34,7 @@
     - gitlab
     - gitlab-users
 
-- { include: install-RedHat.yml, when: 'ansible_os_family == "RedHat"'}
-- { include: install-Debian.yml, when: 'ansible_os_family == "Debian"'}
+- include: install-{{ ansible_os_family }}.yml
 
 - name: Start and enable mail
   service:

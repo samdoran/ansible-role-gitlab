@@ -107,7 +107,7 @@ gitlab_rails['ldap_servers'] = YAML.load <<-EOS
     method: '{{ server.method }}'
     bind_dn: '{{ server.bind_dn }}'
     password: '{{ server.password }}'
-    active_directory: '{{ server.active_directory }}'
+    active_directory: {{ server.active_directory | lower}}
     allow_username_or_email_login: '{{ server.allow_username_or_email_login }}'
     base: '{{ server.base }}'
     user_filter: '{{ server.user_filter }}'

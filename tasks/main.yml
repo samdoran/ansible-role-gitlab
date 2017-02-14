@@ -61,7 +61,7 @@
     - gitlabrb
     - ssl
 
-- name: Copy GitLab SSL certifacte
+- name: Copy GitLab SSL certificate
   template:
     backup: yes
     src: gitlab.crt.j2
@@ -91,7 +91,7 @@
     - gitlab
     - gitlab-ssl
 
-- name: Copy GitLab CI SSL certifacte
+- name: Copy GitLab CI SSL certificate
   template:
     backup: yes
     src: gitlab-ci.crt.j2

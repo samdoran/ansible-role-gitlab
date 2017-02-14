@@ -14,7 +14,7 @@
       - "{{ gitlab_smtp_service }}"
       - apt-transport-https
     state: latest
-    update_cache: yes
+    update_cache: no
   tags:
     - gitlab
     - gitlab-packages

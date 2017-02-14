@@ -1,4 +1,4 @@
-GitLab Omnibus
+GitLab Community Edition
 ========
 [![Build Status](https://travis-ci.org/samdoran/ansible-role-gitlab.svg?branch=master)](https://travis-ci.org/samdoran/ansible-role-gitlab)
 [![Galaxy](https://img.shields.io/badge/galaxy-samdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/gitlab)
@@ -18,8 +18,6 @@ Requirements
 
 Role Variables
 --------------
-
-**Note:** Variable names have changed. `gitlab_ssl_*` is now `gitlab_nginx_ssl_*`.
 
 #### GitLab Variables  ####
 

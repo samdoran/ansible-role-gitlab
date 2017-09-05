@@ -5,6 +5,7 @@ gitlab_days_old_backups: 10
 # More options are available in the GitLab Nginx section
 gitlab_fqdn: "{{ ansible_fqdn }}"
 gitlab_nginx_ssl_enabled: False
+gitlab_ssl_self_sign: False
 gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
 gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
 gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"

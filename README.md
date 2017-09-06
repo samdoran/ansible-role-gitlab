@@ -39,6 +39,9 @@ Here are the variables you will most likely need to set.
 | `gitlab_nginx_ssl_port` | 443 | Listening port for HTTPS. |
 | `gitlab_nginx_ssl_crt` | Undefined multi-line variable | SSL Public certificate. |
 | `gitlab_nginx_ssl_key` | Undefined multi-line variable | SSL Private key. I recommend putting this in an ansible vault. |
+|`gitlab_ssl_self_sign`| False | Wether or not to generate a self signed SSL Certificate. Do not provide an SSL Certificate if using this option. |
+|`gitlab_ssl_self_sign_subj` | `"/CN={{ ansible_fqdn }}"` | Subject of self signed SSL Certificate. |
+|`gitlab_ssl_self_sign_days`| 365 | Days self signed SSL Certificate is signed for. | 
 
 #### GitLab CI Variables ####
 

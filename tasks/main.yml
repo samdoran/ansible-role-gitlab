@@ -61,6 +61,36 @@
     - gitlabrb
     - ssl
 
+- name: Generate temp cert key
+  command: openssl genrsa -des3 -passout pass:x -out /tmp/server.pass.key 2048
+  when: gitlab_ssl_self_sign
+
+- name: Generate self signed server key
+  command: >
+    openssl rsa -passin pass:x -in /tmp/server.pass.key -out 
+    {{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key
+  args:
+    creates: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
+  when: gitlab_ssl_self_sign
+
+- name: Generate csr
+  command: > 
+    openssl req -new -key {{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key 
+    -out /tmp/server.csr -subj {{ gitlab_ssl_self_sign_subj }}
+  args:
+    creates: /tmp/server.csr
+  when: gitlab_ssl_self_sign
+
+- name: Generate self signed certificate
+  command: >
+    openssl x509 -req -days {{ gitlab_ssl_self_sign_days }} 
+    -in /tmp/server.csr -signkey {{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key 
+    -out {{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt
+  args:
+    creates: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
+  when: gitlab_ssl_self_sign
+
+
 - name: Copy GitLab SSL certificate
   template:
     backup: yes

@@ -69,9 +69,9 @@
   command: >
     openssl rsa -passin pass:x -in /tmp/server.pass.key -out 
     {{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key
-  when: gitlab_ssl_self_sign
   args:
     creates: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
+  when: gitlab_ssl_self_sign
 
 - name: Generate csr
   command: > 

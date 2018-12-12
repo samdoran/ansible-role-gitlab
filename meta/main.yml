@@ -1,4 +1,5 @@
 galaxy_info:
+  role_name: gitlab
   author: Sam Doran
   description: Install GitLab CE Omnibus
   company: Ansible by Red Hat

@@ -9,12 +9,14 @@
 
 - name: RHEL | Install support packages
   yum:
-    name: "{{ item }}"
+    name:
+      - policycoreutils
+      - openssh-server
+      - openssh-clients
+      - curl
+      - "{{ gitlab_smtp_service }}"
+      - cronie
     state: latest
-  with_items:
-    - curl
-    - "{{ gitlab_smtp_service }}"
-    - cronie
   tags:
     - gitlab
     - gitlab-packages

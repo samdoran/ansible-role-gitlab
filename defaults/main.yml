@@ -226,7 +226,6 @@ gitlab_incoming_email_start_tls: no
 # gitlab_user_git_user_email: "gitlab@#{node['fqdn']}"
 
 
-
 # --- GitLab Unicorn --- #
 # gitlab_unicorn_worker_timeout: 60
 # gitlab_unicorn_worker_processes: 3
@@ -242,11 +241,9 @@ gitlab_incoming_email_start_tls: no
 # gitlab_unicorn_log_directory: "/var/log/gitlab/unicorn"
 
 
-
 # --- GitLab Sidekiq --- #
 # gitlab_sidekiq_log_directory: '/var/log/gitlab/sidekiq'
 # gitlab_sidekiq_shutdown_timeout: 4
-
 
 
 # --- GitLab Shell --- #
@@ -259,7 +256,6 @@ gitlab_incoming_email_start_tls: no
 # For Debian and Ubuntu systems this can be done with: sudo apt-get install git-annex
 # For CentOS: sudo yum install epel-release && sudo yum install git-annex
 # gitlab_shell_git_annex_enabled: False
-
 
 
 # --- GitLab PostgreSQL --- #
@@ -296,7 +292,6 @@ gitlab_incoming_email_start_tls: no
 # gitlab_postgresql_checkpoint_warning: "30s"
 
 
-
 # --- GitLab Redis --- #
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/redis.md#redis-settings
 ## Connect to your own redis instance.
@@ -308,7 +303,6 @@ gitlab_incoming_email_start_tls: no
 # gitlab_redis_username: gitlab-redis
 # gitlab_redis_uid: nil
 # gitlab_redis_gid: nil
-
 
 
 # --- GitLab Web Server --- #
@@ -324,7 +318,6 @@ gitlab_incoming_email_start_tls: no
 # gitlab_web_server_group: 'gitlab-www'
 # gitlab_web_server_uid: nil
 # gitlab_web_server_gid: nil
-
 
 
 # --- GitLab Nginx --- #
@@ -403,7 +396,6 @@ gitlab_incoming_email_start_tls: no
 # gitlab_nginx_cache_max_size: '5000m'
 
 
-
 # --- GitLab Logging --- #
 ## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logs
 
@@ -446,7 +438,6 @@ gitlab_incoming_email_start_tls: no
 ## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logrotate
 ## You can disable built in logrotate feature.
 # gitlab_logrotate_enabled: True
-
 
 
 # --- GitLab Git --- #

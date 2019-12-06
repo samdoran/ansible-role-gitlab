@@ -7,25 +7,23 @@ galaxy_info:
   min_ansible_version: 2.7
 
   platforms:
-  - name: EL
-    versions:
-      - 6
-      - 7
+    - name: EL
+      versions:
+        - 6
+        - 7
 
-  - name: Debian
-    versions:
-      - jessie
-      - stretch
-      - buster
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+        - buster
 
-  - name: Ubuntu
-    versions:
-      - trusty
-      - xenial
-      - bionic
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
 
-  categories:
+  galaxy_tags:
     - development
     - git
-
-dependencies: []

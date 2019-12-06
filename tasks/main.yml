@@ -37,9 +37,9 @@
     group: root
     mode: '0600'
   notify:
-   - reconfigure gitlab
-   - restart gitlab
-   - wait for unicorn
+    - reconfigure gitlab
+    - restart gitlab
+    - wait for unicorn
   tags:
     - gitlab
     - gitlabrb

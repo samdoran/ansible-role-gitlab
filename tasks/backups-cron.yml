@@ -3,7 +3,7 @@
     name: backup GitLab
     minute: '23'
     hour: '23'
-    job: gitlab-backup create
+    job: gitlab-ctl backup-etc && gitlab-backup create CRON=1
   tags:
     - gitlab
     - gitlab_backup

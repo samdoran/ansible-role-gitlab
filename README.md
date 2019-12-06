@@ -29,6 +29,7 @@ Here are the variables you will most likely need to set.
 |----------------|-----------------------------|----------------------------|
 | `gitlab_version` | `[undefined]` | If defined, install a specific version of GitLab. If undefined, install the latest version. This needs to be a string, so be sure to wrap it in double quotes. |
 | `gitlab_version_suffix` | `-ce.0` | **Debian only** When specifying `gitlab_version`, an additional suffix is needed. To see valid suffixes, run `aptitude versions gitlab-ce`. Since GitLab 8, the suffix is always `-ce.[012]`. |
+| `gitlab_manage_backup_path` | `yes` | Whether or not GitLab should manage backups |
 |  `gitlab_days_old_backups` | 10 | Passed to `find -time +[n]` in cron job that deletes GitLab backups |
 | `gitlab_fqdn` | `"{{ ansible_fqdn }}"` | FQDN of GitLab host |
 | `gitlab_nginx_ssl_enabled` | False | Whether or not to configure GitLab to use SSL. This is meant to be used when the SSL certificates are installed using an additional role and not defined inside `gitlab_nginx_ssl_crt` and `gitlab_nginx_ssl_key`. If `gitlab_nginx_ssl_crt` or `gitlab_nginx_ssl_key` are defined, SSL will be enabled |

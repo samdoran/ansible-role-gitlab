@@ -1,4 +1,4 @@
-# Passed to find -mitme +n when deleting GitLab backups
+gitlab_manage_backup_path: yes
 gitlab_days_old_backups: 10
 
 # Basic GitLab settings for configuring SSL

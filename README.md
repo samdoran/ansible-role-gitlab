@@ -1,13 +1,13 @@
 GitLab Community Edition
 ========
-[![Build Status](https://travis-ci.org/samdoran/ansible-role-gitlab.svg?branch=master)](https://travis-ci.org/samdoran/ansible-role-gitlab)
+[![Build Status](https://travis-ci.com/samdoran/ansible-role-gitlab.svg?branch=master)](https://travis-ci.com/samdoran/ansible-role-gitlab)
 [![Galaxy](https://img.shields.io/badge/galaxy-samdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/gitlab)
 
 The role will install the latest version of GitLab CE from the official repositories.
 
-There is a cron job that creates daily backups of the database and another cron job that deletes backups older than `gitlab_days_old_backups` days.
+There is a cron job or `systemd` timer that creates daily backups of the database.
 
-To only run update tasks, run `ansible-playbook site.yml --tags gitlabupdate`.
+To only run update tasks, run `ansible-playbook site.yml --tags gitlab_update`.
 
 Requirements
 ------------
@@ -42,7 +42,7 @@ Here are the variables you will most likely need to set.
 
 #### GitLab CI Variables ####
 
-**Note:** In GitLab 7.8, GitLab CI now uses OAuth for authentication. Here is the rough procedure for setting it up:
+**Note:** GitLab CI uses OAuth for authentication. Here is the rough procedure for setting it up:
 
   1. Install GitLab
   1. Follow the instructions on the GitLab CI login page to generate an OAuth token for GitLab CI
@@ -73,7 +73,7 @@ Install a specific version of GitLab.
   become: yes
 
   vars:
-     gitlab_version: "8.6.9"
+     gitlab_version: "12.5.3"
      gitlab_version_suffix: "-ce.2"
 
   roles:
@@ -83,4 +83,4 @@ Install a specific version of GitLab.
 License
 -------
 
-MIT
+Apache 2.0

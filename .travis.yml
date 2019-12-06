@@ -1,51 +1,32 @@
 language: python
-python: "2.7"
+services: docker
 
-sudo: required
-
-branches:
-  only:
-    - master
-    - develop
-
-# Install ansible
-addons:
-  apt:
-    packages:
-      - python-pip
+env:
+  global:
+    - ROLE_NAME: gitlab
+  matrix:
+    - MOLECULE_DISTRIBUTION: centos6
+    - MOLECULE_DISTRIBUTION: centos7
+    - MOLECULE_DISTRIBUTION: ubuntu16
+    - MOLECULE_DISTRIBUTION: ubuntu18
+    - MOLECULE_DISTRIBUTION: debian8
+    - MOLECULE_DISTRIBUTION: debian9
+    - MOLECULE_DISTRIBUTION: debian10
+    # - MOLECULE_DISTRIBUTION: fedora29
+    # - MOLECULE_DISTRIBUTION: fedora30
 
 install:
-  # Install ansible
-  - pip install ansible
+  - pip install molecule docker
 
-  # Check ansible version
-  - ansible --version
-
-  # Create ansible.cfg with correct roles_path
-  - printf '[defaults]\nroles_path=../' >ansible.cfg
+before_script:
+  # Remove "ansible-role-" prefix from role name
+  - cd ../
+  - mv ansible-role-${ROLE_NAME/_/-} $ROLE_NAME
+  - cd $ROLE_NAME
 
 script:
-  # Basic role syntax check
-  - ansible-playbook tests/test.yml -i tests/inventory --syntax-check
-
-  # Run the first time
-  - ansible-playbook tests/test.yml -i tests/inventory -c local -b
-
-  # Run again and expect no changes
-  #
-  # - >
-  #   ansible-playbook tests/test.yml -i tests/inventory -c local -b
-  #   | grep -q 'changed=0.*failed=0'
-  #   && (echo 'Idempotence test: pass' && exit 0)
-  #   || (echo 'Idempotence test: fail' && exit 1)
-
-  # Check that GitLab is accessible
-  - >
-    curl -s -o /dev/null -w "%{http_code}" http://localhost/users/password/new
-    | grep -q '200'
-    && (echo 'GitLab server responded with 200.' && exit 0)
-    || (echo 'GitLab server is not responding.' && exit 2)
-
+  # Run tests
+  - molecule test --all
 
 notifications:
-  webhooks: https://galaxy.ansible.com/api/v1/notifications/
+  webhooks: https://galaxy.ansible.com/api/v1/notifications/

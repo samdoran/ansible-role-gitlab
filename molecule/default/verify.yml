@@ -1,0 +1,12 @@
+- name: Verify role
+  hosts: all
+  become: yes
+  gather_facts: no
+
+  tasks:
+    - name: Check GitLab
+      uri:
+        url: http://localhost/users/password/new
+
+    - name: Check backup jobs
+      command: systemctl status

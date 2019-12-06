@@ -1,10 +1,19 @@
+- name: DEBIAN | Creat GitLab repository
+  apt_repository:
+    filename: gitlab-ce
+    repo: https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_facts.distribution | lower }}/ {{ ansible_facts.distribution_release }} main
+    state: present
+  tags:
+    - gitlab
+    - gitlab_repo
+
 - name: DEBIAN | Install GitLab GPG key
   apt_key:
     state: present
     url: https://packages.gitlab.com/gpg.key
   tags:
     - gitlab
-    - gitlab-gpg
+    - gitlab_gpg
 
 - name: DEBIAN | Install support packages
   apt:
@@ -17,7 +26,7 @@
     update_cache: no
   tags:
     - gitlab
-    - gitlab-packages
+    - gitlab_packages
 
 - name: DEBIAN | Install GitLab CE
   apt:
@@ -30,4 +39,4 @@
     - wait for unicorn
   tags:
     - gitlab
-    - gitlab-update
+    - gitlab_update

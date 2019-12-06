@@ -3,14 +3,14 @@ gitlab_days_old_backups: 10
 
 # Basic GitLab settings for configuring SSL
 # More options are available in the GitLab Nginx section
-gitlab_fqdn: "{{ ansible_fqdn }}"
-gitlab_nginx_ssl_enabled: False
-gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
+gitlab_fqdn: "{{ ansible_facts.fqdn }}"
+gitlab_nginx_ssl_enabled: no
+gitlab_nginx_ssl_filename: "{{ ansible_facts.fqdn }}"
 gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
 gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
 gitlab_nginx_ssl_port: 443
 
-# gitlab_version: "8.6.3"         # If undefined, install the latest. Make sure this is a string by quoting it.
+# gitlab_version: "12.5.3"        # If undefined, install the latest. Make sure this is a string by quoting it.
 gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version is defined.
 
 
@@ -69,10 +69,10 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_incoming_email_password: "{{ vault_gitlab_incoming_email_password }}"
 
 ## IMAP Settings
-gitlab_incoming_email_host:  "imap.gmail.com"
-gitlab_incoming_email_port:  993
-gitlab_incoming_email_ssl:  true
-gitlab_incoming_email_start_tls:  false
+gitlab_incoming_email_host: "imap.gmail.com"
+gitlab_incoming_email_port: 993
+gitlab_incoming_email_ssl: yes
+gitlab_incoming_email_start_tls: no
 
 ## LDAP sign-in
 # These settings are documented in more detail at
@@ -269,7 +269,7 @@ gitlab_incoming_email_start_tls:  false
 # gitlab_postgresql_data_dir: "/var/opt/gitlab/postgresql/data"
 
 ## Recommend value is 1/4 of total RAM, up to 14GB. Default is 256MB.
-# gitlab_postgresql_shared_buffers: "{{ ansible_memtotal_mb // 4 }}MB"
+# gitlab_postgresql_shared_buffers: "{{ ansible_facts.memtotal_mb // 4 }}MB"
 
 ## Advanced settings
 # gitlab_postgresql_ha: False

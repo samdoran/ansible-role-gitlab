@@ -1,40 +1,23 @@
 - name: Include distribution specific variables
-  include_vars: "{{ ansible_os_family }}.yml"
+  include_vars: "{{ lookup('first_found', params) }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_facts.distribution }}-{{ ansible_facts.distribution_version }}.yml"
+        - "{{ ansible_facts.os_family }}-{{ ansible_facts.distribution_major_version }}.yml"
+        - "{{ ansible_facts.distribution }}.yml"
+        - "{{ ansible_facts.os_family }}.yml"
+        - default.yml
+      paths:
+        - "{{ role_path }}/vars"
   tags:
     - gitlab
-    - gitlabupdate
+    - gitlab_update
     - always
 
-- name: Get current GitLab version
-  command: "{{ gitlab_check_command }} gitlab gitlab-ce"
-  register: gitlab_status
-  failed_when: false
-  changed_when: false
-  check_mode: no
+- include_tasks: install-{{ ansible_facts.os_family }}.yml
   tags:
     - gitlab
-    - gitlab-update
-    - always
-
-- name: Copy GitLab repo file
-  template:
-    src: "{{ gitlab_repo_file }}.j2"
-    dest: "{{ gitlab_repo_dir }}/{{ gitlab_repo_file }}"
-  tags:
-    - gitlab
-
-- name: Create gitlab-ci user
-  user:
-    name: gitlab-ci
-    comment: "GitLab CI"
-    system: yes
-    state: present
-    createhome: no
-  tags:
-    - gitlab
-    - gitlab-users
-
-- include: install-{{ ansible_os_family }}.yml
 
 - name: Start and enable mail
   service:
@@ -43,7 +26,8 @@
     state: started
   tags:
     - gitlab
-    - gitlab-services
+    - gitlab_services
+    - notest
 
 - name: Copy gitlab.rb
   template:
@@ -51,7 +35,7 @@
     dest: /etc/gitlab/gitlab.rb
     owner: root
     group: root
-    mode: 0600
+    mode: '0600'
   notify:
    - reconfigure gitlab
    - restart gitlab
@@ -68,13 +52,13 @@
     dest: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
     owner: root
     group: root
-    mode: 0644
+    mode: '0644'
     force: no
   when: gitlab_nginx_ssl_crt is defined
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - gitlab-ssl
+    - gitlab_ssl
 
 - name: Copy GitLab SSL private key
   template:
@@ -83,74 +67,24 @@
     dest: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
     owner: root
     group: root
-    mode: 0600
+    mode: '0600'
     force: no
   when: gitlab_nginx_ssl_key is defined
   notify: restart gitlab nginx
   tags:
     - gitlab
-    - gitlab-ssl
+    - gitlab_ssl
 
-- name: Copy GitLab CI SSL certificate
-  template:
-    backup: yes
-    src: gitlab-ci.crt.j2
-    dest: "{{ gitlab_ci_nginx_ssl_cert_path }}/{{ gitlab_ci_nginx_ssl_filename }}.crt"
-    owner: root
-    group: root
-    mode: 0644
-    force: no
-  when: gitlab_ci_nginx_ssl_crt is defined
-  notify: restart gitlab nginx
+- name: Configure backups using cron
+  include_tasks: backups-cron.yml
+  when: ansible_facts.service_mgr != 'systemd'
   tags:
     - gitlab
-    - gitlab-ssl
+    - gitlab_backup
 
-- name: Copy GitLab CI SSL private key
-  template:
-    backup: yes
-    src: gitlab-ci.key.j2
-    dest: "{{ gitlab_ci_nginx_ssl_key_path }}/{{ gitlab_ci_nginx_ssl_filename }}.key"
-    owner: root
-    group: root
-    mode: 0600
-    force: no
-  when: gitlab_ci_nginx_ssl_key is defined
-  notify: restart gitlab nginx
+- name: Configure backups using systemd timers
+  include_tasks: backups-systemd.yml
+  when: ansible_facts.service_mgr == 'systemd'
   tags:
     - gitlab
-    - gitlab-ssl
-
-- name: Create cron job to backup GitLab daily
-  cron:
-    name: "backup GitLab"
-    minute: "23"
-    hour: "23"
-    job: "gitlab-rake gitlab:backup:create"
-  tags:
-    - gitlab
-    - gitlab-cron
-
-- name: Create cron job to remove old GitLab backups
-  cron:
-    name: "remove old GitLab backups"
-    minute: "51"
-    hour: "23"
-    job: "find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
-  tags:
-    - gitlab
-    - gitlab-cron
-
-- name: Ensure GitLab accounts never expire
-  user:
-    name: "{{ item }}"
-    expires: "4102444800"
-    createhome: no
-  changed_when: False     # Added because there is a bug with the module. https://github.com/ansible/ansible/issues/13235#issuecomment-190852303
-  with_items:
-    - git
-    - gitlab-ci
-  tags:
-    - gitlab
-    - gitlab-users
-
+    - gitlab_backup

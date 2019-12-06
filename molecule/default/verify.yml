@@ -1,12 +1,15 @@
 - name: Verify role
   hosts: all
   become: yes
-  gather_facts: no
+  gather_facts: yes
 
   tasks:
     - name: Check GitLab
       uri:
         url: http://localhost/users/password/new
+        follow_redirects: all
+        validate_certs: no
 
     - name: Check backup jobs
-      command: systemctl status
+      command: systemctl status backup-gitlab.timer
+      when: ansible_facts.service_mgr == 'systemd'

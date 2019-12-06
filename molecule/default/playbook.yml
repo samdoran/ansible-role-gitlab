@@ -71,5 +71,10 @@
           Testing with Ansible {{ ansible_version.full }} using Python {{ ansible_facts.python_version }}
           on {{ ansible_facts.distribution }} {{ ansible_facts.distribution_version }}
 
+    - name: Remove /.dockerenv
+      file:
+        path: /.dockerenv
+        state: absent
+
     - import_role:
         name: gitlab

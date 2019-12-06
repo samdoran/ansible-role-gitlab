@@ -1,8 +1,8 @@
 - name: Create cron job to backup GitLab daily
   cron:
     name: backup GitLab
-    minute: 23
-    hour: 23
+    minute: '23'
+    hour: '23'
     job: gitlab-backup create
   tags:
     - gitlab
@@ -11,8 +11,8 @@
 - name: Create cron job to remove old GitLab backups
   cron:
     name: remove old GitLab backups
-    minute: 51
-    hour: 23
+    minute: '51'
+    hour: '23'
     job: "find /var/opt/gitlab/backups -type f -mtime +{{ gitlab_days_old_backups }} -exec rm '{}' ';'"
   tags:
     - gitlab

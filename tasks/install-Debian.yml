@@ -1,7 +1,7 @@
-- name: DEBIAN | Creat GitLab repository
+- name: DEBIAN | Create GitLab repository
   apt_repository:
     filename: gitlab-ce
-    repo: https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_facts.distribution | lower }}/ {{ ansible_facts.distribution_release }} main
+    repo: deb https://packages.gitlab.com/gitlab/gitlab-ce/{{ ansible_facts.distribution | lower }}/ {{ ansible_facts.distribution_release }} main
     state: present
   tags:
     - gitlab

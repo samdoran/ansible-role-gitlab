@@ -2,10 +2,9 @@ dependency:
   name: galaxy
 driver:
   name: docker
-lint:
-  name: yamllint
-  options:
-    config-file: molecule/default/yamllint.yml
+lint: |
+  ansible-lint -x 204,403,502
+  yamllint -c molecule/default/yamllint.yml .
 platforms:
   - name: gitlab-test-${MOLECULE_DISTRIBUTION:-centos7}
     image: "quay.io/samdoran/${MOLECULE_DISTRIBUTION:-centos7}-ansible:latest"
@@ -19,21 +18,9 @@ provisioner:
   config_options:
     defaults:
       stdout_callback: debug
-  lint:
-    name: ansible-lint
-    options:
-      exclude:
-        - molecule/default/playbook.yml
-      x:
-        - 204  # Lines should be no longer than 160 chars
-        - 403  # Package installs should not use latest
-        - 502  # All tasks should be named
   playbooks:
-    converge: ${MOLECULE_PLAYBOOK:-playbook.yml}
+    converge: ${MOLECULE_PLAYBOOK:-converge.yml}
 scenario:
   name: default
 verifier:
   name: ansible
-  lint:
-    name: ansible-lint
-    enabled: no

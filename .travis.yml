@@ -1,3 +1,4 @@
+dist: focal
 language: python
 services: docker
 
@@ -16,7 +17,7 @@ env:
     # - MOLECULE_DISTRIBUTION: fedora30
 
 install:
-  - pip install molecule docker
+  - pip install molecule[lint]==3.0.6 docker
 
 before_script:
   # Remove "ansible-role-" prefix from role name

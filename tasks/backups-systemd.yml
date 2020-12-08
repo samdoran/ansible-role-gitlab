@@ -1,0 +1,26 @@
+- name: Create service units for backups
+  template:
+    src: systemd/backup.service.j2
+    dest: /etc/systemd/system/backup-gitlab.service
+  notify: reload systemd
+  tags:
+    - gitlab
+    - gitlab_backup
+
+- name: Create timer units for backups
+  template:
+    src: systemd/backup.timer.j2
+    dest: /etc/systemd/system/backup-gitlab.timer
+  notify: reload systemd
+  tags:
+    - gitlab
+    - gitlab_backup
+
+- name: Enable timer units
+  systemd:
+    name: backup-gitlab.timer
+    enabled: yes
+    state: started
+  tags:
+    - gitlab
+    - gitlab_backup

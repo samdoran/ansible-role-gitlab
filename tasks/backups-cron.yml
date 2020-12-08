@@ -1,0 +1,9 @@
+- name: Create cron job to backup GitLab daily
+  cron:
+    name: backup GitLab
+    minute: '23'
+    hour: '23'
+    job: gitlab-ctl backup-etc && gitlab-backup create CRON=1
+  tags:
+    - gitlab
+    - gitlab_backup

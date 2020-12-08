@@ -5,17 +5,18 @@ external_url "https://{{ gitlab_fqdn }}{% if gitlab_nginx_ssl_port | int != 443 
 external_url "http://{{ gitlab_fqdn }}"
 {% endif -%}
 
-{% include 'gitlab.yml.j2' %}
-{% include 'gitlab_application.j2' %}
-{% include 'gitlab_database.j2' %}
-{% include 'gitlab_email.j2' %}
-{% include 'gitlab_user.j2' %}
-{% include 'gitlab_unicorn.j2' %}
-{% include 'gitlab_sidekiq.j2' %}
-{% include 'gitlab_shell.j2' %}
-{% include 'gitlab_postgresql.j2' %}
-{% include 'gitlab_redis.j2' %}
-{% include 'gitlab_webserver.j2' %}
-{% include 'gitlab_nginx.j2' %}
-{% include 'gitlab_logging.j2' %}
-{% include 'gitlab_git.j2' %}
+{% include 'gitlab.rb/000_gitlab.yml.j2' %}
+{% include 'gitlab.rb/010_gitlab_application.j2' %}
+{% include 'gitlab.rb/015_gitlab_backup.j2' %}
+{% include 'gitlab.rb/020_gitlab_database.j2' %}
+{% include 'gitlab.rb/030_gitlab_email.j2' %}
+{% include 'gitlab.rb/040_gitlab_user.j2' %}
+{% include 'gitlab.rb/050_gitlab_unicorn.j2' %}
+{% include 'gitlab.rb/060_gitlab_sidekiq.j2' %}
+{% include 'gitlab.rb/070_gitlab_shell.j2' %}
+{% include 'gitlab.rb/080_gitlab_postgresql.j2' %}
+{% include 'gitlab.rb/090_gitlab_redis.j2' %}
+{% include 'gitlab.rb/100_gitlab_webserver.j2' %}
+{% include 'gitlab.rb/110_gitlab_nginx.j2' %}
+{% include 'gitlab.rb/120_gitlab_logging.j2' %}
+{% include 'gitlab.rb/130_gitlab_git.j2' %}

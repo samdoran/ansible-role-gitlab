@@ -1,27 +1,29 @@
 galaxy_info:
+  role_name: gitlab
   author: Sam Doran
-  description: Install GitLab CE Omnibus
-  company: Ansible by Red Hat
-  license: MIT
-  min_ansible_version: 2.1
+  description: Install GitLab CE
+  company:
+  license: Apache 2.0
+  min_ansible_version: 2.7
 
   platforms:
-  - name: EL
-    versions:
-      - 6
-      - 7
+    - name: EL
+      versions:
+        - 6
+        - 7
 
-  - name: Debian
-    versions:
-      - jessie
+    - name: Debian
+      versions:
+        - jessie
+        - stretch
+        - buster
 
-  - name: Ubuntu
-    versions:
-      - precise
-      - trusty
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
 
-  categories:
+  galaxy_tags:
     - development
     - git
-
-dependencies: []

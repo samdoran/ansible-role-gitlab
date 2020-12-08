@@ -1,23 +1,41 @@
+- name: RHEL | Create GitLab repository
+  yum_repository:
+    name: gitlab_gitlab-ce
+    description: gitlab_gitlab-ce
+    baseurl: https://packages.gitlab.com/gitlab/gitlab-ce/el/{{ ansible_facts.distribution_major_version }}/$basearch
+    repo_gpgcheck: yes
+    gpgcheck: yes
+    enabled: yes
+    gpgkey:
+      - https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
+      - https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey/gitlab-gitlab-ce-3D645A26AB9FBD22.pub.gpg
+    sslverify: yes
+    sslcacert: /etc/pki/tls/certs/ca-bundle.crt
+  tags:
+    - gitlab
+    - gitlab_repo
+
 - name: RHEL | Install GitLab GPG key
   rpm_key:
     state: present
-    key: https://packages.gitlab.com/gpg.key
-  when: ansible_os_family == 'RedHat'
+    key: https://packages.gitlab.com/gitlab/gitlab-ce/gpgkey
   tags:
     - gitlab
-    - gitlab-gpg
+    - gitlab_gpg
 
 - name: RHEL | Install support packages
   yum:
-    name: "{{ item }}"
+    name:
+      - policycoreutils
+      - openssh-server
+      - openssh-clients
+      - curl
+      - "{{ gitlab_smtp_service }}"
+      - cronie
     state: latest
-  with_items:
-    - curl
-    - "{{ gitlab_smtp_service }}"
-    - cronie
   tags:
     - gitlab
-    - gitlab-packages
+    - gitlab_packages
 
 - name: RHEL | Install GitLab CE
   yum:
@@ -29,4 +47,4 @@
     - wait for unicorn
   tags:
     - gitlab
-    - gitlab-update
+    - gitlab_update

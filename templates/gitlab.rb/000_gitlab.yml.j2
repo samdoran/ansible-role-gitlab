@@ -5,19 +5,35 @@
   gitlab_email_from is defined or
   gitlab_email_display_name is defined or
   gitlab_email_reply_to is defined or
+  gitlab_email_subject_suffix is defined or
   gitlab_default_can_create_group is defined or
   gitlab_username_changing_enabled is defined or
   gitlab_default_theme is defined or
-  gitlab_restricted_visibility_levels is defined or
   gitlab_default_projects_features_issues is defined or
   gitlab_default_projects_features_merge_requests is defined or
   gitlab_default_projects_features_wiki is defined or
   gitlab_default_projects_features_snippets is defined or
-  gitlab_default_projects_features_visibility_level is defined or
+  gitlab_default_projects_features_builds is defined or
+  gitlab_default_projects_features_container_registry is defined or
+  gitlab_issue_closing_pattern is defined or
   gitlab_repository_downloads_path is defined or
   gitlab_gravatar_plain_url is defined or
   gitlab_gravatar_ssl_url is defined or
+  gitlab_stuck_ci_builds_worker_cron is defined or
+  gitlab_expire_build_artifacts_worker_cron is defined or
+  gitlab_repository_check_worker_cron is defined or
+  gitlab_admin_email_worker_cron is defined or
+  gitlab_repository_archive_cache_worker_cron is defined or
   gitlab_webhook_timeout is defined or
+  gitlab_trusted_proxies is defined or
+  gitlab_incoming_email_enabled is defined or
+  gitlab_incoming_email_addresses is defined or
+  gitlab_incoming_email_email is defined or
+  gitlab_incoming_email_password is defined or
+  gitlab_incoming_email_host is defined or
+  gitlab_incoming_email_port is defined or
+  gitlab_incoming_email_ssl is defined or
+  gitlab_incoming_email_start_tls is defined or
   gitlab_ldap_enabled is defined or
   gitlab_omniauth_enabled is defined or
   gitlab_backup_path is defined or
@@ -55,19 +71,13 @@
 {% endif %}
 {% if gitlab_email_reply_to is defined %}gitlab_rails['gitlab_email_reply_to'] = '{{ gitlab_email_reply_to }}'
 {% endif %}
+{% if gitlab_email_subject_suffix is defined %}gitlab_rails['gitlab_email_subject_suffix'] = '{{ gitlab_email_subject_suffix }}'
+{% endif %}
 {% if gitlab_default_can_create_group is defined %}gitlab_rails['gitlab_default_can_create_group'] = {{ gitlab_default_can_create_group }}
 {% endif %}
 {% if gitlab_username_changing_enabled is defined %}gitlab_rails['gitlab_username_changing_enabled'] = {{ gitlab_username_changing_enabled }}
 {% endif %}
 {% if gitlab_default_theme is defined %}gitlab_rails['gitlab_default_theme'] = {{ gitlab_default_theme }}
-{% endif %}
-{% if gitlab_restricted_visibility_levels is defined %}
-    {%- for level in gitlab_restricted_visibility_levels -%}gitlab_rails['gitlab_restricted_visibility_levels'] = [
-        '{{ level }}'{% if not loop.last %}, {% endif -%}
-    ]
-    {%- endfor %}
-{% endif %}
-{% if gitlab_restricted_visibility_levels is defined %}gitlab_rails['gitlab_restricted_visibility_levels'] = {{ gitlab_restricted_visibility_levels }}
 {% endif %}
 {% if gitlab_default_projects_features_issues is defined %}gitlab_rails['gitlab_default_projects_features_issues'] = {{ gitlab_default_projects_features_issues | lower }}
 {% endif %}
@@ -77,7 +87,11 @@
 {% endif %}
 {% if gitlab_default_projects_features_snippets is defined %}gitlab_rails['gitlab_default_projects_features_snippets'] = {{ gitlab_default_projects_features_snippets | lower }}
 {% endif %}
-{% if gitlab_default_projects_features_visibility_level is defined %}gitlab_rails['gitlab_default_projects_features_visibility_level'] = '{{ gitlab_default_projects_features_visibility_level }}'
+{% if gitlab_default_projects_features_builds is defined %}gitlab_rails['gitlab_default_projects_features_builds'] = {{ gitlab_default_projects_features_builds | lower }}
+{% endif %}
+{% if gitlab_default_projects_features_container_registry is defined %}gitlab_rails['gitlab_default_projects_features_container_registry'] = {{ gitlab_default_projects_features_container_registry | lower }}
+{% endif %}
+{% if gitlab_issue_closing_pattern is defined %}gitlab_rails['gitlab_issue_closing_pattern'] = "{{ gitlab_issue_closing_pattern }}"
 {% endif %}
 {% if gitlab_repository_downloads_path is defined %}gitlab_rails['gitlab_repository_downloads_path'] = '{{ gitlab_repository_downloads_path }}'
 {% endif %}
@@ -88,9 +102,37 @@
 {% if gitlab_gravatar_ssl_url is defined -%}
     gitlab_rails['gravatar_ssl_url'] = '{{ gitlab_gravatar_ssl_url | default('https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon') }}'
 {% endif %}
+{% if gitlab_stuck_ci_builds_worker_cron is defined %}gitlab_rails['stuck_ci_builds_worker_cron'] = "{{ gitlab_stuck_ci_builds_worker_cron }}"
+{% endif %}
+{% if gitlab_expire_build_artifacts_worker_cron is defined %}gitlab_rails['expire_build_artifacts_worker_cron'] = "{{ gitlab_expire_build_artifacts_worker_cron }}"
+{% endif %}
+{% if gitlab_repository_check_worker_cron is defined %}gitlab_rails['repository_check_worker_cron'] = "{{ gitlab_repository_check_worker_cron }}"
+{% endif %}
+{% if gitlab_admin_email_worker_cron is defined %}gitlab_rails['admin_email_worker_cron'] = "{{ gitlab_admin_email_worker_cron }}"
+{% endif %}
+{% if gitlab_repository_archive_cache_worker_cron is defined %}gitlab_rails['repository_archive_cache_worker_cron'] = "{{ gitlab_repository_archive_cache_worker_cron }}"
+{% endif %}
 {% if gitlab_webhook_timeout is defined -%}
     gitlab_rails['webhook_timeout'] = {{ gitlab_webhook_timeout}}
 {% endif -%}
+{% if gitlab_trusted_proxies is defined %}gitlab_rails['trusted_proxies'] = [{% for item in gitlab_trusted_proxies %}"{{ item }}"{% if not loop.last %},{% endif %}{% endfor %}]
+{% endif %}
+{% if gitlab_incoming_email_enabled is defined %}gitlab_rails['incoming_email_enabled'] = {{ gitlab_incoming_email_enabled | lower }}
+{% endif %}
+{% if gitlab_incoming_email_addresses is defined %}gitlab_rails['incoming_email_addresses'] = "{{ gitlab_incoming_email_addresses }}"
+{% endif %}
+{% if gitlab_incoming_email_email is defined %}gitlab_rails['incoming_email_email'] = "{{ gitlab_incoming_email_email }}"
+{% endif %}
+{% if gitlab_incoming_email_password is defined %}gitlab_rails['incoming_email_password'] = "{{ gitlab_incoming_email_password }}"
+{% endif %}
+{% if x is defined %}gitlab_rails['x'] = "x"
+{% endif %}
+{% if x is defined %}gitlab_rails['x'] = "x"
+{% endif %}
+{% if x is defined %}gitlab_rails['x'] = "x"
+{% endif %}
+{% if x is defined %}gitlab_rails['x'] = "x"
+{% endif %}
 
 {%- if gitlab_ldap_enabled is defined and gitlab_ldap_enabled == True %}
 ## For setting up LDAP

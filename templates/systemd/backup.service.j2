@@ -1,0 +1,9 @@
+[Unit]
+Description=Backup GitLab
+
+[Service]
+Type=oneshot
+Nice=19
+IOSchedulingClass=idle
+ExecStartPre=/usr/bin/gitlab-ctl backup-etc
+ExecStart=/usr/bin/gitlab-backup create CRON=1

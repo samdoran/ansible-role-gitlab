@@ -1,16 +1,16 @@
-# Passed to find -mitme +n when deleting GitLab backups
+gitlab_manage_backup_path: yes
 gitlab_days_old_backups: 10
 
 # Basic GitLab settings for configuring SSL
 # More options are available in the GitLab Nginx section
-gitlab_fqdn: "{{ ansible_fqdn }}"
-gitlab_nginx_ssl_enabled: False
-gitlab_nginx_ssl_filename: "{{ ansible_fqdn }}"
+gitlab_fqdn: "{{ ansible_facts.fqdn }}"
+gitlab_nginx_ssl_enabled: no
+gitlab_nginx_ssl_filename: "{{ ansible_facts.fqdn }}"
 gitlab_nginx_ssl_certificate_path: "{{ gitlab_nginx_ssl_cert_path }}/{{ gitlab_nginx_ssl_filename }}.crt"
 gitlab_nginx_ssl_certificate_key_path: "{{ gitlab_nginx_ssl_key_path }}/{{ gitlab_nginx_ssl_filename }}.key"
 gitlab_nginx_ssl_port: 443
 
-# gitlab_version: "8.6.3"         # If undefined, install the latest. Make sure this is a string by quoting it.
+# gitlab_version: "12.5.3"        # If undefined, install the latest. Make sure this is a string by quoting it.
 gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version is defined.
 
 
@@ -42,19 +42,37 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_email_from: "gitlab@{{ gitlab_fqdn }}"
 # gitlab_email_display_name: 'GitLab'
 # gitlab_email_reply_to: "noreply@{{ gitlab_fqdn }}"
+# gitlab_email_subject_suffix: '[GitLab]'
 # gitlab_default_can_create_group: True
 # gitlab_username_changing_enabled: True
 # gitlab_default_theme: 2
-# gitlab_restricted_visibility_levels: [] # to restrict public and internal: [ 'public' , 'internal' ]
 # gitlab_default_projects_features_issues: True
 # gitlab_default_projects_features_merge_requests: True
 # gitlab_default_projects_features_wiki: True
 # gitlab_default_projects_features_snippets: False
-# gitlab_default_projects_features_visibility_level: private
+# gitlab_default_projects_features_builds: True
+# gitlab_default_projects_features_container_registry: True
+# gitlab_issue_closing_pattern: '((?:[Cc]los(?:e[sd]?|ing)|[Ff]ix(?:e[sd]|ing)?|[Rr]esolv(?:e[sd]?|ing))(:?) +(?:(?:issues? +)?%{issue_ref}(?:(?:, *| +and +)?)|([A-Z][A-Z0-9_]+-\d+))+)'
 # gitlab_repository_downloads_path: tmp/repositories
 # gitlab_gravatar_plain_url: "http://www.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
 # gitlab_gravatar_ssl_url: "https://secure.gravatar.com/avatar/%{hash}?s=%{size}&d=identicon"
+# gitlab_stuck_ci_builds_worker_cron: "0 0 * * *"
+# gitlab_expire_build_artifacts_worker_cron: "50 * * * *"
+# gitlab_repository_check_worker_cron: "20 * * * *"
+# gitlab_admin_email_worker_cron: "0 0 * * 0"
+# gitlab_repository_archive_cache_worker_cron: "0 * * * *"
 # gitlab_webhook_timeout: 10
+# gitlab_trusted_proxies: []
+# gitlab_incoming_email_enabled: True
+# gitlab_incoming_email_addresses: 'gitlab-incoming+%{key}@gmail.com'
+# gitlab_incoming_email_email: 'gitlab-incoming@gmail.com'
+# gitlab_incoming_email_password: "{{ vault_gitlab_incoming_email_password }}"
+
+## IMAP Settings
+gitlab_incoming_email_host: "imap.gmail.com"
+gitlab_incoming_email_port: 993
+gitlab_incoming_email_ssl: yes
+gitlab_incoming_email_start_tls: no
 
 ## LDAP sign-in
 # These settings are documented in more detail at
@@ -208,7 +226,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_user_git_user_email: "gitlab@#{node['fqdn']}"
 
 
-
 # --- GitLab Unicorn --- #
 # gitlab_unicorn_worker_timeout: 60
 # gitlab_unicorn_worker_processes: 3
@@ -224,11 +241,9 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_unicorn_log_directory: "/var/log/gitlab/unicorn"
 
 
-
 # --- GitLab Sidekiq --- #
 # gitlab_sidekiq_log_directory: '/var/log/gitlab/sidekiq'
 # gitlab_sidekiq_shutdown_timeout: 4
-
 
 
 # --- GitLab Shell --- #
@@ -243,7 +258,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_shell_git_annex_enabled: False
 
 
-
 # --- GitLab PostgreSQL --- #
 # gitlab_postgresql_enable: True
 # gitlab_postgresql_listen_address: nil
@@ -251,7 +265,7 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_postgresql_data_dir: "/var/opt/gitlab/postgresql/data"
 
 ## Recommend value is 1/4 of total RAM, up to 14GB. Default is 256MB.
-# gitlab_postgresql_shared_buffers: "{{ ansible_memtotal_mb // 4 }}MB"
+# gitlab_postgresql_shared_buffers: "{{ ansible_facts.memtotal_mb // 4 }}MB"
 
 ## Advanced settings
 # gitlab_postgresql_ha: False
@@ -278,7 +292,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_postgresql_checkpoint_warning: "30s"
 
 
-
 # --- GitLab Redis --- #
 ## see https://gitlab.com/gitlab-org/omnibus-gitlab/blob/629def0a7a26e7c2326566f0758d4a27857b52a3/doc/settings/redis.md#redis-settings
 ## Connect to your own redis instance.
@@ -290,7 +303,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_redis_username: gitlab-redis
 # gitlab_redis_uid: nil
 # gitlab_redis_gid: nil
-
 
 
 # --- GitLab Web Server --- #
@@ -306,7 +318,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_web_server_group: 'gitlab-www'
 # gitlab_web_server_uid: nil
 # gitlab_web_server_gid: nil
-
 
 
 # --- GitLab Nginx --- #
@@ -385,7 +396,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 # gitlab_nginx_cache_max_size: '5000m'
 
 
-
 # --- GitLab Logging --- #
 ## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logs
 
@@ -428,7 +438,6 @@ gitlab_version_suffix: "-ce.0"    # Only used for Debian and if gitlab_version i
 ## see: https://gitlab.com/gitlab-org/omnibus-gitlab/tree/629def0a7a26e7c2326566f0758d4a27857b52a3/README.md#logrotate
 ## You can disable built in logrotate feature.
 # gitlab_logrotate_enabled: True
-
 
 
 # --- GitLab Git --- #

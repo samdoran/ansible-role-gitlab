@@ -1,7 +1,5 @@
 GitLab Community Edition
 ========
-[![Build Status](https://travis-ci.com/samdoran/ansible-role-gitlab.svg?branch=master)](https://travis-ci.com/samdoran/ansible-role-gitlab)
-[![Galaxy](https://img.shields.io/badge/galaxy-samdoran.gitlab-blue.svg?style=flat)](https://galaxy.ansible.com/samdoran/gitlab)
 
 The role will install the latest version of GitLab CE from the official repositories.
 
